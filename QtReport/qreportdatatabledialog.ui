@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>QReportDataTableDialog</class>
+ <widget class="QDialog" name="QReportDataTableDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>686</width>
+    <height>530</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>New datasource</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="resources.qrc">
+    <normaloff>:/designer/qtreport_32</normaloff>:/designer/qtreport_32</iconset>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_2">
+   <item row="0" column="0" colspan="2">
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>Name:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="datasourceName">
+       <property name="maxLength">
+        <number>64</number>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>Query:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1" rowspan="2">
+      <widget class="QPlainTextEdit" name="querySql">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>50</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="2">
+      <widget class="QToolButton" name="queryBuilderButton">
+       <property name="toolTip">
+        <string>Open query builder and select table/view or enter query manually for datasource.</string>
+       </property>
+       <property name="text">
+        <string>...</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="1" column="0" colspan="2">
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0" colspan="2">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Fields properties</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QTreeWidget" name="treeWidgetFields">
+     <property name="rootIsDecorated">
+      <bool>false</bool>
+     </property>
+     <column>
+      <property name="text">
+       <string notr="true">Field name</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Type</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Filter</string>
+      </property>
+     </column>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="QGroupBox" name="groupBoxFilter">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="title">
+      <string>Filter</string>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="checked">
+      <bool>false</bool>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QComboBox" name="comboBoxOperator"/>
+      </item>
+      <item>
+       <layout class="QGridLayout" name="gridLayout_3">
+        <item row="0" column="0">
+         <widget class="QRadioButton" name="radioFilterValue">
+          <property name="text">
+           <string>Value</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="lineEditFilterValue">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QRadioButton" name="radioFilterParametere">
+          <property name="text">
+           <string>Parameter</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QComboBox" name="comboBoxParameter">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="4" column="0" colspan="2">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>QReportDataTableDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>299</x>
+     <y>520</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioFilterValue</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>lineEditFilterValue</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>549</x>
+     <y>202</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>663</x>
+     <y>203</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioFilterParametere</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>comboBoxParameter</receiver>
+   <slot>setEnabled(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>549</x>
+     <y>230</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>663</x>
+     <y>231</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEditFilterValue</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>QReportDataTableDialog</receiver>
+   <slot>setFilterText()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>599</x>
+     <y>187</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>444</x>
+     <y>230</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxParameter</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>QReportDataTableDialog</receiver>
+   <slot>setFilterText()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>631</x>
+     <y>222</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>681</x>
+     <y>232</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBoxOperator</sender>
+   <signal>currentIndexChanged(QString)</signal>
+   <receiver>QReportDataTableDialog</receiver>
+   <slot>setFilterText()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>494</x>
+     <y>167</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>442</x>
+     <y>161</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioFilterValue</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>QReportDataTableDialog</receiver>
+   <slot>setFilterText()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>493</x>
+     <y>192</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>443</x>
+     <y>210</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioFilterParametere</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>QReportDataTableDialog</receiver>
+   <slot>setFilterText()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>483</x>
+     <y>218</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>442</x>
+     <y>285</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>groupBoxFilter</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>QReportDataTableDialog</receiver>
+   <slot>setFilterText()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>467</x>
+     <y>129</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>4</x>
+     <y>104</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>setFilterText()</slot>
+ </slots>
+</ui>

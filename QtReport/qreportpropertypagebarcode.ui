@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>QReportPropertyPageBarcode</class>
+ <widget class="QWidget" name="QReportPropertyPageBarcode">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>356</width>
+    <height>276</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QFormLayout" name="formLayout">
+   <property name="labelAlignment">
+    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+   </property>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Barcode type:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QComboBox" name="comboBox">
+     <item>
+      <property name="text">
+       <string>Code 39</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Code 39 extented</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Code 128</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Code 128 large</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Dobson</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Text:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QLineEdit" name="lineEdit"/>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

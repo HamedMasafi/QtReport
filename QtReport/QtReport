@@ -1,0 +1,10 @@
+#include "qreporttextbox.h"
+#include "qreportverticalline.h"
+#include "qreporthorizontalline.h"
+#include "qreportimage.h"
+
+#ifndef QT_REPORT_GLOBAL
+#define QT_REPORT_GLOBAL
+
+
+#endif //QT_REPORT_GLOBAL
