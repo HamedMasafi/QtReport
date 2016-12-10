@@ -22,63 +22,73 @@
  ***************************************************************************/
 
 
-#ifndef RREPORTDATATABLE_H
-#define RREPORTDATATABLE_H
+#include "qreportdatatable.h"
 
-#include "qreportxmlseriazble.h"
-#include "qtreportglobal.h"
+#include <QtCore/QDebug>
+#include <QtSql/QSqlRecord>
+#include <QtXml/QDomElement>
 
-#include <QString>
-#include <QVariant>
+LEAF_BEGIN_NAMESPACE
 
-class QSqlRecord;
-class QReportDataConnection;
-
-class QReportDataField : public QReportXMLSeriazble
+QReportDataTable::QReportDataTable(QString connectionName) :
+    QReportXMLSeriazble(),
+    _connectionName(connectionName)
 {
-    Q_OBJECT
+}
 
-    Q_PROPERTY(int type READ type WRITE setType USER true)
-    Q_PROPERTY(QString filter READ filter WRITE setFilter USER true)
+void QReportDataTable::remove(QReportDataField *field)
+{
+    _fields.removeOne(field);
+}
 
-    R_PROPERTY(QString, filter, filter, setFilter, _filter)
-    R_PROPERTY(int, type, type, setType, _type)
+void QReportDataTable::clear()
+{
+    _fields.clear();
+}
 
-public:
-    QReportDataField(QString name) {
-        setObjectName(name);
+void QReportDataTable::append(QReportDataField *field)
+{
+    _fields.append(field);
+}
+
+void QReportDataTable::append(QString fieldName)
+{
+    QReportDataField *f = new QReportDataField(fieldName);
+    _fields.append(f);
+}
+
+void QReportDataTable::appendRecordFields(QSqlRecord *record)
+{
+    for (int i = 0; i < record->count(); i++)
+        append(record->fieldName(i));
+}
+
+QList<QReportDataField*> QReportDataTable::fields() const
+{
+    return _fields;
+}
+
+void QReportDataTable::saveDom(QDomElement *dom)
+{
+    QReportXMLSeriazble::saveDom(dom);
+
+    foreach(QReportDataField *field, _fields){
+        QDomElement elParam = dom->ownerDocument().createElement("Field");
+        field->saveDom(&elParam);
+        dom->appendChild(elParam);
+    }//foreach
+}
+
+void QReportDataTable::loadDom(QDomElement *dom)
+{
+    QDomNodeList fieldsList = dom->elementsByTagName("Field");
+    for(int i = 0; i < fieldsList.count(); i++){
+        QDomElement el = fieldsList.at(i).toElement();
+        QReportDataField *field = new QReportDataField(el.attribute("objectName"));
+        field->loadDom(&el);
+        _fields.append(field);
     }
+    QReportXMLSeriazble::loadDom(dom);
+}
 
-};
-
-class QReportDataTable : public QReportXMLSeriazble
-{
-    Q_OBJECT
-
-    Q_PROPERTY(QString connectionName READ connectionName WRITE setConnectionName USER true)
-    R_PROPERTY(QString, connectionName, connectionName, setConnectionName, _connectionName)
-
-    Q_PROPERTY(QString selectCommand READ selectCommand WRITE setSelectCommand USER true)
-    R_PROPERTY(QString, selectCommand, selectCommand, setSelectCommand, _selectCommand)
-
-    public:
-        QReportDataTable(QString connectionName);
-
-        void remove(QReportDataField *field);
-        void clear();
-        void append(QReportDataField *field);
-        void append(QString fieldName);
-
-        void appendRecordFields(QSqlRecord *record);
-
-        QList<QReportDataField*> fields() const;
-
-        void saveDom(QDomElement *dom);
-        void loadDom(QDomElement *dom);
-
-    private:
-        QList<QReportDataField*> _fields;
-
-};
-
-#endif // RREPORTDATATABLE_H
+LEAF_END_NAMESPACE

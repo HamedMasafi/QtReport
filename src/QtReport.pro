@@ -6,8 +6,8 @@ QT += sql \
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
-TRANSLATIONS = qtreport_en.ts \
-               qtreport_fa.ts
+TRANSLATIONS = ../translations/qtreport_en.ts \
+               ../translations/qtreport_fa.ts
 
 CONFIG += staticlib
 

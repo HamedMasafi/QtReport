@@ -23,29 +23,26 @@
 #ifndef QREPORT_H
 #define QREPORT_H
 
-
 #include <QObject>
 
 #include "qtreportglobal.h"
 #include "qreportdatatable.h"
 
-
-QT_BEGIN_HEADER
-
-QT_BEGIN_NAMESPACE
-
-class QReportWidgetBase;
-class QReportBand;
-class QSizeF;
-class QReportDataConnection;
-class QVariant;
-class QString;
 template <typename T> class QList;
 template <class Key, class T> class QHash;
 class QSizeF;
+class QSizeF;
+class QVariant;
+class QString;
+
+LEAF_BEGIN_NAMESPACE
+
 class QReportParametere;
 class QReportPrivate;
-class Q_DECL_EXPORT QReport : public QObject
+class QReportWidgetBase;
+class QReportBand;
+class QReportDataConnection;
+class LEAF_EXPORT QReport : public QObject
 {
     Q_OBJECT
 
@@ -145,10 +142,7 @@ signals:
     friend class QReportDocumentDesigner;
 };
 
-
-QT_END_NAMESPACE
-
-QT_END_HEADER
+LEAF_END_NAMESPACE
 
 #endif // RREPORT_H
 

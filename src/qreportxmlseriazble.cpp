@@ -21,85 +21,58 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef QRTEPORT_GLOBAL
-#define QRTEPORT_GLOBAL
+#include "qreportxmlseriazble.h"
 
-#include <QFlags>
+#include <QtXml/QDomElement>
+#include <QtCore/QMetaProperty>
 
+LEAF_BEGIN_NAMESPACE
 
-#define R_PROPERTY(type, name, read, write, m_name ) \
-    private: type m_name; \
-    public: inline void write (type v){ m_name = v; } \
-    inline type read() const{ return m_name; }
-//Q_PROPERTY( type name READ read WRITE write )//DESIGNABLE true USER true  )
-
-#define QT_NAMESPACE QtReport
-//#define Q_CLASS_NAME(c) #c
-
-
-QT_BEGIN_NAMESPACE
-
-enum WidgetTypeFlag
+QReportXMLSeriazble::QReportXMLSeriazble(QObject *parent) :
+    QObject(parent)
 {
-    Band,
-    Widget,
-    Page
-};
-Q_DECLARE_FLAGS(WidgetType, WidgetTypeFlag)
-Q_DECLARE_OPERATORS_FOR_FLAGS(WidgetType)
+}
 
-enum ResizeDirectionFlag
+/**
+ * @brief QReportXMLSeriazble::saveDom
+ * @param dom
+ */
+void QReportXMLSeriazble::saveDom(QDomElement *dom)
 {
-    Top = 1,
-    Left = 2,
-    Right = 4,
-    Bottom = 8
-};
-Q_DECLARE_FLAGS(ResizeDirection, ResizeDirectionFlag)
-Q_DECLARE_OPERATORS_FOR_FLAGS(ResizeDirection)
+    dom->setAttribute("type", metaObject()->className());
 
-enum UnitFlag
+    for (int i = 0; i < metaObject()->propertyCount(); i++) {
+        QMetaProperty prop = metaObject()->property(i);
+
+        //if (prop.isUser(this))
+        dom->setAttribute(
+            prop.name(),
+            prop.read(this).toString());
+    }//for
+}
+
+void QReportXMLSeriazble::loadDom(QDomElement *dom)
 {
-    Centimeters,
-    Milimeters,
-    Inch,
-    Pixel
-};
-Q_DECLARE_FLAGS(Unit, UnitFlag)
-Q_DECLARE_OPERATORS_FOR_FLAGS(Unit)
 
-enum BandTypeFlag
+    for (int i = 0; i < metaObject()->propertyCount(); i++) {
+        QMetaProperty prop = metaObject()->property(i);
+
+        if (prop.isUser(this) && dom->hasAttribute(prop.name())) {
+            QString domVal = dom->attribute(prop.name(), prop.read(this).toString());
+
+            prop.write(this, QVariant::fromValue(domVal));
+        }//if
+    }//for
+
+    setObjectName(dom->attribute("objectName"));
+}
+
+void QReportXMLSeriazble::copyTo(QReportXMLSeriazble *other)
 {
-    ReportHeader,
-    PageHeader,
-    GroupHeader,
-    Data,
-    EmptyData,
-    GroupFooter,
-    PageFooter,
-    ReportFooter
-};
-Q_DECLARE_FLAGS(BandType, BandTypeFlag)
-Q_DECLARE_OPERATORS_FOR_FLAGS(BandType)
+    for (int i = 0; i < metaObject()->propertyCount(); i++) {
+        QMetaProperty prop = metaObject()->property(i);
+        other->setProperty(prop.name(), prop.read(this));
+    }
+}
 
-enum GridTypeFlag
-{
-    NoGrid,
-    DotGrid,
-    LinesGrid
-};
-Q_DECLARE_FLAGS(GridType, GridTypeFlag)
-Q_DECLARE_OPERATORS_FOR_FLAGS(GridType)
-
-enum MouseToolFlag
-{
-    Pointer,
-    Hand
-};
-Q_DECLARE_FLAGS(MouseTool, MouseToolFlag)
-Q_DECLARE_OPERATORS_FOR_FLAGS(MouseTool)
-
-
-QT_END_NAMESPACE
-
-#endif
+LEAF_END_NAMESPACE

@@ -21,74 +21,45 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
+#ifndef QREPORTXMLSERIAZBLE_H
+#define QREPORTXMLSERIAZBLE_H
 
-#include "qreportdatatable.h"
+#include "qtreportglobal.h"
 
-#include <QDebug>
-#include <QSqlRecord>
-#include <QtXml/QDomElement>
+#include <QtCore/QObject>
 
-QReportDataTable::QReportDataTable(QString connectionName) :
-    QReportXMLSeriazble(),
-    _connectionName(connectionName)
+#define XML_ROOT_TAG            "ReportDocument"
+#define COPY_XML_ROOT           "CopyContent"
+#define XML_NODE_REPORT         "Report"
+#define XML_NODE_WIDGET         "Widget"
+#define XML_NODE_WIDGETS        XML_NODE_WIDGET "s"
+#define XML_NODE_BAND           "Band"
+#define XML_NODE_BANDS          XML_NODE_BAND "s"
+#define XML_NODE_CONNECTION     "Connection"
+#define XML_NODE_CONNECTIONS    XML_NODE_CONNECTION "s"
+#define XML_NODE_PARAMETER      "Parameter"
+#define XML_NODE_PARAMETERS     XML_NODE_PARAMETER "s"
+#define XML_NODE_DATATABLE      "DataTable"
+#define XML_NODE_DATATABLES     XML_NODE_DATATABLE "s"
+
+class QDomElement;
+
+LEAF_BEGIN_NAMESPACE
+
+class QReportXMLSeriazble : public QObject
 {
-}
+    Q_OBJECT
 
+public:
 
-void QReportDataTable::remove(QReportDataField *field)
-{
-    _fields.removeOne(field);
-}
+    QReportXMLSeriazble(QObject *parent = 0);
 
-void QReportDataTable::clear()
-{
-    _fields.clear();
-}
+    virtual void saveDom(QDomElement *dom);
+    virtual void loadDom(QDomElement *dom);
 
-void QReportDataTable::append(QReportDataField *field)
-{
-    _fields.append(field);
-}
+    void copyTo(QReportXMLSeriazble *other);
+};
 
-void QReportDataTable::append(QString fieldName)
-{
-    QReportDataField *f = new QReportDataField(fieldName);
-    _fields.append(f);
-}
+LEAF_END_NAMESPACE
 
-void QReportDataTable::appendRecordFields(QSqlRecord *record)
-{
-    for (int i = 0; i < record->count(); i++)
-        append(record->fieldName(i));
-}
-
-QList<QReportDataField*> QReportDataTable::fields() const
-{
-    return _fields;
-}
-
-
-void QReportDataTable::saveDom(QDomElement *dom)
-{
-    QReportXMLSeriazble::saveDom(dom);
-
-    foreach(QReportDataField *field, _fields){
-        QDomElement elParam = dom->ownerDocument().createElement("Field");
-        field->saveDom(&elParam);
-        dom->appendChild(elParam);
-    }//foreach
-}
-
-void QReportDataTable::loadDom(QDomElement *dom)
-{
-    QDomNodeList fieldsList = dom->elementsByTagName("Field");
-    for(int i = 0; i < fieldsList.count(); i++){
-        QDomElement el = fieldsList.at(i).toElement();
-        QReportDataField *field = new QReportDataField(el.attribute("objectName"));
-        field->loadDom(&el);
-        _fields.append(field);
-    }
-    QReportXMLSeriazble::loadDom(dom);
-}
-
-
+#endif // QREPORTXMLSERIAZBLE_H

@@ -4,12 +4,12 @@ TEMPLATE = app
 QT += sql xml
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
-INCLUDEPATH += ../QtReport
+INCLUDEPATH += ../../src
 
-LIBS +=  ../QtReport/libQtReport.a
+LIBS +=  ../../src/libQtReport.a
 
 #
-TARGETDEPS += ../QtReport/libQtReport.a
+TARGETDEPS += ../../src/libQtReport.a
 
 
 

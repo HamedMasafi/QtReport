@@ -31,6 +31,7 @@
 #include <math.h>
 #include "qreportruler.h"
 
+LEAF_BEGIN_NAMESPACE
 
 /*!
  * \class RRuler
@@ -213,9 +214,10 @@ void QReportRuler::setStartMargin(int v)
 
 }
 
-
 void QReportRuler::setEndMargin(int v)
 {
    _endMargin = v;
 
 }
+
+LEAF_END_NAMESPACE

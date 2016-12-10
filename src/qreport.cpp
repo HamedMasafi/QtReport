@@ -45,7 +45,7 @@
 #define ZMINWIDGET   100
 #define ZMAXWIDGET   999
 
-
+LEAF_BEGIN_NAMESPACE
 
 class QReportPrivate
 {
@@ -673,3 +673,5 @@ QReportDataConnection *QReport::connection(QString connectionName)
 
     return 0;
 }
+
+LEAF_END_NAMESPACE

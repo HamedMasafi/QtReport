@@ -21,66 +21,67 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef RRULER_H
-#define RRULER_H
 
+#ifndef RREPORTDATATABLE_H
+#define RREPORTDATATABLE_H
 
-class QFontMetrics;
-class QMouseEvent;
-#include <QWidget>
+#include "qtreportglobal.h"
+#include "qreportxmlseriazble.h"
 
-class QReportRuler : public QWidget
+#include <QtCore/QString>
+#include <QtCore/QVariant>
+
+class QSqlRecord;
+
+LEAF_BEGIN_NAMESPACE
+
+class QReportDataConnection;
+class QReportDataField : public QReportXMLSeriazble
 {
-	public:
+    Q_OBJECT
 
+    Q_PROPERTY(int type READ type WRITE setType USER true)
+    Q_PROPERTY(QString filter READ filter WRITE setFilter USER true)
 
-      QReportRuler ( QWidget *parent, Qt::Orientation direction );
-      ~QReportRuler();
-		void paintEvent ( QPaintEvent  *event );
-		void mouseMoveEvent ( QMouseEvent  *event );
+    R_PROPERTY(QString, filter, filter, setFilter, _filter)
+    R_PROPERTY(int, type, type, setType, _type)
 
-		/*!
-		  *Define ruler direction
-		 */
-      Qt::Orientation direction() const{ return _direction;}
-      //Q_PROPERTY ( Qt::Orientation direction READ direction WRITE setDirection );
-
-      int pixelPerUnit() const { return _pixelPerUnit; }
-      int startPos() const { return _startPos; }
-      int ruleWidth() const { return _ruleWidth; }
-      int startMargin() const { return _startMargin; }
-      int endMargin() const { return _endMargin; }
-
-      void setDirection( Qt::Orientation direction );
-      void setPixelPerUnit(int v);
-      void setStartPos(int v);
-      void setRuleWidth(int v);
-      void setStartMargin(int v);
-      void setEndMargin(int v);
-
-	private:
-      Qt::Orientation _direction;
-		int _pixelPerUnit;
-		int _startPos;
-		int _ruleWidth;
-		int _startMargin;
-      int _endMargin;
-		QFontMetrics _fontMetrics;
-
-      /* *
-		  *Define resze mode. When user move mouse to body start/end (margin)
-		  *the pointer form resize mode and user able to resize margin size.
-		  *This resize can be in two form:
-
-		enum ResizeMode
-		{
-			/// Nothing for resize
-         NoResize,
-			/// User resize start margin
-         ResizeStartMargin,
-			/// User resize end margin
-         ResizeEndMargin,
-      } _resizeMode;*/
+public:
+    QReportDataField(QString name) {
+        setObjectName(name);
+    }
 };
 
-#endif
+class QReportDataTable : public QReportXMLSeriazble
+{
+    Q_OBJECT
+
+    Q_PROPERTY(QString connectionName READ connectionName WRITE setConnectionName USER true)
+    R_PROPERTY(QString, connectionName, connectionName, setConnectionName, _connectionName)
+
+    Q_PROPERTY(QString selectCommand READ selectCommand WRITE setSelectCommand USER true)
+    R_PROPERTY(QString, selectCommand, selectCommand, setSelectCommand, _selectCommand)
+
+    public:
+        QReportDataTable(QString connectionName);
+
+        void remove(QReportDataField *field);
+        void clear();
+        void append(QReportDataField *field);
+        void append(QString fieldName);
+
+        void appendRecordFields(QSqlRecord *record);
+
+        QList<QReportDataField*> fields() const;
+
+        void saveDom(QDomElement *dom);
+        void loadDom(QDomElement *dom);
+
+    private:
+        QList<QReportDataField*> _fields;
+
+};
+
+LEAF_END_NAMESPACE
+
+#endif // RREPORTDATATABLE_H

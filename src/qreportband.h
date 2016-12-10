@@ -27,8 +27,6 @@
 #include "qtreportglobal.h"
 #include "qreportpanel.h"
 
-QT_BEGIN_HEADER
-
 QT_BEGIN_NAMESPACE
 
 class QReportBand : public QReportPanel
@@ -94,5 +92,7 @@ class QReportBand : public QReportPanel
         int        _index;
 
 };
+
+QT_END_NAMESPACE
 
 #endif

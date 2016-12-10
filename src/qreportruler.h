@@ -21,39 +21,72 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef QREPORTXMLSERIAZBLE_H
-#define QREPORTXMLSERIAZBLE_H
+#ifndef RRULER_H
+#define RRULER_H
 
-#include <QObject>
+#include "qtreportglobal.h"
 
-#define XML_ROOT_TAG            "ReportDocument"
-#define COPY_XML_ROOT           "CopyContent"
-#define XML_NODE_REPORT         "Report"
-#define XML_NODE_WIDGET         "Widget"
-#define XML_NODE_WIDGETS        XML_NODE_WIDGET "s"
-#define XML_NODE_BAND           "Band"
-#define XML_NODE_BANDS          XML_NODE_BAND "s"
-#define XML_NODE_CONNECTION     "Connection"
-#define XML_NODE_CONNECTIONS    XML_NODE_CONNECTION "s"
-#define XML_NODE_PARAMETER      "Parameter"
-#define XML_NODE_PARAMETERS     XML_NODE_PARAMETER "s"
-#define XML_NODE_DATATABLE      "DataTable"
-#define XML_NODE_DATATABLES     XML_NODE_DATATABLE "s"
+#include <QWidget>
 
-class QDomElement;
+class QFontMetrics;
+class QMouseEvent;
 
-class QReportXMLSeriazble : public QObject
+LEAF_BEGIN_NAMESPACE
+
+class QReportRuler : public QWidget
 {
-    Q_OBJECT
+	public:
 
-public:
 
-    QReportXMLSeriazble(QObject *parent = 0);
+      QReportRuler ( QWidget *parent, Qt::Orientation direction );
+      ~QReportRuler();
+		void paintEvent ( QPaintEvent  *event );
+		void mouseMoveEvent ( QMouseEvent  *event );
 
-    virtual void saveDom(QDomElement *dom);
-    virtual void loadDom(QDomElement *dom);
+		/*!
+		  *Define ruler direction
+		 */
+      Qt::Orientation direction() const{ return _direction;}
+      //Q_PROPERTY ( Qt::Orientation direction READ direction WRITE setDirection );
 
-    void copyTo(QReportXMLSeriazble *other);
+      int pixelPerUnit() const { return _pixelPerUnit; }
+      int startPos() const { return _startPos; }
+      int ruleWidth() const { return _ruleWidth; }
+      int startMargin() const { return _startMargin; }
+      int endMargin() const { return _endMargin; }
+
+      void setDirection( Qt::Orientation direction );
+      void setPixelPerUnit(int v);
+      void setStartPos(int v);
+      void setRuleWidth(int v);
+      void setStartMargin(int v);
+      void setEndMargin(int v);
+
+	private:
+      Qt::Orientation _direction;
+		int _pixelPerUnit;
+		int _startPos;
+		int _ruleWidth;
+		int _startMargin;
+      int _endMargin;
+		QFontMetrics _fontMetrics;
+
+      /* *
+		  *Define resze mode. When user move mouse to body start/end (margin)
+		  *the pointer form resize mode and user able to resize margin size.
+		  *This resize can be in two form:
+
+		enum ResizeMode
+		{
+			/// Nothing for resize
+         NoResize,
+			/// User resize start margin
+         ResizeStartMargin,
+			/// User resize end margin
+         ResizeEndMargin,
+      } _resizeMode;*/
 };
 
-#endif // QREPORTXMLSERIAZBLE_H
+LEAF_END_NAMESPACE
+
+#endif

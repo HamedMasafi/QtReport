@@ -21,21 +21,35 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
+#ifndef RDISPLAYBASE_H
+#define RDISPLAYBASE_H
+
+
 #include <QFont>
 
-#include "qreportdisplaybase.h"
+#include "qreportrectanglebase.h"
 
-QReportDisplayBase::QReportDisplayBase ( QGraphicsItem *parent ) : 
-      QReportRectangle ( parent )
+LEAF_BEGIN_NAMESPACE
+
+/*!
+  *This class is base class for all display class that display a thing
+  *in a rectangle region such as textbox, image and rectangle
+ */
+class QReportDisplayBase : public QReportRectangle
 {
-    this->setAlign( Qt::AlignLeft | Qt::AlignTop );
-}
+   Q_OBJECT
+
+   R_PROPERTY( Qt::Alignment, align, align, setAlign, m_align )
+   Q_PROPERTY( Qt::Alignment align READ align WRITE setAlign DESIGNABLE true USER true )
 
 
-QReportDisplayBase::~QReportDisplayBase()
-{
-}
+   public:
+      QReportDisplayBase ( QGraphicsItem *parent = 0 );
 
+      ~QReportDisplayBase();
 
+};
 
+LEAF_END_NAMESPACE
 
+#endif
