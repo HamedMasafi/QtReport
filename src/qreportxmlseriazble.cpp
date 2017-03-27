@@ -28,16 +28,16 @@
 
 LEAF_BEGIN_NAMESPACE
 
-QReportXMLSeriazble::QReportXMLSeriazble(QObject *parent) :
+LReportXMLSeriazble::LReportXMLSeriazble(QObject *parent) :
     QObject(parent)
 {
 }
 
 /**
- * @brief QReportXMLSeriazble::saveDom
+ * @brief LReportXMLSeriazble::saveDom
  * @param dom
  */
-void QReportXMLSeriazble::saveDom(QDomElement *dom)
+void LReportXMLSeriazble::saveDom(QDomElement *dom)
 {
     dom->setAttribute("type", metaObject()->className());
 
@@ -51,7 +51,7 @@ void QReportXMLSeriazble::saveDom(QDomElement *dom)
     }//for
 }
 
-void QReportXMLSeriazble::loadDom(QDomElement *dom)
+void LReportXMLSeriazble::loadDom(QDomElement *dom)
 {
 
     for (int i = 0; i < metaObject()->propertyCount(); i++) {
@@ -67,7 +67,7 @@ void QReportXMLSeriazble::loadDom(QDomElement *dom)
     setObjectName(dom->attribute("objectName"));
 }
 
-void QReportXMLSeriazble::copyTo(QReportXMLSeriazble *other)
+void LReportXMLSeriazble::copyTo(LReportXMLSeriazble *other)
 {
     for (int i = 0; i < metaObject()->propertyCount(); i++) {
         QMetaProperty prop = metaObject()->property(i);

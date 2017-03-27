@@ -6,31 +6,31 @@
 
 LEAF_BEGIN_NAMESPACE
 
-class QReport;
-class QReportDocumentDesigner;
-class QReportUndoCommandPrivate;
-class QReportUndoCommand : public QUndoCommand
+class LReport;
+class LReportDocumentDesigner;
+class LReportUndoCommandPrivate;
+class LReportUndoCommand : public QUndoCommand
 {
 
 private:
-    QReportUndoCommandPrivate *d_ptr;
-    Q_DECLARE_PRIVATE(QReportUndoCommand)
+    LReportUndoCommandPrivate *d_ptr;
+    Q_DECLARE_PRIVATE(LReportUndoCommand)
 
 public:
 
-    QReportUndoCommand();
-    QReportUndoCommand(QReportDocumentDesigner *designer, QReport *report);
+    LReportUndoCommand();
+    LReportUndoCommand(LReportDocumentDesigner *designer, LReport *report);
 
     virtual void undo();
     virtual void redo();
 
     void setReady();
 
-    QReportDocumentDesigner *designer() const;
-    QReport *report() const;
+    LReportDocumentDesigner *designer() const;
+    LReport *report() const;
 
-    void setDesigner(QReportDocumentDesigner *designer);
-    void setReport(QReport *report);
+    void setDesigner(LReportDocumentDesigner *designer);
+    void setReport(LReport *report);
 
     void setOldState(QString oldState);
     void setNewState(QString newState);

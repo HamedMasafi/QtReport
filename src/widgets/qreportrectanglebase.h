@@ -21,33 +21,55 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef QREPORTSECTIONSPROPERTIES_H
-#define QREPORTSECTIONSPROPERTIES_H
+#ifndef RRECTANGLEBASE_H
+#define RRECTANGLEBASE_H
 
-#include "qtreportglobal.h"
-#include "ui_qreportsectionsproperties.h"
+#include "qreportwidgetbase.h"
 
 LEAF_BEGIN_NAMESPACE
 
-class QReportDocumentDesigner;
-class QReport;
-
-class QReportSectionsProperties : public QDialog, private Ui::QReportSectionsProperties
+class LReportRectangle : public LReportWidgetBase
 {
-    Q_OBJECT
+   Q_OBJECT
 
-public:
-    explicit QReportSectionsProperties(QWidget *parent,
-                                       QReportDocumentDesigner *designer,
-                                       QReport *report);
+   Q_CLASSINFO("prop_rect", "true")
 
-protected:
-    void changeEvent(QEvent *e);
+   R_PROPERTY( int,            lineWidth, lineWidth, setLineWidth, m_lineWidth )
+   Q_PROPERTY( int lineWidth READ lineWidth WRITE setLineWidth DESIGNABLE true USER true )
 
-    QReportDocumentDesigner *_designer;
-    QReport *_report;
+   R_PROPERTY( QColor,         lineColor, lineColor, setLineColor, m_lineColor )
+   Q_PROPERTY( QColor lineColor READ lineColor WRITE setLineColor DESIGNABLE true USER true )
+
+   R_PROPERTY( Qt::PenStyle,   lineType,  lineType,  setLineType,  m_lineType  )
+   Q_PROPERTY( Qt::PenStyle  lineType READ lineType WRITE setLineType DESIGNABLE true USER true )
+
+   R_PROPERTY( Qt::BrushStyle, fillType,  fillType,  setFillType,  m_fillType )
+   Q_PROPERTY( Qt::BrushStyle fillType READ fillType WRITE setFillType  DESIGNABLE true USER true)
+
+   R_PROPERTY( QColor,         fillColor, fillColor, setFillColor, m_fillColor )
+   Q_PROPERTY( QColor fillColor READ fillColor WRITE setFillColor DESIGNABLE true USER true )
+
+
+   public:
+      LReportRectangle ( QGraphicsItem *parent = 0 );
+      ~LReportRectangle();
+
+      void paint ( QPainter *painter,
+                   const QStyleOptionGraphicsItem *option,
+                   QWidget *Widget );
+
+
+      QRectF insideRect() const;
+
+      QString _sample;
+      QString sample() const{ return _sample; }
+      void setSample( QString v ){ _sample = v; }
+
+
+      void loadDom( QDomElement *dom );
+
 };
 
 LEAF_END_NAMESPACE
 
-#endif // QREPORTSECTIONSPROPERTIES_H
+#endif

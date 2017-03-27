@@ -1,7 +1,7 @@
 /***************************************************************************
  *   QtReport                                                              *
  *   Qt Report Builder Soultion                                            *
- *                                                                         * 
+ *                                                                         *
  *   Copyright (C) 2010 by Hamed Masafi                                    *
  *   Hamed.Masafi@GMail.COM                                                *
  *                                                                         *
@@ -21,39 +21,58 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef RLINEBASE_H
-#define RLINEBASE_H
+#include <QStyleOption>
 
-#include "qreportwidgetbase.h"
+#include "qreporttextbox.h"
+#include "propertypages/qreportpropertypagetext.h"
+#include "propertypages/qreportpropertypagepos.h"
+#include "propertypages/qreportpropertypagerectangle.h"
+#include "propertypages/qreportpropertypagefont.h"
 
 LEAF_BEGIN_NAMESPACE
 
-class QReportLineBase : public QReportWidgetBase
+LReportTextBox::LReportTextBox(QGraphicsItem *parent) :
+    LReportDisplayBase(parent)
 {
-   Q_OBJECT
+    this->setSize(90, 40);
+    this->setMinimumSize(10, 4);
 
-   Q_CLASSINFO("prop_line", "true")
+    setLineWidth(1);
+    setLineType(Qt::NoPen);
+    setLineColor(Qt::black);
 
-   R_PROPERTY( int,            lineWidth, lineWidth, setLineWidth, m_lineWidth )
-   Q_PROPERTY( int lineWidth READ lineWidth WRITE setLineWidth DESIGNABLE true USER true )
+    setFillColor(Qt::white);
+    setFillType(Qt::SolidPattern);
 
-   R_PROPERTY( QColor,         lineColor, lineColor, setLineColor, m_lineColor )
-   Q_PROPERTY( QColor lineColor READ lineColor WRITE setLineColor DESIGNABLE true USER true )
-
-   R_PROPERTY( Qt::PenStyle,   lineType,  lineType,  setLineType,  m_lineType  )
-   Q_PROPERTY( Qt::PenStyle  lineType READ lineType WRITE setLineType DESIGNABLE true USER true )
-
+    setForeColor(Qt::black);
+    setFont(QFont());
+    setText(QString::null);
+}
 
 
-public:
-    QReportLineBase(QGraphicsItem *parent);
+LReportTextBox::~LReportTextBox()
+{
+}
 
-    ~QReportLineBase();
 
-   void loadDom(QDomElement *dom);
+void LReportTextBox::paint(QPainter *painter,
+                           const QStyleOptionGraphicsItem *option,
+                           QWidget *widget)
+{
+    LReportRectangle::paint(painter, option, widget);
 
-};
+    Q_UNUSED(option);
+    Q_UNUSED(widget);
+
+    QTextOption textOption;
+    textOption.setWrapMode(QTextOption::WrapAtWordBoundaryOrAnywhere);
+    textOption.setAlignment(align());
+
+    painter->setFont(font());
+    painter->setPen(foreColor());
+    painter->drawText(this->rect(),
+                      text(),
+                      textOption);
+}
 
 LEAF_END_NAMESPACE
-
-#endif

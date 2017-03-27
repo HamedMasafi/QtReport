@@ -21,20 +21,21 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include "qreportpropertypagefont.h"
-#include "qreporttextbox.h"
+#include "propertypages/qreportpropertypagefont.h"
+#include "widgets/qreporttextbox.h"
+#include "qreportdocumentdesigner.h"
 
 LEAF_BEGIN_NAMESPACE
 
-QReportPropertyPageFont::QReportPropertyPageFont(QWidget *parent) :
-    QReportPropertyPageBase(parent)
+LReportPropertyPageFont::LReportPropertyPageFont(QWidget *parent) :
+    LReportPropertyPageBase(parent)
 {
     setupUi(this);
 
     _title = tr("Font");
 }
 
-void QReportPropertyPageFont::changeEvent(QEvent *e)
+void LReportPropertyPageFont::changeEvent(QEvent *e)
 {
     QWidget::changeEvent(e);
     switch (e->type()) {
@@ -46,7 +47,7 @@ void QReportPropertyPageFont::changeEvent(QEvent *e)
     }
 }
 
-void QReportPropertyPageFont::load()
+void LReportPropertyPageFont::load()
 {
    QFont font = _designer->widgetProperty("font").value<QFont>();
 
@@ -62,7 +63,7 @@ void QReportPropertyPageFont::load()
    comboBoxSize->setCurrentIndex( comboBoxSize->findText(s) );
 }
 
-void QReportPropertyPageFont::save()
+void LReportPropertyPageFont::save()
 {
    int size;
    bool ok;

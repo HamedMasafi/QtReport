@@ -30,7 +30,7 @@ class QString;
 
 LEAF_BEGIN_NAMESPACE
 
-class QReportDataConnection : public QReportXMLSeriazble
+class LReportDataConnection : public LReportXMLSeriazble
 {
     Q_OBJECT
 
@@ -41,7 +41,7 @@ class QReportDataConnection : public QReportXMLSeriazble
     Q_PROPERTY(QString password READ password WRITE setPassword USER true)
 
 public:
-    QReportDataConnection();
+    LReportDataConnection();
 
     QString driver() const;
     QString databaseName() const;
@@ -57,7 +57,7 @@ public:
 
     void setDatabaseInfo( QString driver, QString database, QString serverName, QString username, QString password );
 
-    bool operator ==(QReportDataConnection &other);
+    bool operator ==(LReportDataConnection &other);
 
 private:
     QString _name;

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>QReportSectionDataProperties</class>
- <widget class="QWidget" name="QReportSectionDataProperties">
+ <class>LReportSectionDataProperties</class>
+ <widget class="QWidget" name="LReportSectionDataProperties">
   <property name="geometry">
    <rect>
     <x>0</x>

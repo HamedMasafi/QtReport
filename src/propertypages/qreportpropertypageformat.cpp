@@ -1,16 +1,16 @@
-#include "qreportpropertypageformat.h"
+#include "propertypages/qreportpropertypageformat.h"
 
 LEAF_BEGIN_NAMESPACE
 
-QReportPropertyPageFormat::QReportPropertyPageFormat(QWidget *parent) :
-      QReportPropertyPageBase(parent)
+LReportPropertyPageFormat::LReportPropertyPageFormat(QWidget *parent) :
+      LReportPropertyPageBase(parent)
 {
     setupUi(this);
 
     _title = tr( "Format" );
 }
 
-void QReportPropertyPageFormat::changeEvent(QEvent *e)
+void LReportPropertyPageFormat::changeEvent(QEvent *e)
 {
     QWidget::changeEvent(e);
 
@@ -18,12 +18,12 @@ void QReportPropertyPageFormat::changeEvent(QEvent *e)
         retranslateUi(this);
 }
 
-void QReportPropertyPageFormat::load()
+void LReportPropertyPageFormat::load()
 {
 
 }
 
-void QReportPropertyPageFormat::save()
+void LReportPropertyPageFormat::save()
 {
 
 }

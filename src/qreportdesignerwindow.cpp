@@ -34,7 +34,7 @@ static void init_resources() {
 LEAF_BEGIN_NAMESPACE
 
 /*
-void QReportDesignerWindow::changeEvent(QEvent *e)
+void LReportDesignerWindow::changeEvent(QEvent *e)
 {
     QMainWindow::changeEvent(e);
     switch (e->type()) {
@@ -47,12 +47,12 @@ void QReportDesignerWindow::changeEvent(QEvent *e)
 }
 */
 
-QReportDesignerWindow::QReportDesignerWindow ( QWidget *parent )
+LReportDesignerWindow::LReportDesignerWindow ( QWidget *parent )
     : QMainWindow ( parent )
 {
     init_resources();
 
-    factory = new QReportDesignerFactory( this );
+    factory = new LReportDesignerFactory( this );
     QSettings set( "QtReport2" );
 
     this->setWindowIcon(QIcon(":/designer/qtreport_32"));
@@ -61,7 +61,7 @@ QReportDesignerWindow::QReportDesignerWindow ( QWidget *parent )
     this->setWindowTitle("QtReport 0.1 (beta)- preview 4");
 }
 
-QReportDesignerWindow::~QReportDesignerWindow ()
+LReportDesignerWindow::~LReportDesignerWindow ()
 {
     QSettings set( "QtReport2" );
     set.setValue( "MainWindowState", this->saveState() );

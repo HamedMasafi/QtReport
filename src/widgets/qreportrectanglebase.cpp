@@ -23,8 +23,8 @@
 
 #include "qreportrectanglebase.h"
 
-#include "qreportpropertypagepos.h"
-#include "qreportpropertypagerectangle.h"
+#include "propertypages/qreportpropertypagepos.h"
+#include "propertypages/qreportpropertypagerectangle.h"
 
 
 #include <QDomElement>
@@ -32,10 +32,10 @@
 
 LEAF_BEGIN_NAMESPACE
 
-QReportRectangle::QReportRectangle(QGraphicsItem *parent):
-    QReportWidgetBase(parent)
+LReportRectangle::LReportRectangle(QGraphicsItem *parent):
+    LReportWidgetBase(parent)
 {
-    setResizeDirection(::Top | ::Bottom | ::Left | ::Right);
+    setResizeDirection( Top | Bottom | Left | Right);
 
     setFillColor(Qt::white);
     setFillType(Qt::SolidPattern);
@@ -45,12 +45,12 @@ QReportRectangle::QReportRectangle(QGraphicsItem *parent):
 }
 
 
-QReportRectangle::~QReportRectangle()
+LReportRectangle::~LReportRectangle()
 {
 }
 
 
-void QReportRectangle::paint(QPainter *painter,
+void LReportRectangle::paint(QPainter *painter,
                                  const QStyleOptionGraphicsItem *option,
                                  QWidget *widget)
 {
@@ -91,7 +91,7 @@ void QReportRectangle::paint(QPainter *painter,
 
 
 
-QRectF QReportRectangle::insideRect() const
+QRectF LReportRectangle::insideRect() const
 {
     if (lineType() == Qt::NoPen)
         return rect();
@@ -102,9 +102,9 @@ QRectF QReportRectangle::insideRect() const
                       size().height() - lineWidth()  *2 + 1);
 }
 
-void QReportRectangle::loadDom(QDomElement *dom)
+void LReportRectangle::loadDom(QDomElement *dom)
 {
-    QReportWidgetBase::loadDom(dom);
+    LReportWidgetBase::loadDom(dom);
 
     QColor c;
     int n;

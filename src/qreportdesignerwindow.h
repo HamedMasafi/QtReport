@@ -31,19 +31,19 @@
 
 LEAF_BEGIN_NAMESPACE
 
-class QReportDesignerFactory ;
+class LReportDesignerFactory ;
 
 
-class QReportDesignerWindow : public QMainWindow//, private Ui::QReportDesignerWindow
+class LReportDesignerWindow : public QMainWindow//, private Ui::LReportDesignerWindow
 {
     Q_OBJECT
 
 public:
-    QReportDesignerWindow(QWidget *parent = 0);
-    ~QReportDesignerWindow();
+    LReportDesignerWindow(QWidget *parent = 0);
+    ~LReportDesignerWindow();
 
 private:
-   QReportDesignerFactory *factory;
+   LReportDesignerFactory *factory;
 };
 
 LEAF_END_NAMESPACE

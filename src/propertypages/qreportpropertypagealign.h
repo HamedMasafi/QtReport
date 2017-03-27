@@ -25,16 +25,16 @@
 #define QREPORTPROPERTYPAGEALIGN_H
 
 #include "ui_qreportpropertypagealign.h"
-#include "qreportpropertypagebase.h"
+#include "propertypages/qreportpropertypagebase.h"
 
 LEAF_BEGIN_NAMESPACE
 
-class QReportPropertyPageAlign : public QReportPropertyPageBase, private Ui::QReportPropertyPageAlign
+class LReportPropertyPageAlign : public LReportPropertyPageBase, private Ui::LReportPropertyPageAlign
 {
     Q_OBJECT
 
 public:
-    explicit QReportPropertyPageAlign(QWidget *parent = 0);
+    explicit LReportPropertyPageAlign(QWidget *parent = 0);
 
     void load();
     void save();

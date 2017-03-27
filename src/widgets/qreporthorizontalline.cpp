@@ -21,25 +21,25 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include "qreportverticalline.h"
+#include "qreporthorizontalline.h"
 
 LEAF_BEGIN_NAMESPACE
 
-QReportVerticalLine::QReportVerticalLine(QGraphicsItem *parent): QReportLineBase(parent)
+LReportHorizontalLine::LReportHorizontalLine(QGraphicsItem *parent): LReportLineBase(parent)
 {
-   this->setResizeDirection( ::Left | ::Right );
-   this->setHeight( 7 );
-   this->setWidth( 90 );
-   this->setMarginPos( 0, 4 );
-   setFixedSize(0, 7);
+   this->setResizeDirection( Top | Bottom );
+   this->setWidth( 7 );
+   this->setHeight( 90 );
+   this->setMarginPos( 4, 0 );
+   setFixedSize(7, 0);
 }
 
 
-QReportVerticalLine::~QReportVerticalLine()
+LReportHorizontalLine::~LReportHorizontalLine()
 {
 }
 
-void QReportVerticalLine::paint ( QPainter *painter, const QStyleOptionGraphicsItem *option,
+void LReportHorizontalLine::paint ( QPainter *painter, const QStyleOptionGraphicsItem *option,
                        QWidget *widget )
 {
   Q_UNUSED( option );
@@ -50,11 +50,12 @@ void QReportVerticalLine::paint ( QPainter *painter, const QStyleOptionGraphicsI
   pen.setColor( lineColor() );
   pen.setWidth( lineWidth() );
   painter->setPen( pen );
-  painter->drawLine( 0,
+  painter->drawLine( 4,
+                     0, 
                      4,
-                     this->boundingRect().width(), 
-                     4 );
-
+                     this->boundingRect().height() );
+  
+  //TODO -> RLineBase::paint( painter, option, widget );
 }
 
 LEAF_END_NAMESPACE

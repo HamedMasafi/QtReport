@@ -5,20 +5,20 @@
 
 LEAF_BEGIN_NAMESPACE
 
-class QReportPanel : public QReportRectangle
+class LReportPanel : public LReportRectangle
 {
     Q_OBJECT
 
 public:
-    explicit QReportPanel(QGraphicsItem *parent = 0);
+    explicit LReportPanel(QGraphicsItem *parent = 0);
 
-    QList<QReportWidgetBase*>   *childs();
+    QList<LReportWidgetBase*>   *childs();
 
 public slots:
     void reorderChilds();
 
 protected:
-    QList<QReportWidgetBase*>   _childs;
+    QList<LReportWidgetBase*>   _childs;
 
 };
 

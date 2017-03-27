@@ -29,7 +29,7 @@
 
 LEAF_BEGIN_NAMESPACE
 
-class QReportBand : public QReportPanel
+class LReportBand : public LReportPanel
 {
     Q_OBJECT
 
@@ -41,10 +41,10 @@ class QReportBand : public QReportPanel
     Q_CLASSINFO("prop_band", "true")
 
 public:
-    QReportBand(QGraphicsItem *parent = 0);
-    QReportBand(BandType type, QGraphicsItem *parent = 0);
+    LReportBand(QGraphicsItem *parent = 0);
+    LReportBand(BandType type, QGraphicsItem *parent = 0);
 
-    ~QReportBand();
+    ~LReportBand();
 
     /*!
           *Return top of current band.
@@ -68,7 +68,7 @@ public:
                const QStyleOptionGraphicsItem *option,
                QWidget *Widget);
 
-    void addWidget(QReportWidgetBase*, QPointF);
+    void addWidget(LReportWidgetBase*, QPointF);
 
     QString header() const;
     QString typeString() const;

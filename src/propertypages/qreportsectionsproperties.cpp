@@ -21,58 +21,37 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include <QStyleOption>
-
-#include "qreporttextbox.h"
-#include "qreportpropertypagetext.h"
-#include "qreportpropertypagepos.h"
-#include "qreportpropertypagerectangle.h"
-#include "qreportpropertypagefont.h"
+#include "qreportsectionsproperties.h"
+#include "qreportdocumentdesigner.h"
+#include "qreport.h"
+#include "qreportband.h"
 
 LEAF_BEGIN_NAMESPACE
 
-QReportTextBox::QReportTextBox(QGraphicsItem *parent) :
-    QReportDisplayBase(parent)
+LReportSectionsProperties::LReportSectionsProperties(QWidget *parent,
+                                                     LReportDocumentDesigner *designer,
+                                                     LReport *report) :
+    QDialog(parent),
+    _designer(designer),
+    _report(report)
 {
-    this->setSize(90, 40);
-    this->setMinimumSize(10, 4);
+    setupUi(this);
 
-    setLineWidth(1);
-    setLineType(Qt::NoPen);
-    setLineColor(Qt::black);
+    for(int i = 0; i < _report->bands()->count(); i++)
+        listWidget->addItem(_report->bands()->at(i)->header());
 
-    setFillColor(Qt::white);
-    setFillType(Qt::SolidPattern);
-
-    setForeColor(Qt::black);
-    setFont(QFont());
-    setText(QString::null);
 }
 
-
-QReportTextBox::~QReportTextBox()
+void LReportSectionsProperties::changeEvent(QEvent *e)
 {
-}
-
-
-void QReportTextBox::paint(QPainter *painter,
-                           const QStyleOptionGraphicsItem *option,
-                           QWidget *widget)
-{
-    QReportRectangle::paint(painter, option, widget);
-
-    Q_UNUSED(option);
-    Q_UNUSED(widget);
-
-    QTextOption textOption;
-    textOption.setWrapMode(QTextOption::WrapAtWordBoundaryOrAnywhere);
-    textOption.setAlignment(align());
-
-    painter->setFont(font());
-    painter->setPen(foreColor());
-    painter->drawText(this->rect(),
-                      text(),
-                      textOption);
+    QDialog::changeEvent(e);
+    switch (e->type()) {
+    case QEvent::LanguageChange:
+        retranslateUi(this);
+        break;
+    default:
+        break;
+    }
 }
 
 LEAF_END_NAMESPACE

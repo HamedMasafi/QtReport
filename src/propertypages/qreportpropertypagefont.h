@@ -25,17 +25,17 @@
 #ifndef RPROPERTYPAGEFONT_H
 #define RPROPERTYPAGEFONT_H
 
-#include "qreportpropertypagebase.h"
+#include "propertypages/qreportpropertypagebase.h"
 #include "ui_qreportpropertypagefont.h"
 
 LEAF_BEGIN_NAMESPACE
 
-class QReportPropertyPageFont : public QReportPropertyPageBase, private Ui::QReportPropertyPageFont
+class LReportPropertyPageFont : public LReportPropertyPageBase, private Ui::LReportPropertyPageFont
 {
     Q_OBJECT
 
 public:
-    QReportPropertyPageFont(QWidget *parent = 0);
+    LReportPropertyPageFont(QWidget *parent = 0);
 
     void load();
     void save();

@@ -5,10 +5,10 @@
 
 LEAF_BEGIN_NAMESPACE
 
-class QReportWidget : public QReportWidgetBase
+class LReportWidget : public LReportWidgetBase
 {
 public:
-    QReportWidget(QGraphicsItem *parent = 0);
+    LReportWidget(QGraphicsItem *parent = 0);
 };
 
 LEAF_END_NAMESPACE

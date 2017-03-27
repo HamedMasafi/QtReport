@@ -1,17 +1,17 @@
 #ifndef QREPORTPROPERTYPAGEPOS_H
 #define QREPORTPROPERTYPAGEPOS_H
 
-#include "qreportpropertypagebase.h"
+#include "propertypages/qreportpropertypagebase.h"
 #include "ui_qreportpropertypagepos.h"
 
 LEAF_BEGIN_NAMESPACE
 
-class QReportPropertyPagePos : public QReportPropertyPageBase, private Ui::QReportPropertyPagePos
+class LReportPropertyPagePos : public LReportPropertyPageBase, private Ui::LReportPropertyPagePos
 {
     Q_OBJECT
 
 public:
-    QReportPropertyPagePos(QWidget *parent = 0);
+    LReportPropertyPagePos(QWidget *parent = 0);
 
     void load();
     void save();

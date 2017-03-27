@@ -25,20 +25,20 @@
 #ifndef RPROPERTYPAGERICHTEXT_H
 #define RPROPERTYPAGERICHTEXT_H
 
-#include "qreportpropertypagebase.h"
+#include "propertypages/qreportpropertypagebase.h"
 #include "ui_qreportpropertypagerichtext.h"
 
 LEAF_BEGIN_NAMESPACE
 
-class QReportPropertyPageRichText : public QReportPropertyPageBase, private Ui::QReportPropertyPageRichText
+class LReportPropertyPageRichText : public LReportPropertyPageBase, private Ui::LReportPropertyPageRichText
 {
     Q_OBJECT
 
 public:
-    QReportPropertyPageRichText(QWidget *parent = 0);
+    LReportPropertyPageRichText(QWidget *parent = 0);
 
-    void save(QReportWidgetBase *);
-    void load(QReportWidgetBase *);
+    void save(LReportWidgetBase *);
+    void load(LReportWidgetBase *);
 
 protected:
     void changeEvent(QEvent *e);

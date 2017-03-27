@@ -27,12 +27,12 @@
 
 #include "ui_qreportpropertypagepage.h"
 
-class QReportPropertyPagePage : public QWidget, private Ui::QReportPropertyPageText
+class LReportPropertyPagePage : public QWidget, private Ui::LReportPropertyPageText
 {
     Q_OBJECT
 
 public:
-    explicit QReportPropertyPagePage(QWidget *parent = 0);
+    explicit LReportPropertyPagePage(QWidget *parent = 0);
 
 protected:
     void changeEvent(QEvent *e);

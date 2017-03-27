@@ -29,7 +29,7 @@ int main ( int argc, char *argv[] )
 {
    QApplication app ( argc, argv );
 
-   Leaf::QReportDesignerWindow wnd;
+   LEAF_WRAP_NAMESPACE(LReportDesignerWindow) wnd;
 
    wnd.show();
 

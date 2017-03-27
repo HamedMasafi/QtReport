@@ -24,6 +24,7 @@
 #define QREPORT_H
 
 #include <QObject>
+#include <QSqlQuery>
 
 #include "qtreportglobal.h"
 #include "qreportdatatable.h"
@@ -37,12 +38,12 @@ class QString;
 
 LEAF_BEGIN_NAMESPACE
 
-class QReportParametere;
-class QReportPrivate;
-class QReportWidgetBase;
-class QReportBand;
-class QReportDataConnection;
-class LEAF_EXPORT QReport : public QObject
+class LReportParametere;
+class LReportPrivate;
+class LReportWidgetBase;
+class LReportBand;
+class LReportDataConnection;
+class LEAF_EXPORT LReport : public QObject
 {
     Q_OBJECT
 
@@ -64,14 +65,14 @@ public:
         All         = Widget | Band | Connection | DataTable | Parametere
     };
 
-    QReport();
+    LReport();
 
     bool load(QString path);
     void save(QString path = "");
     QByteArray getXmlContent(int NodeFlags = All) const;
 
-    QList<QReportBand*>          *bands();
-    QList<QReportWidgetBase*>    *widgets();
+    QList<LReportBand*>          *bands();
+    QList<LReportWidgetBase*>    *widgets();
 
     void removeBand(QString name);
     void removeWidget(QString name);
@@ -99,47 +100,49 @@ public:
 
     QString filePath() const;
 
-    void widgetToBack(QReportWidgetBase*);
-    void widgetToFront(QReportWidgetBase*);
-    void bandToBack(QReportBand*);
-    void bandToFront(QReportBand*);
+    void widgetToBack(LReportWidgetBase*);
+    void widgetToFront(LReportWidgetBase*);
+    void bandToBack(LReportBand*);
+    void bandToFront(LReportBand*);
 
-    void changeParent(QReportWidgetBase*, QReportBand*);
+    void changeParent(LReportWidgetBase*, LReportBand*);
 
-    QList<QReportDataTable*> dataTablesByName(QString tableName);
-    QList<QReportDataTable*> dataTablesByConnections(QString connectionName);
-    QList<QReportDataTable*> dataTables();
-    void addDataTable(QReportDataTable *dataTable);
-    QReportDataTable *dataTable(QString tableName);
-    QReportDataTable *dataTable(QString tableName, QString connectionName);
-    void removeDataTable(QReportDataTable *table);
+    QList<LReportDataTable*> dataTablesByName(QString tableName);
+    QList<LReportDataTable*> dataTablesByConnections(QString connectionName);
+    QList<LReportDataTable*> dataTables();
+    void addDataTable(LReportDataTable *dataTable);
+    LReportDataTable *dataTable(QString tableName);
+    LReportDataTable *dataTable(QString tableName, QString connectionName);
+    void removeDataTable(LReportDataTable *table);
 
-    QReportBand *section(QString sectionName);
-    QReportBand *findBandByName(QString bandName);
-    QReportDataConnection *findConnectionByName(QString connectionName);
-    QReportWidgetBase *findWidgetByName(QString widgetName);
+    LReportBand *section(QString sectionName);
+    LReportBand *findBandByName(QString bandName);
+    LReportDataConnection *findConnectionByName(QString connectionName);
+    LReportWidgetBase *findWidgetByName(QString widgetName);
 
-    QReportParametere *parameter(QString name);
-    QList<QReportParametere*> parameters();
+    LReportParametere *parameter(QString name);
+    QList<LReportParametere*> parameters();
     void addParametere(QString name, QVariant value);
-    void addParametere(QReportParametere *param);
+    void addParametere(LReportParametere *param);
     void setParametereValue(QString name, QVariant value);
-    void removeParametere(QReportParametere *param);
+    void removeParametere(LReportParametere *param);
 
-    QList<QReportDataConnection*> connections() const;
-    QReportDataConnection *connection(QString connectionName);
-    void addConnection(QReportDataConnection *conn);
-    void removeConnection(QReportDataConnection *conn);
+    QList<LReportDataConnection*> connections() const;
+    LReportDataConnection *connection(QString connectionName);
+    void addConnection(LReportDataConnection *conn);
+    void removeConnection(LReportDataConnection *conn);
+
+    void setDataSource(QString dataTableName, QSqlQuery &query);
 
 private:
-    QReportPrivate  *const d_ptr;
-    Q_DECLARE_PRIVATE(QReport)
+    LReportPrivate  *const d_ptr;
+    Q_DECLARE_PRIVATE(LReport)
 
 
 signals:
     void designerUpdateNeeded();
 
-    friend class QReportDocumentDesigner;
+    friend class LReportDocumentDesigner;
 };
 
 LEAF_END_NAMESPACE

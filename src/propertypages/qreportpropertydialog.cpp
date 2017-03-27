@@ -8,14 +8,14 @@
 #include <QPushButton>
 
 #include "qreportpropertydialog.h"
-#include "qreportpropertypagebase.h"
-#include "qreportpropertypagebase.h"
-#include "qreportpropertypagetext.h"
-#include "qreportwidgetbase.h"
+#include "propertypages/qreportpropertypagebase.h"
+#include "propertypages/qreportpropertypagebase.h"
+#include "propertypages/qreportpropertypagetext.h"
+#include "widgets/qreportwidgetbase.h"
 
 LEAF_BEGIN_NAMESPACE
 
-QReportPropertyDialog::QReportPropertyDialog(QWidget *parent): QDialog( parent )
+LReportPropertyDialog::LReportPropertyDialog(QWidget *parent): QDialog( parent )
 {
    resize(355, 284);
    verticalLayout = new QVBoxLayout( this );
@@ -40,7 +40,7 @@ QReportPropertyDialog::QReportPropertyDialog(QWidget *parent): QDialog( parent )
    QMetaObject::connectSlotsByName( this );
 }
 
-QReportPropertyDialog::QReportPropertyDialog( QReportWidgetBase *reportWidget, QWidget *parent ) :
+LReportPropertyDialog::LReportPropertyDialog( LReportWidgetBase *reportWidget, QWidget *parent ) :
     QDialog( parent ),
     _widget( reportWidget )
 {
@@ -70,27 +70,27 @@ QReportPropertyDialog::QReportPropertyDialog( QReportWidgetBase *reportWidget, Q
    QMetaObject::connectSlotsByName( this );
 } // setupUi
 
-void QReportPropertyDialog::retranslateUi(QDialog *)
+void LReportPropertyDialog::retranslateUi(QDialog *)
 {
    setWindowTitle( tr("Property page") );
    buttonBox->button(QDialogButtonBox::Cancel)->setText( tr("Cancel") );
    buttonBox->button(QDialogButtonBox::Ok)->setText( tr("OK") );
 }
 
-int QReportPropertyDialog::exec()
+int LReportPropertyDialog::exec()
 {
    if( tabWidget->count() == 0)
    {
       QLabel *nothing = new QLabel(this);
       nothing->setText( tr("This widget has no property to change!") );
-      nothing->setAlignment( Qt::AlignHCenter | Qt::AlignVCenter );
+      nothing->setAlignment( Qt::AlignCenter );
       tabWidget->addTab( nothing, tr("Properties") );
    }
 
    return QDialog::exec();
 }
 
-void QReportPropertyDialog::initTabs()
+void LReportPropertyDialog::initTabs()
 {
    //TODO init properties in new way
    /*properties = _widget->getPropertiesPages();
@@ -107,7 +107,7 @@ void QReportPropertyDialog::initTabs()
    }*/
 }
 
-void QReportPropertyDialog::addTab(QReportPropertyPageBase *page)
+void LReportPropertyDialog::addTab(LReportPropertyPageBase *page)
 {
    tabWidget->addTab( page, page->title() );
 
@@ -115,7 +115,7 @@ void QReportPropertyDialog::addTab(QReportPropertyPageBase *page)
 }
 
 
-void QReportPropertyDialog::on_buttonBox_accepted()
+void LReportPropertyDialog::on_buttonBox_accepted()
 {
    for( int i = 0; i < properties.count(); i++ )
       properties.at( i )->save();
@@ -123,7 +123,7 @@ void QReportPropertyDialog::on_buttonBox_accepted()
    this->accept();
 }
 
-void QReportPropertyDialog::on_buttonBox_clicked(QAbstractButton *button)
+void LReportPropertyDialog::on_buttonBox_clicked(QAbstractButton *button)
 {
     qDebug()<<buttonBox->buttonRole(button);
    if(buttonBox->buttonRole(button) == QDialogButtonBox::ApplyRole)

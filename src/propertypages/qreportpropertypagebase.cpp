@@ -1,36 +1,43 @@
 
 #include <QLabel>
 
-#include "qreportpropertypagebase.h"
-#include "qreportwidgetbase.h"
+#include "widgets/qreportwidgetbase.h"
+#include "qreportdocumentdesigner.h"
+#include "propertypages/qreportpropertypagebase.h"
+#include "widgets/qreportwidgetbase.h"
 
 LEAF_BEGIN_NAMESPACE
 
-QReportPropertyPageBase::QReportPropertyPageBase(QWidget *parent) :
+LReportPropertyPageBase::LReportPropertyPageBase(QWidget *parent) :
     QWidget(parent)
 {
 }
 
 
-bool QReportPropertyPageBase::isChanged() const
+bool LReportPropertyPageBase::isChanged() const
 {
    return _isChanged;
 }
 
-int QReportPropertyPageBase::index() const
+int LReportPropertyPageBase::index() const
 {
    return _index;
 }
 
-QString QReportPropertyPageBase::title() const
+QString LReportPropertyPageBase::title() const
 {
    return _title;
 }
 
-
-void QReportPropertyPageBase::setDesigner(QReportDocumentDesigner *designer)
+LReportDocumentDesigner *LReportPropertyPageBase::designer() const
 {
-   _designer = designer;
+    return _designer;
+}
+
+void LReportPropertyPageBase::setDesigner(LReportDocumentDesigner *designer)
+{
+    _designer = designer;
 }
 
 LEAF_END_NAMESPACE
+

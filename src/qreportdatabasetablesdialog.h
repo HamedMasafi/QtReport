@@ -34,20 +34,20 @@ class QTreeWidgetItem;
 
 LEAF_BEGIN_NAMESPACE
 
-class QReport;
+class LReport;
 
-class QReportDatabaseTablesDialog : public QDialog, private Ui::QReportDatabaseTablesDialog
+class LReportDatabaseTablesDialog : public QDialog, private Ui::LReportDatabaseTablesDialog
 {
     Q_OBJECT
 
 public:
-    QReportDatabaseTablesDialog(QReport *report, QString connectionName, QWidget *parent = 0);
+    LReportDatabaseTablesDialog(LReport *report, QString connectionName, QWidget *parent = 0);
 
 protected:
     void changeEvent(QEvent *e);
 
 private:
-    QReport *_report;
+    LReport *_report;
     QTreeWidgetItem *nodeTableDB;
     QTreeWidgetItem *nodeViewDB;
     QTreeWidgetItem *nodeTableReport;

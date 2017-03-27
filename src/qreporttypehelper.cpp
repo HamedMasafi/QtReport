@@ -23,11 +23,11 @@
 
 #include "qreporttypehelper.h"
 
-QReportTypeHelper::QReportTypeHelper()
+LReportTypeHelper::LReportTypeHelper()
 {
 }
 
-QString QReportTypeHelper::typeToString(QVariant::Type type)
+QString LReportTypeHelper::typeToString(QVariant::Type type)
 {
     switch(type){
     case QVariant::Int:
@@ -58,7 +58,7 @@ QString QReportTypeHelper::typeToString(QVariant::Type type)
 
 }
 
-QVariant::Type QReportTypeHelper::stringToType(QString type)
+QVariant::Type LReportTypeHelper::stringToType(QString type)
 {
     type = type.toLower();
 

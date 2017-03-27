@@ -1,14 +1,14 @@
-#include "qreportpropertypagebarcode.h"
+#include "propertypages/qreportpropertypagebarcode.h"
 #include "ui_qreportpropertypagebarcode.h"
 
-QReportPropertyPageBarcode::QReportPropertyPageBarcode(QWidget *parent) :
+LReportPropertyPageBarcode::LReportPropertyPageBarcode(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::QReportPropertyPageBarcode)
+    ui(new Ui::LReportPropertyPageBarcode)
 {
     ui->setupUi(this);
 }
 
-QReportPropertyPageBarcode::~QReportPropertyPageBarcode()
+LReportPropertyPageBarcode::~LReportPropertyPageBarcode()
 {
     delete ui;
 }

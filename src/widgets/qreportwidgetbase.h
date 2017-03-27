@@ -43,15 +43,15 @@ class QPointF;
 
 LEAF_BEGIN_NAMESPACE
 
-class QReportResizeEvent;
-class QReportMoveEvent;
-class QReportBand;
-class QReportPanel;
-class QReportWidgetBasePrivate;
-class QReportWidgetAttributes : public QList<QPair<QString, QString> >
+class LReportResizeEvent;
+class LReportMoveEvent;
+class LReportBand;
+class LReportPanel;
+class LReportWidgetBasePrivate;
+class LReportWidgetAttributes : public QList<QPair<QString, QString> >
 {
 public:
-    QReportWidgetAttributes(){
+    LReportWidgetAttributes(){
 
     }
 
@@ -59,24 +59,24 @@ public:
         append(qMakePair<QString, QString>(name, value));
     }
 };
-class QReportWidgetBase : public QReportXMLSeriazble, public QGraphicsItem
+class LReportWidgetBase : public LReportXMLSeriazble, public QGraphicsItem
 {
     Q_OBJECT
     Q_INTERFACES(QGraphicsItem)
-    Q_DISABLE_COPY(QReportWidgetBase)
+    Q_DISABLE_COPY(LReportWidgetBase)
 
     Q_PROPERTY(qreal left READ left WRITE setLeft USER true)
     Q_PROPERTY(qreal top READ top WRITE setTop USER true)
     Q_PROPERTY(qreal width READ width WRITE setWidth USER true)
     Q_PROPERTY(qreal height READ height WRITE setHeight USER true)
     Q_PROPERTY(QSizeF size WRITE setSize READ size)
-    //Q_PROPERTY(QReportPanel *parentBand READ parentBand WRITE setParentBand)
+    //Q_PROPERTY(LReportPanel *parentBand READ parentBand WRITE setParentBand)
     Q_PROPERTY(QPointF childPos READ childPos WRITE setChildPos)
 
 
 public:
-    QReportWidgetBase(QGraphicsItem *parent = 0);
-    ~QReportWidgetBase();
+    LReportWidgetBase(QGraphicsItem *parent = 0);
+    ~LReportWidgetBase();
 
 
     ResizeDirection resizeDirection() const;
@@ -128,13 +128,13 @@ public:
     bool isMovable() const;
     void setIsMovable(bool isMovable);
 
-    const ::WidgetType widgetType() const;
+    const WidgetType widgetType() const;
 
-    QReportPanel *parentBand() const;
-    void setParentBand(QReportPanel *Widget);
+    LReportPanel *parentBand() const;
+    void setParentBand(LReportPanel *Widget);
 
-    QReportBand *secondParent() const;
-    void setSecondParent(QReportBand *Widget);
+    LReportBand *secondParent() const;
+    void setSecondParent(LReportBand *Widget);
 
     qreal topAtSecondBand() const;
     void setTopAtSecondBand(qreal value);
@@ -150,12 +150,12 @@ public:
     bool hasProperty(QString name);
     QVariant propertyValue(QString name);
 
-    static QReportWidgetBase *createWidget(QString type);
-    static QReportWidgetBase *createWidget(QDomElement *dom);
+    static LReportWidgetBase *createWidget(QString type);
+    static LReportWidgetBase *createWidget(QDomElement *dom);
     static QString createWidgetDomString(QString type);
-    static QString createWidgetDomString(QString type, QString name, QReportWidgetAttributes attributes);
+    static QString createWidgetDomString(QString type, QString name, LReportWidgetAttributes attributes);
     static QDomElement createWidgetDom(QString type);
-    static QDomElement createWidgetDom(QString type, QString name, QReportWidgetAttributes attributes);
+    static QDomElement createWidgetDom(QString type, QString name, LReportWidgetAttributes attributes);
 
     bool hasClassInfo(QString infoName);
 
@@ -173,11 +173,11 @@ protected:
     void dragMoveEvent(QGraphicsSceneDragDropEvent *event);
     void contextMenuEvent(QGraphicsSceneContextMenuEvent *event);
 
-    void setWidgetType(::WidgetType type);
+    void setWidgetType(WidgetType type);
 
 private:
-    QReportWidgetBasePrivate  *const d_ptr;
-    Q_DECLARE_PRIVATE(QReportWidgetBase)
+    LReportWidgetBasePrivate  *const d_ptr;
+    Q_DECLARE_PRIVATE(LReportWidgetBase)
 
 signals:
     void mousePressEvent(QMouseEvent *event);
@@ -189,15 +189,15 @@ signals:
     void contextMenu();
 
     void moved(QPointF lastPos);
-    void moving(QReportMoveEvent*);
-    void resizing(QReportResizeEvent*);
+    void moving(LReportMoveEvent*);
+    void resizing(LReportResizeEvent*);
 
     void selectedChanged();
 
-    friend class QReport;
+    friend class LReport;
 };
 
-//Q_DECLARE_METATYPE(QReportWidgetBase)
+//Q_DECLARE_METATYPE(LReportWidgetBase)
 
 LEAF_END_NAMESPACE
 

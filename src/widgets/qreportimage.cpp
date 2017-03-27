@@ -23,9 +23,9 @@
 
 #include "qreportimage.h"
 
-#include "qreportpropertypagepos.h"
-#include "qreportpropertypagerectangle.h"
-#include "qreportpropertypageimage.h"
+#include "propertypages/qreportpropertypagepos.h"
+#include "propertypages/qreportpropertypagerectangle.h"
+#include "propertypages/qreportpropertypageimage.h"
 
 #include <QDomElement>
 #include <QBuffer>
@@ -33,25 +33,25 @@
 
 LEAF_BEGIN_NAMESPACE
 
-QReportImage::QReportImage(QGraphicsItem *parent):
-    QReportDisplayBase(parent)
+LReportImage::LReportImage(QGraphicsItem *parent):
+    LReportDisplayBase(parent)
 {
     setScaleImage(false);
     setAcceptRatio(false);
 }
 
 
-QReportImage::~QReportImage()
+LReportImage::~LReportImage()
 {
 }
 
 
 
-void QReportImage::paint(QPainter *painter,
+void LReportImage::paint(QPainter *painter,
                          const QStyleOptionGraphicsItem *option,
                          QWidget *widget)
 {
-    QReportRectangle::paint(painter, option, widget);
+    LReportRectangle::paint(painter, option, widget);
 
     Q_UNUSED(option);
     Q_UNUSED(widget);
@@ -81,9 +81,9 @@ void QReportImage::paint(QPainter *painter,
 
 }
 
-void QReportImage::saveDom(QDomElement *dom)
+void LReportImage::saveDom(QDomElement *dom)
 {
-    QReportXMLSeriazble::saveDom(dom);
+    LReportXMLSeriazble::saveDom(dom);
 
     QByteArray ba;
     QBuffer buffer(&ba, this);
@@ -94,9 +94,9 @@ void QReportImage::saveDom(QDomElement *dom)
     dom->setAttribute("imageData", QString(ba.toBase64()));
 }
 
-void QReportImage::loadDom(QDomElement *dom)
+void LReportImage::loadDom(QDomElement *dom)
 {
-    QReportWidgetBase::loadDom(dom);
+    LReportWidgetBase::loadDom(dom);
     QByteArray b;
 
     b.append(dom->attribute("imageData"));

@@ -29,8 +29,8 @@
 
 LEAF_BEGIN_NAMESPACE
 
-QReportParametere::QReportParametere(QString name, QVariant value, QVariant::Type type):
-    QReportXMLSeriazble(),
+LReportParametere::LReportParametere(QString name, QVariant value, QVariant::Type type):
+    LReportXMLSeriazble(),
     _value(value)
 {
     setObjectName(name);

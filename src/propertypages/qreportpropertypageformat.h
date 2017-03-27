@@ -1,17 +1,17 @@
 #ifndef QREPORTPROPERTYPAGEFORMAT_H
 #define QREPORTPROPERTYPAGEFORMAT_H
 
-#include "qreportpropertypagebase.h"
+#include "propertypages/qreportpropertypagebase.h"
 #include "ui_qreportpropertypageformat.h"
 
 LEAF_BEGIN_NAMESPACE
 
-class QReportPropertyPageFormat : public QReportPropertyPageBase, private Ui::QReportPropertyPageFormat
+class LReportPropertyPageFormat : public LReportPropertyPageBase, private Ui::LReportPropertyPageFormat
 {
     Q_OBJECT
 
 public:
-    explicit QReportPropertyPageFormat(QWidget *parent = 0);
+    explicit LReportPropertyPageFormat(QWidget *parent = 0);
 
     void load();
     void save();

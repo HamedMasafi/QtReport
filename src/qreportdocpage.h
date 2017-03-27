@@ -28,16 +28,16 @@
 
 class QGraphicsSceneMouseEvent;
 
-#include "qreportwidgetbase.h"
+#include "widgets/qreportwidgetbase.h"
 
 LEAF_BEGIN_NAMESPACE
 
-class Q_DECL_HIDDEN QReportPage : public QReportWidgetBase
+class Q_DECL_HIDDEN LReportPage : public LReportWidgetBase
 {
    public:
-      QReportPage( QGraphicsItem *parent=0 );
+      LReportPage( QGraphicsItem *parent=0 );
 
-      ~QReportPage();
+      ~LReportPage();
 
       void paint ( QPainter  *painter, const QStyleOptionGraphicsItem  *option, QWidget  *Widget = 0 )  ;
 
@@ -48,13 +48,13 @@ class Q_DECL_HIDDEN QReportPage : public QReportWidgetBase
 
       QRect documentArea() const;
 
-      ::GridType gridType() const{ return _gridType; }
-      void setGridType( ::GridType type ){ _gridType = type; }
+      GridType gridType() const{ return _gridType; }
+      void setGridType( GridType type ){ _gridType = type; }
 
       void mousePressEvent( QGraphicsSceneMouseEvent  *event );
 
    private:
-      ::GridType _gridType;
+      GridType _gridType;
       int _gridSize;
       qreal _marginLeft;
       qreal _marginBottom;

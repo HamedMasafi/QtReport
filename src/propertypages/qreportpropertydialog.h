@@ -13,17 +13,17 @@ class QAbstractButton;
 
 LEAF_BEGIN_NAMESPACE
 
-class QReportWidgetBase;
-class QReportPropertyPageBase;
-class QReportPropertyDialog : public QDialog
+class LReportWidgetBase;
+class LReportPropertyPageBase;
+class LReportPropertyDialog : public QDialog
 {
    Q_OBJECT
 public:
-   QReportPropertyDialog(QWidget *parent = 0);
-   QReportPropertyDialog( QReportWidgetBase  *reportWidget, QWidget *parent = 0);
+   LReportPropertyDialog(QWidget *parent = 0);
+   LReportPropertyDialog( LReportWidgetBase  *reportWidget, QWidget *parent = 0);
    void retranslateUi(QDialog *);
 
-   void addTab(QReportPropertyPageBase*);
+   void addTab(LReportPropertyPageBase*);
 
    int exec();
 
@@ -33,10 +33,10 @@ private:
    QDialogButtonBox *buttonBox;
 
    void initTabs();
-   QReportWidgetBase *_widget;
+   LReportWidgetBase *_widget;
 
 
-   QList<QReportPropertyPageBase*> properties;
+   QList<LReportPropertyPageBase*> properties;
 
 
 public slots:

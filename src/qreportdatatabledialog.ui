@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>QReportDataTableDialog</class>
- <widget class="QDialog" name="QReportDataTableDialog">
+ <class>LReportDataTableDialog</class>
+ <widget class="QDialog" name="LReportDataTableDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -193,7 +193,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>QReportDataTableDialog</receiver>
+   <receiver>LReportDataTableDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -241,7 +241,7 @@
   <connection>
    <sender>lineEditFilterValue</sender>
    <signal>textChanged(QString)</signal>
-   <receiver>QReportDataTableDialog</receiver>
+   <receiver>LReportDataTableDialog</receiver>
    <slot>setFilterText()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -257,7 +257,7 @@
   <connection>
    <sender>comboBoxParameter</sender>
    <signal>currentIndexChanged(QString)</signal>
-   <receiver>QReportDataTableDialog</receiver>
+   <receiver>LReportDataTableDialog</receiver>
    <slot>setFilterText()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -273,7 +273,7 @@
   <connection>
    <sender>comboBoxOperator</sender>
    <signal>currentIndexChanged(QString)</signal>
-   <receiver>QReportDataTableDialog</receiver>
+   <receiver>LReportDataTableDialog</receiver>
    <slot>setFilterText()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -289,7 +289,7 @@
   <connection>
    <sender>radioFilterValue</sender>
    <signal>toggled(bool)</signal>
-   <receiver>QReportDataTableDialog</receiver>
+   <receiver>LReportDataTableDialog</receiver>
    <slot>setFilterText()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -305,7 +305,7 @@
   <connection>
    <sender>radioFilterParametere</sender>
    <signal>toggled(bool)</signal>
-   <receiver>QReportDataTableDialog</receiver>
+   <receiver>LReportDataTableDialog</receiver>
    <slot>setFilterText()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -321,7 +321,7 @@
   <connection>
    <sender>groupBoxFilter</sender>
    <signal>toggled(bool)</signal>
-   <receiver>QReportDataTableDialog</receiver>
+   <receiver>LReportDataTableDialog</receiver>
    <slot>setFilterText()</slot>
    <hints>
     <hint type="sourcelabel">

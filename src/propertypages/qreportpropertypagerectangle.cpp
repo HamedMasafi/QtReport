@@ -22,15 +22,15 @@
  ***************************************************************************/
 
 
-#include "qreportpropertypagerectangle.h"
-
+#include "propertypages/qreportpropertypagerectangle.h"
+#include "qreportdocumentdesigner.h"
 #include "qreportcolorpicker.h"
-#include "qreportrectanglebase.h"
+#include "widgets/qreportrectanglebase.h"
 
 LEAF_BEGIN_NAMESPACE
 
-QReportPropertyPageRectangle::QReportPropertyPageRectangle(QWidget *parent) :
-    QReportPropertyPageBase(parent)
+LReportPropertyPageRectangle::LReportPropertyPageRectangle(QWidget *parent) :
+    LReportPropertyPageBase(parent)
 {
     setupUi(this);
 
@@ -76,7 +76,7 @@ QReportPropertyPageRectangle::QReportPropertyPageRectangle(QWidget *parent) :
     formLayout->setWidget( 4, QFormLayout::FieldRole, pickerFillColor );
 }
 
-void QReportPropertyPageRectangle::changeEvent(QEvent *e)
+void LReportPropertyPageRectangle::changeEvent(QEvent *e)
 {
     QWidget::changeEvent(e);
     switch (e->type())
@@ -90,7 +90,7 @@ void QReportPropertyPageRectangle::changeEvent(QEvent *e)
 }
 
 
-void QReportPropertyPageRectangle::load()
+void LReportPropertyPageRectangle::load()
 {
    comboBoxLineType->setCurrentIndex(_designer->widgetProperty("lineType").toInt());
    pickerLineColor->setColor(QColor(_designer->widgetProperty("lineColor").toString()));
@@ -101,7 +101,7 @@ void QReportPropertyPageRectangle::load()
    pickerLineColor->update();
 }
 
-void QReportPropertyPageRectangle::save()
+void LReportPropertyPageRectangle::save()
 {
    _designer->setWidgetProperty("fillType", (int)Qt::SolidPattern );
    _designer->setWidgetProperty("lineType",

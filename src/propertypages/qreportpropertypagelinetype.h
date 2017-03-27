@@ -34,18 +34,18 @@ class QPushButton;
 class QComboBox;
 class QSpacerItem;
 
-#include "qreportpropertypagebase.h"
+#include "propertypages/qreportpropertypagebase.h"
 
 LEAF_BEGIN_NAMESPACE
 
 class QColorPicker;
 
-class QReportPropertyPageLineType : public QReportPropertyPageBase
+class LReportPropertyPageLineType : public LReportPropertyPageBase
 {
    Q_OBJECT
 
 public:
-    QReportPropertyPageLineType(QWidget *parent = 0);
+    LReportPropertyPageLineType(QWidget *parent = 0);
 
 
     void load();

@@ -56,32 +56,32 @@
 #include "qreportdocumentview.h"
 #include "qreportruler.h"
 #include "qreportdocpage.h"
-#include "qreportwidgetbase.h"
+#include "widgets/qreportwidgetbase.h"
 #include "qreportwidgetresizer_p.h"
-#include "qreportband.h"
+#include "widgets/qreportband.h"
 #include "qreportscene.h"
-#include "qreportpropertydialog.h"
-#include "qreportpropertypagetext.h"
-#include "qreportpropertypagefont.h"
-#include "qreportpropertypageimage.h"
-#include "qreportpropertypagelinetype.h"
-#include "qreportpropertypagealign.h"
-#include "qreportpropertypagerectangle.h"
-#include "qreportpropertypageformat.h"
-#include "qreportpropertypagewidget.h"
+#include "propertypages/qreportpropertydialog.h"
+#include "propertypages/qreportpropertypagetext.h"
+#include "propertypages/qreportpropertypagefont.h"
+#include "propertypages/qreportpropertypageimage.h"
+#include "propertypages/qreportpropertypagelinetype.h"
+#include "propertypages/qreportpropertypagealign.h"
+#include "propertypages/qreportpropertypagerectangle.h"
+#include "propertypages/qreportpropertypageformat.h"
+#include "propertypages/qreportpropertypagewidget.h"
+#include "propertypages/qreportpropertyband.h"
+#include "propertypages/qreportpropertysort.h"
+#include "propertypages/qreportpropertyfilter.h"
 #include "qreportundocommands.h"
-#include "qreporttextbox.h"
+#include "widgets/qreporttextbox.h"
 #include "qreportdatabaseinfodialog.h"
 #include "qreportparameteredialog.h"
 #include "qreportdatatabledialog.h"
-#include "qreportpropertyband.h"
-#include "qreportpropertysort.h"
-#include "qreportpropertyfilter.h"
 #include "qreportscene.h"
 
 LEAF_BEGIN_NAMESPACE
 
-bool lessThan(const QReportBand *x1, const QReportBand *x2)
+bool lessThan(const LReportBand *x1, const LReportBand *x2)
 {
     if(x1->bandType() == x2->bandType())
         return x1->index() < x2->index();
@@ -90,10 +90,10 @@ bool lessThan(const QReportBand *x1, const QReportBand *x2)
 }
 
 
-class QReportDocumentDesignerPrivate
+class LReportDocumentDesignerPrivate
 {
 public:
-    QReportDocumentDesignerPrivate(QReportDocumentDesigner *parent):
+    LReportDocumentDesignerPrivate(LReportDocumentDesigner *parent):
         activeWidget(0),
         activeBand(0),
         zoom(100),
@@ -101,25 +101,25 @@ public:
         readyToPaste(false)
     {}
 
-    QReport*                report;
+    LReport*                report;
     QGridLayout*            gridLayout;
-    QReportRuler*           vRuler;
-    QReportRuler*           hRuler;
-    QReportDocumentView*    document;
-    QList<QReportPage*>     pages;
+    LReportRuler*           vRuler;
+    LReportRuler*           hRuler;
+    LReportDocumentView*    document;
+    QList<LReportPage*>     pages;
 
 //    QSizeF                  designArea;
-    QReportWidgetBase*      activeWidget;
-    QReportBand*            activeBand;
+    LReportWidgetBase*      activeWidget;
+    LReportBand*            activeBand;
 
-    QReportScene*           scene;
-    QReportWidgetResizer*   resizer;
+    LReportScene*           scene;
+    LReportWidgetResizer*   resizer;
     QUndoStack*             undoStack;
 
     int                     zoom;
     qreal                   gridSize;
     bool                    alignToGrid;
-    QReportPage*            pageOne;
+    LReportPage*            pageOne;
 
     bool                    readyToPaste;       // is scene force to place content on next mouse down
     bool                    pasteInRect;        // paste is in rect or in point
@@ -139,21 +139,21 @@ public:
     void applyWidgetsXml(QDomElement oldElement, QDomElement newElement);
     void applyParameteresXml(QDomElement oldElement, QDomElement newElement);
 
-    void addWidget(QReportWidgetBase *widget);
-    void addBand(QReportBand *band);
+    void addWidget(LReportWidgetBase *widget);
+    void addBand(LReportBand *band);
 
-    void removeWidget(QReportWidgetBase *widget);
-    void removeBand(QReportBand *band);
+    void removeWidget(LReportWidgetBase *widget);
+    void removeBand(LReportBand *band);
 
 private:
-    QReportDocumentDesigner  *const q_ptr;
-    Q_DECLARE_PUBLIC(QReportDocumentDesigner)
+    LReportDocumentDesigner  *const q_ptr;
+    Q_DECLARE_PUBLIC(LReportDocumentDesigner)
 
 };
 
-void QReportDocumentDesignerPrivate::applyConnectionsXml(QDomElement oldElement, QDomElement newElement)
+void LReportDocumentDesignerPrivate::applyConnectionsXml(QDomElement oldElement, QDomElement newElement)
 {
-    Q_Q(QReportDocumentDesigner);
+    Q_Q(LReportDocumentDesigner);
 
     QStringList oldNames, newNames;
 
@@ -169,10 +169,10 @@ void QReportDocumentDesignerPrivate::applyConnectionsXml(QDomElement oldElement,
         newNames << elementName;
 
         if(oldNames.contains(elementName)){
-            QReportDataConnection *conn = report->findConnectionByName(elementName);
+            LReportDataConnection *conn = report->findConnectionByName(elementName);
             conn->loadDom(&el);
         }else{
-            QReportDataConnection *conn = new QReportDataConnection();
+            LReportDataConnection *conn = new LReportDataConnection();
             report->addConnection(conn);
             conn->loadDom(&el);
         }//if
@@ -183,9 +183,9 @@ void QReportDocumentDesignerPrivate::applyConnectionsXml(QDomElement oldElement,
             report->removeConnection(report->findConnectionByName(oldElementName));
 }
 
-void QReportDocumentDesignerPrivate::applyDataTablesXml(QDomElement oldElement, QDomElement newElement)
+void LReportDocumentDesignerPrivate::applyDataTablesXml(QDomElement oldElement, QDomElement newElement)
 {
-    Q_Q(QReportDocumentDesigner);
+    Q_Q(LReportDocumentDesigner);
 
     QStringList oldNames, newNames;
 
@@ -201,10 +201,10 @@ void QReportDocumentDesignerPrivate::applyDataTablesXml(QDomElement oldElement, 
         newNames << elementName;
 
         if(oldNames.contains(elementName)){
-            QReportDataTable *param = report->dataTable(elementName);
+            LReportDataTable *param = report->dataTable(elementName);
             param->loadDom(&el);
         }else{
-            QReportDataTable *param = new QReportDataTable(el.attribute("connectionName"));
+            LReportDataTable *param = new LReportDataTable(el.attribute("connectionName"));
             report->addDataTable(param);
             param->loadDom(&el);
         }//if
@@ -216,9 +216,9 @@ void QReportDocumentDesignerPrivate::applyDataTablesXml(QDomElement oldElement, 
 }
 
 
-void QReportDocumentDesignerPrivate::applyBandsXml(QDomElement oldElement, QDomElement newElement)
+void LReportDocumentDesignerPrivate::applyBandsXml(QDomElement oldElement, QDomElement newElement)
 {
-    Q_Q(QReportDocumentDesigner);
+    Q_Q(LReportDocumentDesigner);
 
     QStringList oldNames, newNames;
 
@@ -234,10 +234,10 @@ void QReportDocumentDesignerPrivate::applyBandsXml(QDomElement oldElement, QDomE
         newNames << elementName;
 
         if(oldNames.contains(elementName)){
-            QReportBand *band = report->findBandByName(elementName);
+            LReportBand *band = report->findBandByName(elementName);
             band->loadDom(&el);
         }else{
-            QReportBand *band = new QReportBand();
+            LReportBand *band = new LReportBand();
             addBand(band);
             band->loadDom(&el);
         }//if
@@ -250,9 +250,9 @@ void QReportDocumentDesignerPrivate::applyBandsXml(QDomElement oldElement, QDomE
     q->reorderBands();
 }
 
-void QReportDocumentDesignerPrivate::applyWidgetsXml(QDomElement oldElement, QDomElement newElement)
+void LReportDocumentDesignerPrivate::applyWidgetsXml(QDomElement oldElement, QDomElement newElement)
 {
-    Q_Q(QReportDocumentDesigner);
+    Q_Q(LReportDocumentDesigner);
 
     QStringList oldNames, newNames;
 
@@ -267,7 +267,7 @@ void QReportDocumentDesignerPrivate::applyWidgetsXml(QDomElement oldElement, QDo
         newNames << elementName;
 
         if(oldNames.contains(elementName)){
-            QReportWidgetBase *widget = report->findWidgetByName(elementName);
+            LReportWidgetBase *widget = report->findWidgetByName(elementName);
             widget->loadDom(&el);
             widget->update();
 
@@ -285,9 +285,9 @@ void QReportDocumentDesignerPrivate::applyWidgetsXml(QDomElement oldElement, QDo
             q->removeReportWidget(report->findWidgetByName(oldElementName));
 }
 
-void QReportDocumentDesignerPrivate::applyParameteresXml(QDomElement oldElement, QDomElement newElement)
+void LReportDocumentDesignerPrivate::applyParameteresXml(QDomElement oldElement, QDomElement newElement)
 {
-    Q_Q(QReportDocumentDesigner);
+    Q_Q(LReportDocumentDesigner);
 
     QStringList oldNames, newNames;
 
@@ -303,10 +303,10 @@ void QReportDocumentDesignerPrivate::applyParameteresXml(QDomElement oldElement,
         newNames << elementName;
 
         if(oldNames.contains(elementName)){
-            QReportParametere *param = report->parameter(elementName);
+            LReportParametere *param = report->parameter(elementName);
             param->loadDom(&el);
         }else{
-            QReportParametere *param = new QReportParametere();
+            LReportParametere *param = new LReportParametere();
             report->addParametere(param);
             param->loadDom(&el);
         }//if
@@ -317,9 +317,9 @@ void QReportDocumentDesignerPrivate::applyParameteresXml(QDomElement oldElement,
             report->removeParametere(report->parameter(oldElementName));
 }
 
-void QReportDocumentDesignerPrivate::addBand(QReportBand *band)
+void LReportDocumentDesignerPrivate::addBand(LReportBand *band)
 {
-    Q_Q(QReportDocumentDesigner);
+    Q_Q(LReportDocumentDesigner);
 
 //    band->setPos(report->marginLeft(), report->marginTop());
 //    band->setWidth(designArea.width() - 1);
@@ -329,8 +329,8 @@ void QReportDocumentDesignerPrivate::addBand(QReportBand *band)
     q->connect(band, SIGNAL(selectedChanged()),
             q,   SLOT(reportWidget_selectedChanged()));
 
-    q->connect(band, SIGNAL(resizing(QReportResizeEvent*)),
-            q,   SLOT(reportWidget_resizing(QReportResizeEvent*)));
+    q->connect(band, SIGNAL(resizing(LReportResizeEvent*)),
+            q,   SLOT(reportWidget_resizing(LReportResizeEvent*)));
 
     q->connect(band, SIGNAL(contextMenu()),
             q,   SLOT(reportWidget_contextMenu()));
@@ -347,7 +347,7 @@ void QReportDocumentDesignerPrivate::addBand(QReportBand *band)
     activeWidget = band;
 }
 
-void QReportDocumentDesignerPrivate::removeWidget(QReportWidgetBase *widget)
+void LReportDocumentDesignerPrivate::removeWidget(LReportWidgetBase *widget)
 {
 //    for (int i = 0; i < report->widgets()->count(); i++)
 //        if (report->widgets()->at(i)->objectName() == widget->objectName())
@@ -357,7 +357,7 @@ void QReportDocumentDesignerPrivate::removeWidget(QReportWidgetBase *widget)
     scene->removeItem(widget);
 }
 
-void QReportDocumentDesignerPrivate::removeBand(QReportBand *band)
+void LReportDocumentDesignerPrivate::removeBand(LReportBand *band)
 {
 //    if(!band) return;
 
@@ -372,24 +372,24 @@ void QReportDocumentDesignerPrivate::removeBand(QReportBand *band)
 
 
 /*!
-  \class QReportDocumentDesigner
+  \class LReportDocumentDesigner
 
   Define a new document designet widget.
-  A document designer contain \e QReportDocument and two \e QReportRuler (vertical & horzontal).
+  A document designer contain \e LReportDocument and two \e LReportRuler (vertical & horzontal).
 
 */
 
 /*!
-  Create a new QReportDocumentDesigner class, this constructor implements
+  Create a new LReportDocumentDesigner class, this constructor implements
   QWidget constructor.
   \param parent parent of widget
   \param f flags for widget
  */
-QReportDocumentDesigner::QReportDocumentDesigner(QWidget *parent, QReport *report) :
+LReportDocumentDesigner::LReportDocumentDesigner(QWidget *parent, LReport *report) :
     QWidget(parent),
-    d_ptr(new QReportDocumentDesignerPrivate(this))
+    d_ptr(new LReportDocumentDesignerPrivate(this))
 {
-    Q_D(QReportDocumentDesigner);
+    Q_D(LReportDocumentDesigner);
     QSizeF pageSize;
 
     setObjectName("documentDesigner");
@@ -400,21 +400,21 @@ QReportDocumentDesigner::QReportDocumentDesigner(QWidget *parent, QReport *repor
     d->gridLayout->setSpacing(0);
 
     // d->hRuler
-    d->hRuler = new QReportRuler(this, Qt::Horizontal);
+    d->hRuler = new LReportRuler(this, Qt::Horizontal);
     d->hRuler->setObjectName("d->hRuler");
     d->hRuler->setMinimumHeight(14);
     d->gridLayout->addWidget(d->hRuler, 0, 1, 1, 1);
     d->hRuler->setPixelPerUnit(96);
 
     // d->vRuler
-    d->vRuler = new QReportRuler(this, Qt::Vertical);
+    d->vRuler = new LReportRuler(this, Qt::Vertical);
     d->vRuler->setObjectName("d->vRuler");
     d->vRuler->setMinimumWidth(14);
     d->gridLayout->addWidget(d->vRuler, 1, 0, 1, 1);
     d->vRuler->setPixelPerUnit(96);
 
     // scene
-    d->scene = new QReportScene;
+    d->scene = new LReportScene;
     d->scene->setObjectName(QString::fromUtf8("scene"));
     d->scene->setParent(this);
     d->scene->setBackgroundBrush(Qt::gray);
@@ -436,7 +436,7 @@ QReportDocumentDesigner::QReportDocumentDesigner(QWidget *parent, QReport *repor
 
 
     // document
-    d->document = new QReportDocumentView(d->scene, this);
+    d->document = new LReportDocumentView(d->scene, this);
     d->document->setObjectName(QString::fromUtf8("document"));
     d->document->setCacheMode(QGraphicsView::CacheNone);
     d->document->setDragMode(QGraphicsView::RubberBandDrag);
@@ -444,13 +444,13 @@ QReportDocumentDesigner::QReportDocumentDesigner(QWidget *parent, QReport *repor
 
 
     // resizer
-    d->resizer = new QReportWidgetResizer(d->scene);
+    d->resizer = new LReportWidgetResizer(d->scene);
     d->resizer->setParent(this);
     d->resizer->setObjectName("resizer");
 
     /*
-       connect( resizer,  SIGNAL(pointGridNeeded( QReportMoveEvent* )),
-                this,     SLOT(on_resizer_pointGridNeeded(QReportMoveEvent*))  );
+       connect( resizer,  SIGNAL(pointGridNeeded( LReportMoveEvent* )),
+                this,     SLOT(on_resizer_pointGridNeeded(LReportMoveEvent*))  );
        connect( resizer,  SIGNAL(sizeGridNeeded( RResizeEvent* )),
                 this,     SLOT(on_resizer_sizeGridNeeded(RResizeEvent*)) );
   */
@@ -465,10 +465,10 @@ QReportDocumentDesigner::QReportDocumentDesigner(QWidget *parent, QReport *repor
 //                           pageSize.height() - d->report->marginTop() - d->report->marginBottom());
 
     // Create new default one page
-    d->pageOne = new QReportPage;
+    d->pageOne = new LReportPage;
     d->pageOne->setSize(d->report->pageSize().width(),
                         d->report->pageSize().height());
-    d->pageOne->setGridType(::DotGrid);
+    d->pageOne->setGridType(DotGrid);
     d->scene->addItem(d->pageOne);
     d->pages.append(d->pageOne);
     d->pageOne->setMargins(d->report->marginLeft(), d->report->marginTop(), d->report->marginRight(), d->report->marginBottom());
@@ -489,13 +489,13 @@ QReportDocumentDesigner::QReportDocumentDesigner(QWidget *parent, QReport *repor
 }
 
 
-QReportDocumentDesigner::~QReportDocumentDesigner()
+LReportDocumentDesigner::~LReportDocumentDesigner()
 {
 }
 
 //-- widget management -------------------------------------------------------------------
 
-void QReportDocumentDesigner::addReportWidget(QReportWidgetBase *widget, int x, int y)
+void LReportDocumentDesigner::addReportWidget(LReportWidgetBase *widget, int x, int y)
 {
     addReportWidget(widget, x, y, true);
 }
@@ -510,9 +510,9 @@ void QReportDocumentDesigner::addReportWidget(QReportWidgetBase *widget, int x, 
  * \param x The x value of position that widget must be placed
  * \param y The y value of position that widget must be placed
  */
-void QReportDocumentDesigner::addReportWidget(QReportWidgetBase *widget, int x, int y, bool addToReport)
+void LReportDocumentDesigner::addReportWidget(LReportWidgetBase *widget, int x, int y, bool addToReport)
 {
-    Q_D(QReportDocumentDesigner);
+    Q_D(LReportDocumentDesigner);
     widget->setParentItem(d->pages[0]);
 
     if (addToReport) {
@@ -536,14 +536,14 @@ void QReportDocumentDesigner::addReportWidget(QReportWidgetBase *widget, int x, 
     connect(widget, SIGNAL(moved(QPointF)),
             this,   SLOT(reportWidget_moved(QPointF)));
 
-    connect(widget, SIGNAL(moving(QReportMoveEvent*)),
-            this,   SLOT(reportWidget_moving(QReportMoveEvent*)));
+    connect(widget, SIGNAL(moving(LReportMoveEvent*)),
+            this,   SLOT(reportWidget_moving(LReportMoveEvent*)));
 
     connect(widget, SIGNAL(selectedChanged()),
             this,   SLOT(reportWidget_selectedChanged()));
 
-    connect(widget, SIGNAL(resizing(QReportResizeEvent*)),
-            this,   SLOT(reportWidget_resizing(QReportResizeEvent*)));
+    connect(widget, SIGNAL(resizing(LReportResizeEvent*)),
+            this,   SLOT(reportWidget_resizing(LReportResizeEvent*)));
 
     connect(widget, SIGNAL(contextMenu()),
             this,   SLOT(reportWidget_contextMenu()));
@@ -552,16 +552,16 @@ void QReportDocumentDesigner::addReportWidget(QReportWidgetBase *widget, int x, 
 }
 
 
-void QReportDocumentDesigner::addBand(QReportBand *band)
+void LReportDocumentDesigner::addBand(LReportBand *band)
 {
     addBand(band, true);
 }
 /*!
   Add new band to Report bands list
 */
-void QReportDocumentDesigner::addBand(QReportBand *band, bool addToReport)
+void LReportDocumentDesigner::addBand(LReportBand *band, bool addToReport)
 {
-    Q_D(QReportDocumentDesigner);
+    Q_D(LReportDocumentDesigner);
 //    band->setPos(d->report->marginLeft(), d->report->marginTop());
 //    band->setWidth(d->designArea.width() - 1);
 
@@ -570,8 +570,8 @@ void QReportDocumentDesigner::addBand(QReportBand *band, bool addToReport)
     connect(band, SIGNAL(selectedChanged()),
             this,   SLOT(reportWidget_selectedChanged()));
 
-    connect(band, SIGNAL(resizing(QReportResizeEvent*)),
-            this,   SLOT(reportWidget_resizing(QReportResizeEvent*)));
+    connect(band, SIGNAL(resizing(LReportResizeEvent*)),
+            this,   SLOT(reportWidget_resizing(LReportResizeEvent*)));
 
     connect(band, SIGNAL(contextMenu()),
             this,   SLOT(reportWidget_contextMenu()));
@@ -584,14 +584,14 @@ void QReportDocumentDesigner::addBand(QReportBand *band, bool addToReport)
         band->setObjectName(getFreeSectionName(band->header()));
         d->report->bands()->append(band);
 
-        //QReportUndoCommand
+        //LReportUndoCommand
     }//if
 
     reorderBands(true);
     d->resizer->setActiveItem(band);
     d->activeWidget = band;
 
-    QReportUndoCommand *cmd = new QReportUndoCommand(this, d->report);
+    LReportUndoCommand *cmd = new LReportUndoCommand(this, d->report);
     cmd->setText(QString(tr("Create %1").arg(band->objectName())));
     cmd->setNewState(getSelectedBandsXML());
     d->undoStack->push(cmd);
@@ -599,27 +599,27 @@ void QReportDocumentDesigner::addBand(QReportBand *band, bool addToReport)
 }
 
 /**
- * @brief QReportDocumentDesigner::addDataConnection
- *  Show a QReportDatabaseInfoDialog and request database information from user, If user accept
+ * @brief LReportDocumentDesigner::addDataConnection
+ *  Show a LReportDatabaseInfoDialog and request database information from user, If user accept
  *  dialog a connection will be added to the report
- * @return QReportDataConnection that created, If dialog was rejected returns 0
+ * @return LReportDataConnection that created, If dialog was rejected returns 0
  */
-QReportDataConnection *QReportDocumentDesigner::addDataConnection()
+LReportDataConnection *LReportDocumentDesigner::addDataConnection()
 {
-    Q_D(QReportDocumentDesigner);
-    QReportDatabaseInfoDialog info(d->report);
+    Q_D(LReportDocumentDesigner);
+    LReportDatabaseInfoDialog info(d->report);
 
     if(info.exec() != QDialog::Accepted)
         return 0;
 
-    QReportUndoCommand *cmd = new QReportUndoCommand(this, d->report);
+    LReportUndoCommand *cmd = new LReportUndoCommand(this, d->report);
     cmd->setText(tr("Create connection"));
-    cmd->setOldState(d->report->getXmlContent(QReport::Connection));
+    cmd->setOldState(d->report->getXmlContent(LReport::Connection));
 
-    QReportDataConnection *conn = info.dataConnection();
+    LReportDataConnection *conn = info.dataConnection();
     d->report->addConnection(conn);
 
-    cmd->setNewState(d->report->getXmlContent(QReport::Connection));
+    cmd->setNewState(d->report->getXmlContent(LReport::Connection));
     d->undoStack->push(cmd);
     cmd->setReady();
 
@@ -627,29 +627,29 @@ QReportDataConnection *QReportDocumentDesigner::addDataConnection()
 }
 
 /**
- * @brief QReportDocumentDesigner::addDataConnection
- *  Show a QReportDatabaseInfoDialog and request database information from user, If user accept
+ * @brief LReportDocumentDesigner::addDataConnection
+ *  Show a LReportDatabaseInfoDialog and request database information from user, If user accept
  *  dialog the connection will be modified
- * @return QReportDataConnection that edited, If dialog was rejected returns 0
+ * @return LReportDataConnection that edited, If dialog was rejected returns 0
  */
-QReportDataConnection *QReportDocumentDesigner::editDataConnection(QString connectionName)
+LReportDataConnection *LReportDocumentDesigner::editDataConnection(QString connectionName)
 {    
-    Q_D(QReportDocumentDesigner);
-    QReportDataConnection *conn = d->report->connection(connectionName);
+    Q_D(LReportDocumentDesigner);
+    LReportDataConnection *conn = d->report->connection(connectionName);
     QString oldConnectionName = conn->objectName();
 
     if(!conn)
         return 0;
-    QReportDatabaseInfoDialog info(d->report, conn);
+    LReportDatabaseInfoDialog info(d->report, conn);
 
     info.setDataConnection(conn);
 
     if(info.exec() == QDialog::Accepted){
 
-        QReportUndoCommand *cmd = new QReportUndoCommand(this, d->report);
-        QReportDataConnection *dc = info.dataConnection();
+        LReportUndoCommand *cmd = new LReportUndoCommand(this, d->report);
+        LReportDataConnection *dc = info.dataConnection();
         cmd->setText(tr("Edit connection"));
-        cmd->setOldState(d->report->getXmlContent(QReport::Connection));
+        cmd->setOldState(d->report->getXmlContent(LReport::Connection));
 
 
         conn->setObjectName  (dc->objectName());
@@ -660,11 +660,11 @@ QReportDataConnection *QReportDocumentDesigner::editDataConnection(QString conne
         conn->setPassword    (dc->password());
 
         if(dc->objectName() != oldConnectionName)
-            foreach (QReportDataTable *table, d->report->dataTables())
+            foreach (LReportDataTable *table, d->report->dataTables())
                 if(table->connectionName() == oldConnectionName)
                     table->setConnectionName(dc->objectName());
 
-        cmd->setNewState(d->report->getXmlContent(QReport::Connection));
+        cmd->setNewState(d->report->getXmlContent(LReport::Connection));
         d->undoStack->push(cmd);
         cmd->setReady();
     }
@@ -673,14 +673,14 @@ QReportDataConnection *QReportDocumentDesigner::editDataConnection(QString conne
 }
 
 /**
- * @brief QReportDocumentDesigner::addDataConnection
+ * @brief LReportDocumentDesigner::addDataConnection
  *  Show a QMessageBox and confrim user to delete the connection, If user press
  *  Yes button the connection will be deleted
  * @return true if user confrim and false if user reject QMessageBox
  */
-bool QReportDocumentDesigner::removeDataConnection(QString connectionName)
+bool LReportDocumentDesigner::removeDataConnection(QString connectionName)
 {
-    Q_D(QReportDocumentDesigner);
+    Q_D(LReportDocumentDesigner);
 
     QMessageBox msg;
     msg.setIcon(QMessageBox::Question);
@@ -692,73 +692,73 @@ bool QReportDocumentDesigner::removeDataConnection(QString connectionName)
     if(msg.exec() == QMessageBox::No)
         return false;
 
-    QReportDataConnection *conn = d->report->connection(connectionName);
-    QReportUndoCommand *cmd = new QReportUndoCommand(this, d->report);
+    LReportDataConnection *conn = d->report->connection(connectionName);
+    LReportUndoCommand *cmd = new LReportUndoCommand(this, d->report);
     cmd->setText(tr("Delete connection"));
-    cmd->setOldState(d->report->getXmlContent(QReport::Connection));
+    cmd->setOldState(d->report->getXmlContent(LReport::Connection));
 
     d->report->removeConnection(conn);
 
-    cmd->setNewState(d->report->getXmlContent(QReport::Connection));
+    cmd->setNewState(d->report->getXmlContent(LReport::Connection));
     d->undoStack->push(cmd);
     cmd->setReady();
 
     return true;
 }
 
-QReportDataTable *QReportDocumentDesigner::addDataTable(QString connectionName)
+LReportDataTable *LReportDocumentDesigner::addDataTable(QString connectionName)
 {
-    Q_D(QReportDocumentDesigner);
+    Q_D(LReportDocumentDesigner);
 
-    QReportDataTableDialog dialog(d->report, connectionName, this);
+    LReportDataTableDialog dialog(d->report, connectionName, this);
 
-    QReportUndoCommand *cmd = new QReportUndoCommand(this, d->report);
+    LReportUndoCommand *cmd = new LReportUndoCommand(this, d->report);
     cmd->setText(tr("Add data table"));
-    cmd->setOldState(d->report->getXmlContent(QReport::DataTable));
+    cmd->setOldState(d->report->getXmlContent(LReport::DataTable));
 
     if(dialog.exec() == QDialog::Rejected)
         return 0;
 
-    QReportDataTable *table = dialog.createDataTable();
+    LReportDataTable *table = dialog.createDataTable();
     d->report->addDataTable(table);
 
-    cmd->setNewState(d->report->getXmlContent(QReport::DataTable));
+    cmd->setNewState(d->report->getXmlContent(LReport::DataTable));
     d->undoStack->push(cmd);
     cmd->setReady();
     return table;
 }
 
-QReportDataTable *QReportDocumentDesigner::editDataTable(QString dataTableName)
+LReportDataTable *LReportDocumentDesigner::editDataTable(QString dataTableName)
 {
-    Q_D(QReportDocumentDesigner);
-    QReportDataTable *table = d->report->dataTable(dataTableName);
+    Q_D(LReportDocumentDesigner);
+    LReportDataTable *table = d->report->dataTable(dataTableName);
 
-    QReportDataTableDialog dialog(d->report, table, this);
+    LReportDataTableDialog dialog(d->report, table, this);
 
-    QReportUndoCommand *cmd = new QReportUndoCommand(this, d->report);
+    LReportUndoCommand *cmd = new LReportUndoCommand(this, d->report);
     cmd->setText(tr("Edit data table"));
-    cmd->setOldState(d->report->getXmlContent(QReport::DataTable));
+    cmd->setOldState(d->report->getXmlContent(LReport::DataTable));
 
     if(dialog.exec() == QDialog::Rejected)
         return 0;
 
-    QReportDataTable *t = dialog.createDataTable();
+    LReportDataTable *t = dialog.createDataTable();
 
 //    table->setConnectionName(t->connectionName());
 //    table->setObjectName(t->objectName());
 
-//    foreach (QReportDataField *f, t->fields())
+//    foreach (LReportDataField *f, t->fields())
 //        table->appendField(f);
 
-    cmd->setNewState(d->report->getXmlContent(QReport::DataTable));
+    cmd->setNewState(d->report->getXmlContent(LReport::DataTable));
     d->undoStack->push(cmd);
     cmd->setReady();
     return t;
 }
 
-bool QReportDocumentDesigner::removeDataTable(QString dataTableName)
+bool LReportDocumentDesigner::removeDataTable(QString dataTableName)
 {
-    Q_D(QReportDocumentDesigner);
+    Q_D(LReportDocumentDesigner);
 
     QMessageBox msg;
     msg.setIcon(QMessageBox::Question);
@@ -770,50 +770,50 @@ bool QReportDocumentDesigner::removeDataTable(QString dataTableName)
     if(msg.exec() == QMessageBox::No)
         return false;
 
-    QReportDataTable *table = d->report->dataTable(dataTableName);
-    QReportUndoCommand *cmd = new QReportUndoCommand(this, d->report);
+    LReportDataTable *table = d->report->dataTable(dataTableName);
+    LReportUndoCommand *cmd = new LReportUndoCommand(this, d->report);
     cmd->setText(tr("Delete connection"));
-    cmd->setOldState(d->report->getXmlContent(QReport::DataTable));
+    cmd->setOldState(d->report->getXmlContent(LReport::DataTable));
 
     d->report->removeDataTable(table);
 
-    cmd->setNewState(d->report->getXmlContent(QReport::DataTable));
+    cmd->setNewState(d->report->getXmlContent(LReport::DataTable));
     d->undoStack->push(cmd);
     cmd->setReady();
 
     return true;
 }
 
-QReportParametere *QReportDocumentDesigner::addParametere()
+LReportParametere *LReportDocumentDesigner::addParametere()
 {
-    Q_D(QReportDocumentDesigner);
+    Q_D(LReportDocumentDesigner);
 
-    QReportParametereDialog *dialog = new QReportParametereDialog(d->report);
+    LReportParametereDialog *dialog = new LReportParametereDialog(d->report);
     if(dialog->exec() == QDialog::Rejected)
         return 0;
 
-    QReportUndoCommand *cmd = new QReportUndoCommand(this, d->report);
+    LReportUndoCommand *cmd = new LReportUndoCommand(this, d->report);
     cmd->setText(QString(tr("Add parametere %1")).arg(dialog->parametere()->objectName()));
-    cmd->setOldState(d->report->getXmlContent(QReport::Parametere));
+    cmd->setOldState(d->report->getXmlContent(LReport::Parametere));
 
     d->report->addParametere(dialog->parametere());
 
-    cmd->setNewState(d->report->getXmlContent(QReport::Parametere));
+    cmd->setNewState(d->report->getXmlContent(LReport::Parametere));
     d->undoStack->push(cmd);
     cmd->setReady();
 
     return dialog->parametere();
 }
 
-QReportParametere *QReportDocumentDesigner::editParametere(QString parametereaName)
+LReportParametere *LReportDocumentDesigner::editParametere(QString parametereaName)
 {
-    Q_D(QReportDocumentDesigner);
+    Q_D(LReportDocumentDesigner);
 
-    QReportParametere *p = d->report->parameter(parametereaName);
-    QReportParametereDialog *dialog = new QReportParametereDialog(d->report, p);
-    QReportUndoCommand *cmd = new QReportUndoCommand(this, d->report);
+    LReportParametere *p = d->report->parameter(parametereaName);
+    LReportParametereDialog *dialog = new LReportParametereDialog(d->report, p);
+    LReportUndoCommand *cmd = new LReportUndoCommand(this, d->report);
     cmd->setText(QString(tr("Edit parametere %1")).arg(p->objectName()));
-    cmd->setOldState(d->report->getXmlContent(QReport::Parametere));
+    cmd->setOldState(d->report->getXmlContent(LReport::Parametere));
 
     if (dialog->exec() == QDialog::Accepted) {
 
@@ -821,7 +821,7 @@ QReportParametere *QReportDocumentDesigner::editParametere(QString parametereaNa
         p->setDefaultValue(dialog->parametere()->defaultValue());
         p->setType(dialog->parametere()->type());
 
-        cmd->setNewState(d->report->getXmlContent(QReport::Parametere));
+        cmd->setNewState(d->report->getXmlContent(LReport::Parametere));
         d->undoStack->push(cmd);
         cmd->setReady();
 
@@ -831,9 +831,9 @@ QReportParametere *QReportDocumentDesigner::editParametere(QString parametereaNa
     }
 }
 
-bool QReportDocumentDesigner::removeParametere(QString parametereaName)
+bool LReportDocumentDesigner::removeParametere(QString parametereaName)
 {
-    Q_D(QReportDocumentDesigner);
+    Q_D(LReportDocumentDesigner);
 
     QMessageBox msg;
     msg.setIcon(QMessageBox::Question);
@@ -845,27 +845,27 @@ bool QReportDocumentDesigner::removeParametere(QString parametereaName)
     if(msg.exec() == QMessageBox::No)
         return false;
 
-    QReportParametere *p = d->report->parameter(parametereaName);
-    QReportUndoCommand *cmd = new QReportUndoCommand(this, d->report);
+    LReportParametere *p = d->report->parameter(parametereaName);
+    LReportUndoCommand *cmd = new LReportUndoCommand(this, d->report);
     cmd->setText(QString(tr("Delete parametere %1")).arg(p->objectName()));
-    cmd->setOldState(d->report->getXmlContent(QReport::Parametere));
+    cmd->setOldState(d->report->getXmlContent(LReport::Parametere));
 
     d->report->removeParametere(p);
 
-    cmd->setNewState(d->report->getXmlContent(QReport::Parametere));
+    cmd->setNewState(d->report->getXmlContent(LReport::Parametere));
     d->undoStack->push(cmd);
     cmd->setReady();
 }
 
-void QReportDocumentDesigner::removeReportWidget()
+void LReportDocumentDesigner::removeReportWidget()
 {
-    Q_D(QReportDocumentDesigner);
+    Q_D(LReportDocumentDesigner);
     removeReportWidget(d->activeWidget);
 }
-void QReportDocumentDesigner::removeReportWidget(QReportWidgetBase *widget)
+void LReportDocumentDesigner::removeReportWidget(LReportWidgetBase *widget)
 {
-    Q_D(QReportDocumentDesigner);
-    /*foreach ( QReportWidgetBase *child, _report->widgets() )
+    Q_D(LReportDocumentDesigner);
+    /*foreach ( LReportWidgetBase *child, _report->widgets() )
        if( widget == child )
        {
           _report->widgets()->removeOne( child );
@@ -886,9 +886,9 @@ void QReportDocumentDesigner::removeReportWidget(QReportWidgetBase *widget)
     d->scene->removeItem(widget);
 }
 
-void QReportDocumentDesigner::removeBand(QReportWidgetBase *band)
+void LReportDocumentDesigner::removeBand(LReportWidgetBase *band)
 {
-    Q_D(QReportDocumentDesigner);
+    Q_D(LReportDocumentDesigner);
     d->report->removeBand(band->objectName());
     d->scene->removeItem(band);
 }
@@ -898,15 +898,15 @@ void QReportDocumentDesigner::removeBand(QReportWidgetBase *band)
   * Convert mouse pointer to (+) and initalize scene for psting content of clipboard
   * \see addContent(QString widgetType)
   */
-void QReportDocumentDesigner::addContent()
+void LReportDocumentDesigner::addContent()
 {
-    Q_D(QReportDocumentDesigner);
+    Q_D(LReportDocumentDesigner);
 
     d->pages[0]->setCursor(Qt::CrossCursor);
     //_readyToPaste = true;
     d->pasteBoard = QApplication::clipboard()->text();
     d->document->setDragMode(QGraphicsView::NoDrag);
-    d->pasteDirection = ::Left | ::Top | ::Bottom | ::Right;
+    d->pasteDirection = Left | Top | Bottom | Right;
     d->pasteMargin.setX(0);
     d->pasteMargin.setY(0);
     d->readyToPaste = true;
@@ -916,12 +916,12 @@ void QReportDocumentDesigner::addContent()
 /**
   * Convert mouse pointer to (+) and initalize scene for psting new widget. The new widget
   * is a widget that type of \e widgetType. The widget will be created with function
-  * QReportWidgetBase::createWidgetFromDom(widgetType).
+  * LReportWidgetBase::createWidgetFromDom(widgetType).
   * \see addContent()
   */
-void QReportDocumentDesigner::addContent(QString widgetType)
+void LReportDocumentDesigner::addContent(QString widgetType)
 {
-    Q_D(QReportDocumentDesigner);
+    Q_D(LReportDocumentDesigner);
     d->pages[0]->setCursor(Qt::CrossCursor);
     //_readyToPaste = true;
     d->pasteBoard = QString("<!DOCTYPE ReportDocument>"
@@ -930,7 +930,7 @@ void QReportDocumentDesigner::addContent(QString widgetType)
                              "</" COPY_XML_ROOT ">").arg(widgetType);
     d->document->setDragMode(QGraphicsView::NoDrag);
 
-    QReportWidgetBase *widget = QReportWidgetBase::createWidget(widgetType);
+    LReportWidgetBase *widget = LReportWidgetBase::createWidget(widgetType);
     d->pasteDirection = widget->resizeDirection();
     d->pasteMargin = widget->marginPos();
     d->readyToPaste = true;
@@ -939,32 +939,32 @@ void QReportDocumentDesigner::addContent(QString widgetType)
 }
 
 /**
- * @brief QReportDocumentDesigner::reportWidget
+ * @brief LReportDocumentDesigner::reportWidget
   *Find a widget in remort by it's name
  * @param name The widget's name
  * @return If widget exists return pointer of it, Otherwise return 0.
  */
 
-QReportWidgetBase *QReportDocumentDesigner::reportWidget(QString name)
+LReportWidgetBase *LReportDocumentDesigner::reportWidget(QString name)
 {
-    Q_D(QReportDocumentDesigner);
-    QList<QReportWidgetBase*> widgets = *d->report->widgets();
-    foreach(QReportWidgetBase *w, widgets)
+    Q_D(LReportDocumentDesigner);
+    QList<LReportWidgetBase*> widgets = *d->report->widgets();
+    foreach(LReportWidgetBase *w, widgets)
         if(w->objectName() == name)
             return w;
     return 0;
 }
 
 /**
-  * @brief QReportDocumentDesigner::applyXml
+  * @brief LReportDocumentDesigner::applyXml
   *  Apply a xml in document. This funxction remove old element by oldXml
   *  and add new element from newXml
   * @param oldXml    The old xml data
   * @param newXml    The new xml data
   */
-void QReportDocumentDesigner::applyXml(QString oldXml, QString newXml)
+void LReportDocumentDesigner::applyXml(QString oldXml, QString newXml)
 {
-    Q_D(QReportDocumentDesigner);
+    Q_D(LReportDocumentDesigner);
 
     QDomDocument oldXmlDoc(XML_ROOT_TAG);
     QDomDocument newXmlDoc(XML_ROOT_TAG);
@@ -985,11 +985,11 @@ void QReportDocumentDesigner::applyXml(QString oldXml, QString newXml)
         emit dataDirectoryModified();
 }
 
-QReportWidgetBase *QReportDocumentDesigner::createWidgetsFromDom(QDomElement dom)
+LReportWidgetBase *LReportDocumentDesigner::createWidgetsFromDom(QDomElement dom)
 {
-    Q_D(QReportDocumentDesigner);
+    Q_D(LReportDocumentDesigner);
 
-    QReportWidgetBase *widget = QReportWidgetBase::createWidget(&dom);
+    LReportWidgetBase *widget = LReportWidgetBase::createWidget(&dom);
 
     addReportWidget(widget, 0, 0, true);
     widget->loadDom(&dom);
@@ -1001,10 +1001,10 @@ QReportWidgetBase *QReportDocumentDesigner::createWidgetsFromDom(QDomElement dom
     return widget;
 }
 
-QList<QReportWidgetBase *> QReportDocumentDesigner::createWidgetsFromXml(QString xml)
+QList<LReportWidgetBase *> LReportDocumentDesigner::createWidgetsFromXml(QString xml)
 {
-    QList<QReportWidgetBase *> ret;
-    Q_D(QReportDocumentDesigner);
+    QList<LReportWidgetBase *> ret;
+    Q_D(LReportDocumentDesigner);
     QDomDocument doc(XML_ROOT_TAG);
     doc.setContent(xml);
 
@@ -1017,15 +1017,15 @@ QList<QReportWidgetBase *> QReportDocumentDesigner::createWidgetsFromXml(QString
     d->resizer->refresh();
     return ret;
 }
-void QReportDocumentDesigner::removeWidgetsFromXml(QString xml)
+void LReportDocumentDesigner::removeWidgetsFromXml(QString xml)
 {
-    Q_D(QReportDocumentDesigner);
+    Q_D(LReportDocumentDesigner);
     QDomDocument doc(XML_ROOT_TAG);
     doc.setContent(xml);
 
     QDomElement elWidget = doc.firstChildElement(COPY_XML_ROOT).firstChildElement("Widget");
     for (; !elWidget.isNull(); elWidget = elWidget.nextSiblingElement("Widget")) {
-        QReportWidgetBase *widget = reportWidget(elWidget.attribute("objectName"));
+        LReportWidgetBase *widget = reportWidget(elWidget.attribute("objectName"));
         if(widget) removeReportWidget(widget);
     }
 
@@ -1033,13 +1033,13 @@ void QReportDocumentDesigner::removeWidgetsFromXml(QString xml)
 }
 
 /**
- * @brief QReportDocumentDesigner::setMouseTool
+ * @brief LReportDocumentDesigner::setMouseTool
  *  Change mouse icon and action (Selector or Grabber)
  * @param mouseTool The mouse tool
  */
-void QReportDocumentDesigner::setMouseTool(MouseTool mouseTool)
+void LReportDocumentDesigner::setMouseTool(MouseTool mouseTool)
 {
-    Q_D(QReportDocumentDesigner);
+    Q_D(LReportDocumentDesigner);
 
     switch (mouseTool) {
     case Pointer:
@@ -1056,23 +1056,23 @@ void QReportDocumentDesigner::setMouseTool(MouseTool mouseTool)
 
 
 /**
- * @brief QReportDocumentDesigner::getBandAt
+ * @brief LReportDocumentDesigner::getBandAt
  *  Find and return QSectionBand that contain \e pt point
  * @param pt    The point
  * @return      band if exists in \e pt or 0 if there are no band exists on \e pt
  */
-QReportBand *QReportDocumentDesigner::getBandAt(QPointF pt) const
+LReportBand *LReportDocumentDesigner::getBandAt(QPointF pt) const
 {
-    Q_D(const QReportDocumentDesigner);
+    Q_D(const LReportDocumentDesigner);
     for (int i = 0; i < d->report->bands()->count(); i++)
         if (d->report->bands()->at(i)->childRect().contains(pt))
             return d->report->bands()->at(i);
     return 0;
 }
 
-QReportBand *QReportDocumentDesigner::getBandAt(qreal h) const
+LReportBand *LReportDocumentDesigner::getBandAt(qreal h) const
 {
-    Q_D(const QReportDocumentDesigner);
+    Q_D(const LReportDocumentDesigner);
     for (int i = 0; i < d->report->bands()->count(); i++) {
         QRectF rc = d->report->bands()->at(i)->sceneRect();
         if ((rc.top() < h) && (rc.top() + rc.height() > h))
@@ -1083,11 +1083,11 @@ QReportBand *QReportDocumentDesigner::getBandAt(qreal h) const
 }
 
 
-void QReportDocumentDesigner::refreshWidgetParents(QReportWidgetBase *widget)
+void LReportDocumentDesigner::refreshWidgetParents(LReportWidgetBase *widget)
 {
-    Q_D(QReportDocumentDesigner);
-    QReportBand *topBandParent = getBandAt(widget->scenePos().y());
-    QReportBand *bottomBandParent = getBandAt(widget->sceneRect().bottom());
+    Q_D(LReportDocumentDesigner);
+    LReportBand *topBandParent = getBandAt(widget->scenePos().y());
+    LReportBand *bottomBandParent = getBandAt(widget->sceneRect().bottom());
 
     if(topBandParent){
         d->report->changeParent(widget, topBandParent);
@@ -1107,28 +1107,28 @@ void QReportDocumentDesigner::refreshWidgetParents(QReportWidgetBase *widget)
 }
 
 
-bool QReportDocumentDesigner::hasWidgetClassInfo(QString infoName)
+bool LReportDocumentDesigner::hasWidgetClassInfo(QString infoName)
 {
     if(!selectedWidgets().count())
         return false;
 
     bool hasAll = true;
-    QList<QReportWidgetBase*>  widgets = selectedWidgets();
+    QList<LReportWidgetBase*>  widgets = selectedWidgets();
 
-    foreach(QReportWidgetBase  *widget, widgets)
+    foreach(LReportWidgetBase  *widget, widgets)
         if (!widget->hasClassInfo(infoName))
             hasAll = false;
 
     return hasAll;
 }
 
-QString QReportDocumentDesigner::getSelectedWidgetXML() const
+QString LReportDocumentDesigner::getSelectedWidgetXML() const
 {
     QDomDocument doc(XML_ROOT_TAG);
     QDomElement report = doc.createElement(XML_NODE_REPORT);
     QDomElement widgets = doc.createElement(XML_NODE_WIDGETS);
 
-    foreach(QReportWidgetBase *widget, selectedWidgets()) {
+    foreach(LReportWidgetBase *widget, selectedWidgets()) {
         QDomElement child = doc.createElement(XML_NODE_WIDGET);
 
         widget->saveDom(&child);
@@ -1141,9 +1141,9 @@ QString QReportDocumentDesigner::getSelectedWidgetXML() const
     return doc.toString();
 }
 
-QString QReportDocumentDesigner::getSelectedBandsXML() const
+QString LReportDocumentDesigner::getSelectedBandsXML() const
 {
-    Q_D(const QReportDocumentDesigner);
+    Q_D(const LReportDocumentDesigner);
 
     QDomDocument doc(XML_ROOT_TAG);
     QDomElement report = doc.createElement(XML_NODE_REPORT);
@@ -1161,13 +1161,13 @@ QString QReportDocumentDesigner::getSelectedBandsXML() const
     return doc.toString();
 }
 
-QString QReportDocumentDesigner::getFreeSectionName(QString perfix) const
+QString LReportDocumentDesigner::getFreeSectionName(QString perfix) const
 {
-    Q_D(const QReportDocumentDesigner);
+    Q_D(const LReportDocumentDesigner);
     int i = 0;
 
-    // remove QReport from beginning of class name; e.g. 'QReportRectangle' to 'Rectangle'
-    if(perfix.startsWith("QReport"))
+    // remove LReport from beginning of class name; e.g. 'LReportRectangle' to 'Rectangle'
+    if(perfix.startsWith("LReport"))
         perfix.remove(0, 7);
 
     while(d->report->section(perfix + QString::number(++i))) {};
@@ -1175,13 +1175,13 @@ QString QReportDocumentDesigner::getFreeSectionName(QString perfix) const
     return perfix + QString::number(i);
 }
 
-QString QReportDocumentDesigner::getFreeWidgetName(QString perfix) const
+QString LReportDocumentDesigner::getFreeWidgetName(QString perfix) const
 {
-    Q_D(const QReportDocumentDesigner);
+    Q_D(const LReportDocumentDesigner);
     int i = 0;
 
-    // remove QReport from beginning of class name; e.g. 'QReportRectangle' to 'Rectangle'
-    if(perfix.startsWith("QReport"))
+    // remove LReport from beginning of class name; e.g. 'LReportRectangle' to 'Rectangle'
+    if(perfix.startsWith("LReport"))
         perfix.remove(0, 7);
 
     while(d->report->findWidgetByName(perfix + QString::number(++i))) {};
@@ -1189,14 +1189,14 @@ QString QReportDocumentDesigner::getFreeWidgetName(QString perfix) const
     return perfix + QString::number(i);
 }
 
-void QReportDocumentDesigner::reorderBands()
+void LReportDocumentDesigner::reorderBands()
 {
     reorderBands(false);
 }
 
-void QReportDocumentDesigner::reorderBands(bool pos)
+void LReportDocumentDesigner::reorderBands(bool pos)
 {
-    Q_D(QReportDocumentDesigner);
+    Q_D(LReportDocumentDesigner);
 
     qSort(d->report->bands()->begin(),
           d->report->bands()->end(),
@@ -1206,7 +1206,7 @@ void QReportDocumentDesigner::reorderBands(bool pos)
     qreal autoTopValue;
 
     for (int i = 0; i < d->report->bands()->count(); i++) {
-        QReportBand *band = d->report->bands()->at(i);
+        LReportBand *band = d->report->bands()->at(i);
 
         autoTopValue = (bandTop + (int)d->report->bands()->at(i)->headerHeight())
                 % (int)d->gridSize;
@@ -1225,7 +1225,7 @@ void QReportDocumentDesigner::reorderBands(bool pos)
     }//for
 
     for (int i = 0; i < d->report->widgets()->count(); i++) {
-        QReportWidgetBase *widget = d->report->widgets()->at(i);
+        LReportWidgetBase *widget = d->report->widgets()->at(i);
 
         if(widget->secondParent()){
             QPointF pt( 0, widget->topAtSecondBand() );
@@ -1242,9 +1242,9 @@ void QReportDocumentDesigner::reorderBands(bool pos)
     d->resizer->refresh();
 }
 
-void QReportDocumentDesigner::setSceneRect()
+void LReportDocumentDesigner::setSceneRect()
 {
-    Q_D(QReportDocumentDesigner);
+    Q_D(LReportDocumentDesigner);
     QRectF rcDoc;
 
     for (int i = 0; i < d->pages.count(); i++) {
@@ -1269,9 +1269,9 @@ void QReportDocumentDesigner::setSceneRect()
  * \see void setZoom(int)
  * \see zoom()
  */
-void QReportDocumentDesigner::setZoom(int zoom)
+void LReportDocumentDesigner::setZoom(int zoom)
 {
-    Q_D(QReportDocumentDesigner);
+    Q_D(LReportDocumentDesigner);
     qreal scale = zoom / 100.00;
 
 
@@ -1297,44 +1297,44 @@ void QReportDocumentDesigner::setZoom(int zoom)
  * \see int zoom()
  * \see zoom
  */
-int QReportDocumentDesigner::zoom() const
+int LReportDocumentDesigner::zoom() const
 {
-    Q_D(const QReportDocumentDesigner);
+    Q_D(const LReportDocumentDesigner);
     return d->zoom;
 }
 
-QUndoStack *QReportDocumentDesigner::undoStack() const
+QUndoStack *LReportDocumentDesigner::undoStack() const
 {
-    Q_D(const QReportDocumentDesigner);
+    Q_D(const LReportDocumentDesigner);
     return d->undoStack;
 }
 
-bool QReportDocumentDesigner::alignToGrid() const
+bool LReportDocumentDesigner::alignToGrid() const
 {
-    Q_D(const QReportDocumentDesigner);
+    Q_D(const LReportDocumentDesigner);
     return d->alignToGrid;
 }
 
-void QReportDocumentDesigner::setAlignToGrid(bool value)
+void LReportDocumentDesigner::setAlignToGrid(bool value)
 {
-    Q_D(QReportDocumentDesigner);
+    Q_D(LReportDocumentDesigner);
     d->alignToGrid = value;
 }
 
 
 
-//-- QReportWidgetBase singals -----------------------------------------------------------
-void QReportDocumentDesigner::reportWidget_selectedChanged()
+//-- LReportWidgetBase singals -----------------------------------------------------------
+void LReportDocumentDesigner::reportWidget_selectedChanged()
 {
-    Q_D(QReportDocumentDesigner);
-    QReportWidgetBase *widget = qobject_cast<QReportWidgetBase*>(sender());
+    Q_D(LReportDocumentDesigner);
+    LReportWidgetBase *widget = qobject_cast<LReportWidgetBase*>(sender());
 
     switch(widget->widgetType()){
-    case ::Page:
+    case Page:
         d->resizer->setVisible(false);
         d->resizer->clear(true);
         break;
-    case ::Widget:
+    case Widget:
         d->activeWidget = widget;
 
         if (!d->resizer->isWidgetSelected(widget)) {
@@ -1344,8 +1344,8 @@ void QReportDocumentDesigner::reportWidget_selectedChanged()
             d->resizer->setActiveItem(widget);
         }//if
         break;
-    case ::Band:
-        d->activeBand = qobject_cast<QReportBand*>(widget);
+    case Band:
+        d->activeBand = qobject_cast<LReportBand*>(widget);
         d->lastBandXML = getSelectedBandsXML();
 
         if (!d->resizer->isWidgetSelected(widget)) {
@@ -1364,26 +1364,26 @@ void QReportDocumentDesigner::reportWidget_selectedChanged()
     d->lastXML = getSelectedWidgetXML();
 }
 
-void QReportDocumentDesigner::reportWidget_mouseMove(QGraphicsSceneMouseEvent*)
+void LReportDocumentDesigner::reportWidget_mouseMove(QGraphicsSceneMouseEvent*)
 {}
-void QReportDocumentDesigner::reportWidget_mousePress(QGraphicsSceneMouseEvent*)
+void LReportDocumentDesigner::reportWidget_mousePress(QGraphicsSceneMouseEvent*)
 {
-    Q_D(QReportDocumentDesigner);
+    Q_D(LReportDocumentDesigner);
     d->lastXML = getSelectedWidgetXML();
     d->lastBandXML = getSelectedBandsXML();
 }
-void QReportDocumentDesigner::reportWidget_mouseRelease(QGraphicsSceneMouseEvent*)
+void LReportDocumentDesigner::reportWidget_mouseRelease(QGraphicsSceneMouseEvent*)
 {}
-void QReportDocumentDesigner::reportWidget_resizing(QReportResizeEvent *event)
+void LReportDocumentDesigner::reportWidget_resizing(LReportResizeEvent *event)
 {
-    Q_D(const QReportDocumentDesigner);
-    QReportWidgetBase *senderWidget = dynamic_cast<QReportWidgetBase*>(sender());
+    Q_D(const LReportDocumentDesigner);
+    LReportWidgetBase *senderWidget = dynamic_cast<LReportWidgetBase*>(sender());
 
     QSizeF newSize = getGridAlignPoint(event->size());
 
     //senderWidget->setPos( getGridAlignPoint( senderWidget->pos() ) );
 
-    if (senderWidget->widgetType() == ::Band) {
+    if (senderWidget->widgetType() == Band) {
         reorderBands();
 //        newSize.setWidth(d->pages[0]->documentArea().width() + 1);
     }//if
@@ -1398,14 +1398,14 @@ void QReportDocumentDesigner::reportWidget_resizing(QReportResizeEvent *event)
     senderWidget->setRect( rc );
   */
 }
-void QReportDocumentDesigner::reportWidget_resized()
+void LReportDocumentDesigner::reportWidget_resized()
 {
-    Q_D(QReportDocumentDesigner);
+    Q_D(LReportDocumentDesigner);
 
-    QReportUndoCommand *cmd = new QReportUndoCommand(this, d->report);
+    LReportUndoCommand *cmd = new LReportUndoCommand(this, d->report);
 
     if(d->resizer->selectedWidgets().count() == 1
-        && d->resizer->selectedWidgets().at(0)->widgetType() == ::Band){
+        && d->resizer->selectedWidgets().at(0)->widgetType() == Band){
 
         cmd->setText(QString(tr("%1 resized")).arg(d->resizer->selectedWidgets().at(0)->objectName()));
         cmd->setOldState(d->lastBandXML);
@@ -1416,8 +1416,8 @@ void QReportDocumentDesigner::reportWidget_resized()
         cmd->setOldState(d->lastXML);
         cmd->setNewState(getSelectedWidgetXML());
 
-        QList<QReportWidgetBase*> widgets = selectedWidgets();
-        foreach(QReportWidgetBase *widget, widgets)
+        QList<LReportWidgetBase*> widgets = selectedWidgets();
+        foreach(LReportWidgetBase *widget, widgets)
             refreshWidgetParents(widget);
     }
     d->undoStack->push(cmd);
@@ -1425,13 +1425,13 @@ void QReportDocumentDesigner::reportWidget_resized()
     d->lastXML = getSelectedWidgetXML();
     d->lastBandXML = getSelectedBandsXML();
 }
-void QReportDocumentDesigner::reportWidget_contextMenu()
+void LReportDocumentDesigner::reportWidget_contextMenu()
 {
     emit widgetContextMenuEvent();
 }
-void QReportDocumentDesigner::reportWidget_moving(QReportMoveEvent *event)
+void LReportDocumentDesigner::reportWidget_moving(LReportMoveEvent *event)
 {
-    Q_D(QReportDocumentDesigner);
+    Q_D(LReportDocumentDesigner);
     QPointF pos = getGridAlignPoint(event->point(), d->activeWidget);
 
     /*
@@ -1448,14 +1448,14 @@ void QReportDocumentDesigner::reportWidget_moving(QReportMoveEvent *event)
     d->resizer->setVisible(false);
     //resizer->setActiveItem( senderWidget );
 }
-void QReportDocumentDesigner::reportWidget_moved(QPointF)
+void LReportDocumentDesigner::reportWidget_moved(QPointF)
 {
-    Q_D(QReportDocumentDesigner);
-    QReportUndoCommand *cmd = new QReportUndoCommand(this, d->report);
+    Q_D(LReportDocumentDesigner);
+    LReportUndoCommand *cmd = new LReportUndoCommand(this, d->report);
 
     cmd->setOldState(d->lastXML);
     cmd->setNewState(getSelectedWidgetXML());
-    cmd->setText(QString(tr("%1 moved")).arg(qobject_cast<QReportWidgetBase*>(sender())->objectName()));
+    cmd->setText(QString(tr("%1 moved")).arg(qobject_cast<LReportWidgetBase*>(sender())->objectName()));
 
     d->undoStack->push(cmd);
     cmd->setReady();
@@ -1466,18 +1466,18 @@ void QReportDocumentDesigner::reportWidget_moved(QPointF)
     d->lastXML = getSelectedWidgetXML();
 }
 
-void QReportDocumentDesigner::on_resizer_pointGridNeeded(QReportMoveEvent *event)
+void LReportDocumentDesigner::on_resizer_pointGridNeeded(LReportMoveEvent *event)
 {
     event->setPoint(getGridAlignPoint(event->point()));
 }
-void QReportDocumentDesigner::on_resizer_sizeGridNeeded(QReportResizeEvent *event)
+void LReportDocumentDesigner::on_resizer_sizeGridNeeded(LReportResizeEvent *event)
 {
     event->setSize(getGridAlignPoint(event->size()));
 }
 
-void QReportDocumentDesigner::on_scene_mousePress(QGraphicsSceneMouseEvent *event)
+void LReportDocumentDesigner::on_scene_mousePress(QGraphicsSceneMouseEvent *event)
 {
-    Q_D(QReportDocumentDesigner);
+    Q_D(LReportDocumentDesigner);
     d->lastXML = getSelectedWidgetXML();
 
     if(d->readyToPaste){
@@ -1489,9 +1489,9 @@ void QReportDocumentDesigner::on_scene_mousePress(QGraphicsSceneMouseEvent *even
         d->pasteRectItem->setVisible(true);
     }//if
 }
-void QReportDocumentDesigner::on_scene_mouseMove(QGraphicsSceneMouseEvent *event)
+void LReportDocumentDesigner::on_scene_mouseMove(QGraphicsSceneMouseEvent *event)
 {
-    Q_D(QReportDocumentDesigner);
+    Q_D(LReportDocumentDesigner);
     if(!d->readyToPaste) return;
     if(!d->pasteInRect) return;
 
@@ -1499,13 +1499,13 @@ void QReportDocumentDesigner::on_scene_mouseMove(QGraphicsSceneMouseEvent *event
     rc.setTopLeft(event->lastScenePos());
     rc.setBottomRight(d->lastScenePoint);
 
-    ::ResizeDirection dir = ~d->pasteDirection;
+    ResizeDirection dir = ~d->pasteDirection;
 
-    if(dir & ::Left || dir & ::Right){
+    if(dir & Left || dir & Right){
         rc.setLeft(d->lastScenePoint.x());
         rc.setWidth(0);
     }//if
-    if(dir & ::Top  || dir & ::Bottom){
+    if(dir & Top  || dir & Bottom){
         rc.setTop(d->lastScenePoint.y());
         rc.setHeight(0);
     }//if
@@ -1513,9 +1513,9 @@ void QReportDocumentDesigner::on_scene_mouseMove(QGraphicsSceneMouseEvent *event
     d->pasteRect = getGridAlignPoint(rc.normalized());
     d->pasteRectItem->setRect(d->pasteRect);
 }
-void QReportDocumentDesigner::on_scene_mouseRelease(QGraphicsSceneMouseEvent *event)
+void LReportDocumentDesigner::on_scene_mouseRelease(QGraphicsSceneMouseEvent *event)
 {
-    Q_D(QReportDocumentDesigner);
+    Q_D(LReportDocumentDesigner);
 
     if (!d->readyToPaste) {
         if(d->activeWidget)
@@ -1540,13 +1540,13 @@ void QReportDocumentDesigner::on_scene_mouseRelease(QGraphicsSceneMouseEvent *ev
     doc.setContent(d->pasteBoard);
 
     QDomElement elWidget = doc.firstChildElement(COPY_XML_ROOT).firstChildElement("Widget");
-    QList<QReportWidgetBase*> widgets;
+    QList<LReportWidgetBase*> widgets;
     QPointF pastePoint(-1, -1);
 
     //init all widgets from clipboard
     for (; !elWidget.isNull(); elWidget = elWidget.nextSiblingElement("Widget")) {
-        QReportWidgetBase *widget;
-        widget = QReportWidgetBase::createWidget(&elWidget);
+        LReportWidgetBase *widget;
+        widget = LReportWidgetBase::createWidget(&elWidget);
 
         widget->loadDom(&elWidget);
         widgets.append(widget);
@@ -1561,7 +1561,7 @@ void QReportDocumentDesigner::on_scene_mouseRelease(QGraphicsSceneMouseEvent *ev
 
     d->resizer->clear();
     //create all widgets
-    foreach(QReportWidgetBase *widget, widgets) {
+    foreach(LReportWidgetBase *widget, widgets) {
         QPointF widgetPos(
                     event->lastScenePos().x() + widget->pos().x() - pastePoint.x(),
                     event->lastScenePos().y() + widget->pos().y() - pastePoint.y());
@@ -1597,7 +1597,7 @@ void QReportDocumentDesigner::on_scene_mouseRelease(QGraphicsSceneMouseEvent *ev
 
     d->resizer->refresh();
 
-    QReportUndoCommand *cmd = new QReportUndoCommand(this, d->report);
+    LReportUndoCommand *cmd = new LReportUndoCommand(this, d->report);
     if(widgets.count() == 1)
         cmd->setText("Create " + widgets.at(0)->objectName());
     else
@@ -1606,14 +1606,14 @@ void QReportDocumentDesigner::on_scene_mouseRelease(QGraphicsSceneMouseEvent *ev
     d->undoStack->push(cmd);
     cmd->setReady();
 }
-void QReportDocumentDesigner::on_scene_drop(QGraphicsSceneDragDropEvent *event)
+void LReportDocumentDesigner::on_scene_drop(QGraphicsSceneDragDropEvent *event)
 {
-    Q_D(QReportDocumentDesigner);
+    Q_D(LReportDocumentDesigner);
 
 //    QString name = getFreeWidgetName("TextBox_" + event->mimeData()->data("text"));
 //    QString text = "{" + event->mimeData()->data("text") + "}";
 
-//    QReportTextBox *textBox = new QReportTextBox();
+//    LReportTextBox *textBox = new LReportTextBox();
 //    textBox->setObjectName(name);
 //    textBox->setText(text);
 //    addReportWidget(textBox,
@@ -1627,24 +1627,24 @@ void QReportDocumentDesigner::on_scene_drop(QGraphicsSceneDragDropEvent *event)
 //    refreshWidgetParents(textBox);
 //    textBox->update();
 
-//    QReportUndoCommand *cmd = new QReportUndoCommand(this);
+//    LReportUndoCommand *cmd = new LReportUndoCommand(this);
 //    cmd->setReport(d->report);
 //    cmd->setOldState("");
 //    cmd->setNewState(getSelectedWidgetXML());
 //    d->undoStack->push(cmd);
 }
 
-void QReportDocumentDesigner::on_scene_selectionChanged()
+void LReportDocumentDesigner::on_scene_selectionChanged()
 {
-    Q_D(QReportDocumentDesigner);
+    Q_D(LReportDocumentDesigner);
     d->resizer->clear(false);
 
     for (int i = 0; i < d->scene->selectedItems().count(); i++) {
-        QReportWidgetBase *widget =
-                dynamic_cast<QReportWidgetBase*>(d->scene->selectedItems().at(i));
+        LReportWidgetBase *widget =
+                dynamic_cast<LReportWidgetBase*>(d->scene->selectedItems().at(i));
 
         if (widget)
-            if (widget->widgetType() == ::Widget)
+            if (widget->widgetType() == Widget)
                 d->resizer->addWidget(widget);
 
     }
@@ -1655,7 +1655,7 @@ void QReportDocumentDesigner::on_scene_selectionChanged()
     emit activeWidgetChanged();
 }
 
-void QReportDocumentDesigner::on_document_scroll(int, int)
+void LReportDocumentDesigner::on_document_scroll(int, int)
 {
     updateScrollBars();
 }
@@ -1665,10 +1665,10 @@ void QReportDocumentDesigner::on_document_scroll(int, int)
 
 /*!
   This function return an aligned rect nested to rc
-  QReportWidgetBase use this to retrive aligned posotion
+  LReportWidgetBase use this to retrive aligned posotion
   for stepped moving
 */
-QRectF QReportDocumentDesigner::getGridAlignPoint(QRectF rc)
+QRectF LReportDocumentDesigner::getGridAlignPoint(QRectF rc)
 {
     QRectF ret = rc;
     ret.setTopLeft(getGridAlignPoint(ret.topLeft()));
@@ -1677,7 +1677,7 @@ QRectF QReportDocumentDesigner::getGridAlignPoint(QRectF rc)
     return ret;
 }
 
-QPointF QReportDocumentDesigner::getGridAlignPoint(const QPointF pt, QReportWidgetBase *widget)
+QPointF LReportDocumentDesigner::getGridAlignPoint(const QPointF pt, LReportWidgetBase *widget)
 {
     QPointF ret = getGridAlignPoint(pt);
 
@@ -1689,12 +1689,12 @@ QPointF QReportDocumentDesigner::getGridAlignPoint(const QPointF pt, QReportWidg
 
 /*!
   This function return an aligned point nested to pt
-  QReportWidgetBase use this to retrive aligned posotion
+  LReportWidgetBase use this to retrive aligned posotion
   for stepped moving
 */
-QPointF QReportDocumentDesigner::getGridAlignPoint(QPointF pt)
+QPointF LReportDocumentDesigner::getGridAlignPoint(QPointF pt)
 {
-    Q_D(QReportDocumentDesigner);
+    Q_D(LReportDocumentDesigner);
     QPointF ret = pt;
 
     if (d->alignToGrid) {
@@ -1716,12 +1716,12 @@ QPointF QReportDocumentDesigner::getGridAlignPoint(QPointF pt)
 
 /*!
   This function return an aligned size nested to size
-  QReportWidgetBase use this to retrive aligned posotion
+  LReportWidgetBase use this to retrive aligned posotion
   for stepped moving
 */
-QSizeF QReportDocumentDesigner::getGridAlignPoint(QSizeF s)
+QSizeF LReportDocumentDesigner::getGridAlignPoint(QSizeF s)
 {
-    Q_D(QReportDocumentDesigner);
+    Q_D(LReportDocumentDesigner);
     QSizeF ret = s;
 
     if (d->alignToGrid) {
@@ -1737,7 +1737,7 @@ QSizeF QReportDocumentDesigner::getGridAlignPoint(QSizeF s)
 
 
 
-void QReportDocumentDesigner::resizeEvent(QResizeEvent*)
+void LReportDocumentDesigner::resizeEvent(QResizeEvent*)
 {
     updateScrollBars();
 }
@@ -1746,9 +1746,9 @@ void QReportDocumentDesigner::resizeEvent(QResizeEvent*)
   This method update and repaint Vertical and Horizontal
   rulers
 */
-void QReportDocumentDesigner::updateScrollBars()
+void LReportDocumentDesigner::updateScrollBars()
 {
-    Q_D(QReportDocumentDesigner);
+    Q_D(LReportDocumentDesigner);
     qreal scale = (qreal)d->zoom / 100.00;
 
     d->hRuler->setRuleWidth(d->report->pageSize().width()  *scale);
@@ -1783,9 +1783,9 @@ void QReportDocumentDesigner::updateScrollBars()
 
 
 
-void QReportDocumentDesigner::setAlign(ResizeDirection direction)
+void LReportDocumentDesigner::setAlign(ResizeDirection direction)
 {
-    Q_D(QReportDocumentDesigner);
+    Q_D(LReportDocumentDesigner);
 
     if (!selectedWidgets().count()) return;
 
@@ -1797,19 +1797,19 @@ void QReportDocumentDesigner::setAlign(ResizeDirection direction)
     for (int i = 0; i < selectedWidgets().count(); i++) {
         QRectF widgetRect = selectedWidgets().at(i)->childRect();
         switch (direction) {
-        case ::Top:
+        case Top:
             widgetRect.moveTop(rc.top());
             break;
 
-        case ::Left:
+        case Left:
             widgetRect.moveLeft(rc.left());
             break;
 
-        case ::Right:
+        case Right:
             widgetRect.moveRight(rc.right());
             break;
 
-        case ::Bottom:
+        case Bottom:
             widgetRect.moveBottom(rc.bottom());
             break;
         }//switch
@@ -1820,45 +1820,45 @@ void QReportDocumentDesigner::setAlign(ResizeDirection direction)
 }
 
 
-void QReportDocumentDesigner::setReport(QReport *report)
+void LReportDocumentDesigner::setReport(LReport *report)
 {
-    Q_D(QReportDocumentDesigner);
+    Q_D(LReportDocumentDesigner);
     d->report = report;
 }
 
-QReport *QReportDocumentDesigner::report() const
+LReport *LReportDocumentDesigner::report() const
 {
-    Q_D(const QReportDocumentDesigner);
+    Q_D(const LReportDocumentDesigner);
     return d->report;
 }
 
-void QReportDocumentDesigner::setGridType(::GridType type)
+void LReportDocumentDesigner::setGridType(GridType type)
 {
-    Q_D(QReportDocumentDesigner);
+    Q_D(LReportDocumentDesigner);
     d->pages.at(0)->setGridType(type);
     d->scene->update();
     d->document->update();
 }
 
 
-bool QReportDocumentDesigner::showRulers() const
+bool LReportDocumentDesigner::showRulers() const
 {
-    Q_D(const QReportDocumentDesigner);
+    Q_D(const LReportDocumentDesigner);
     return d->vRuler->isVisible() || d->hRuler->isVisible();
 }
 
-void QReportDocumentDesigner::setShowRulers(bool value)
+void LReportDocumentDesigner::setShowRulers(bool value)
 {
-    Q_D(QReportDocumentDesigner);
+    Q_D(LReportDocumentDesigner);
     d->vRuler->setVisible(value);
     d->hRuler->setVisible(value);
 }
 
-void QReportDocumentDesigner::createWidget(QString widgetType, QString name, QRectF rc)
+void LReportDocumentDesigner::createWidget(QString widgetType, QString name, QRectF rc)
 {
-    Q_D(QReportDocumentDesigner);
-    QReportUndoCommand *cmd = new QReportUndoCommand(this, d->report);
-    QReportWidgetAttributes attributes;
+    Q_D(LReportDocumentDesigner);
+    LReportUndoCommand *cmd = new LReportUndoCommand(this, d->report);
+    LReportWidgetAttributes attributes;
 
     if(name.isEmpty())
         name = getFreeWidgetName(widgetType);
@@ -1868,7 +1868,7 @@ void QReportDocumentDesigner::createWidget(QString widgetType, QString name, QRe
     attributes.add("width", QString::number(rc.width()));
     attributes.add("height", QString::number(rc.height()));
 
-    QDomElement dom = QReportWidgetBase::createWidgetDom(widgetType, name, attributes);
+    QDomElement dom = LReportWidgetBase::createWidgetDom(widgetType, name, attributes);
     QDomDocument doc(XML_ROOT_TAG);
     QDomElement report = doc.createElement(COPY_XML_ROOT);
     cmd->setOldState(doc.toString());
@@ -1878,15 +1878,15 @@ void QReportDocumentDesigner::createWidget(QString widgetType, QString name, QRe
     d->undoStack->push(cmd);
 }
 
-void QReportDocumentDesigner::updateMetrics()
+void LReportDocumentDesigner::updateMetrics()
 {
     //qApp->desktop()->screen()->physicalDpiX();
 }
 
 
-void QReportDocumentDesigner::showPageSetup()
+void LReportDocumentDesigner::showPageSetup()
 {
-    Q_D(QReportDocumentDesigner);
+    Q_D(LReportDocumentDesigner);
     qreal marginLeft, marginRight, marginTop, marginBottom;
     QPageSetupDialog *pageSetup;
     pageSetup = new QPageSetupDialog();
@@ -1917,15 +1917,15 @@ void QReportDocumentDesigner::showPageSetup()
 }
 
 
-void QReportDocumentDesigner::loadReport()
+void LReportDocumentDesigner::loadReport()
 {
-    Q_D(QReportDocumentDesigner);
+    Q_D(LReportDocumentDesigner);
     d->pages[0]->childItems().clear();
 
     for (int i = 0; i < d->report->bands()->count(); i++) {
         addBand(d->report->bands()->at(i), false);
 
-        QList<QReportWidgetBase*> list = *d->report->bands()->at(i)->childs();
+        QList<LReportWidgetBase*> list = *d->report->bands()->at(i)->childs();
         for (int j = 0; j < list.count(); j++) {
             addReportWidget(list.at(j),
                             0, 0, false);
@@ -1936,7 +1936,7 @@ void QReportDocumentDesigner::loadReport()
         d->report->bands()->at(i)->update();
     }//for
 
-    QList<QReportWidgetBase*> list = *d->report->widgets();
+    QList<LReportWidgetBase*> list = *d->report->widgets();
     for (int i = 0; i < d->report->widgets()->count(); i++) {
         addReportWidget(list.at(i),
                         list.at(i)->pos().x(),
@@ -1949,15 +1949,15 @@ void QReportDocumentDesigner::loadReport()
     reorderBands();
 }
 
-QReportWidgetBase *QReportDocumentDesigner::activeWidget()
+LReportWidgetBase *LReportDocumentDesigner::activeWidget()
 {
-    Q_D(QReportDocumentDesigner);
+    Q_D(LReportDocumentDesigner);
     return d->activeWidget;
 }
 
-QReportBand *QReportDocumentDesigner::activeBand()
+LReportBand *LReportDocumentDesigner::activeBand()
 {
-    Q_D(QReportDocumentDesigner);
+    Q_D(LReportDocumentDesigner);
     return d->activeBand;
 }
 
@@ -1968,14 +1968,14 @@ QReportBand *QReportDocumentDesigner::activeBand()
 /*!
   Return all selected object in designer
 */
-QList<QReportWidgetBase*> QReportDocumentDesigner::selectedWidgets() const
+QList<LReportWidgetBase*> LReportDocumentDesigner::selectedWidgets() const
 {
-    Q_D(const QReportDocumentDesigner);
-    QList<QReportWidgetBase*>  ret;
+    Q_D(const LReportDocumentDesigner);
+    QList<LReportWidgetBase*>  ret;
 
     for (int i = 0; i < d->scene->selectedItems().count(); i++) {
-        QReportWidgetBase *widget = (QReportWidgetBase*)d->scene->selectedItems().at(i);
-        if (widget->widgetType() == ::Widget)
+        LReportWidgetBase *widget = (LReportWidgetBase*)d->scene->selectedItems().at(i);
+        if (widget->widgetType() == Widget)
             ret.append(widget);
     }//for
 
@@ -1986,12 +1986,12 @@ QList<QReportWidgetBase*> QReportDocumentDesigner::selectedWidgets() const
   Check that the widget has a property
   \param propertyName Thegiven property name for check
 */
-bool QReportDocumentDesigner::hasWidgetProperty(QString propertyName)
+bool LReportDocumentDesigner::hasWidgetProperty(QString propertyName)
 {
-    QList<QReportWidgetBase*>  widgets = selectedWidgets();
+    QList<LReportWidgetBase*>  widgets = selectedWidgets();
     int count = 0;
 
-    foreach(QReportWidgetBase  *widget, widgets)
+    foreach(LReportWidgetBase  *widget, widgets)
         if (widget->hasProperty(propertyName))
             count++;
 
@@ -2004,11 +2004,11 @@ bool QReportDocumentDesigner::hasWidgetProperty(QString propertyName)
   \param propertyValue The value for property of objects
   \see selectedWidgets()
 */
-void QReportDocumentDesigner::setWidgetProperty(QString propertyName, QVariant propertyValue)
+void LReportDocumentDesigner::setWidgetProperty(QString propertyName, QVariant propertyValue)
 {
-    QList<QReportWidgetBase*>  widgets = selectedWidgets();
+    QList<LReportWidgetBase*>  widgets = selectedWidgets();
 
-    foreach(QReportWidgetBase  *widget, widgets)
+    foreach(LReportWidgetBase  *widget, widgets)
         widget->setPropertyValue(propertyName, propertyValue);
 
 }
@@ -2019,28 +2019,28 @@ void QReportDocumentDesigner::setWidgetProperty(QString propertyName, QVariant p
   \param name Name of property
   \see selectedWidgets()
 */
-QVariant QReportDocumentDesigner::widgetProperty(QString name) const
+QVariant LReportDocumentDesigner::widgetProperty(QString name) const
 {
     QVariant ret;
 
-    QList<QReportWidgetBase*>  widgets = selectedWidgets();
+    QList<LReportWidgetBase*>  widgets = selectedWidgets();
 
     if (!widgets.count()) return QVariant();
 
     ret = widgets.at(0)->propertyValue(name);
-    foreach(QReportWidgetBase  *widget, widgets)
+    foreach(LReportWidgetBase  *widget, widgets)
         if (widget->propertyValue(name) != ret)
             return QVariant();
 
     return ret;
 }
 
-QStringList QReportDocumentDesigner::widgetProperties() const
+QStringList LReportDocumentDesigner::widgetProperties() const
 {
     QHash<QString, int> propertiesCount;
-    QList<QReportWidgetBase*>  widgets = selectedWidgets();
+    QList<LReportWidgetBase*>  widgets = selectedWidgets();
 
-    foreach(QReportWidgetBase  *widget, widgets)
+    foreach(LReportWidgetBase  *widget, widgets)
         for (int i = 0; i < widget->metaObject()->propertyCount(); i++)
             propertiesCount[widget->metaObject()->property(i).name()]++;
 
@@ -2058,22 +2058,22 @@ QStringList QReportDocumentDesigner::widgetProperties() const
 
 
 //-- design methods ----------------------------------------------------------------------
-QAction *QReportDocumentDesigner::createRedoAction(QObject *parent) const
+QAction *LReportDocumentDesigner::createRedoAction(QObject *parent) const
 {
-    Q_D(const QReportDocumentDesigner);
+    Q_D(const LReportDocumentDesigner);
     return d->undoStack->createRedoAction(parent);
 }
-QAction *QReportDocumentDesigner::createUndoAction(QObject *parent) const
+QAction *LReportDocumentDesigner::createUndoAction(QObject *parent) const
 {
-    Q_D(const QReportDocumentDesigner);
+    Q_D(const LReportDocumentDesigner);
     return d->undoStack->createUndoAction(parent);
 }
 
-void QReportDocumentDesigner::clear()
+void LReportDocumentDesigner::clear()
 {
-    Q_D(QReportDocumentDesigner);
+    Q_D(LReportDocumentDesigner);
 
-    QReportUndoCommand *cmd = new QReportUndoCommand();
+    LReportUndoCommand *cmd = new LReportUndoCommand();
     cmd->setNewState("");
     cmd->setOldState(d->report->getXmlContent());
     cmd->setReady();
@@ -2083,9 +2083,9 @@ void QReportDocumentDesigner::clear()
 
     undoStack()->clear();
 }
-void QReportDocumentDesigner::setSameSize()
+void LReportDocumentDesigner::setSameSize()
 {
-    Q_D(QReportDocumentDesigner);
+    Q_D(LReportDocumentDesigner);
     if (!d->activeWidget) return;
 
     for (int i = 0; i < selectedWidgets().count(); i++)
@@ -2093,9 +2093,9 @@ void QReportDocumentDesigner::setSameSize()
 
     d->resizer->refresh();
 }
-void QReportDocumentDesigner::setSameWidth()
+void LReportDocumentDesigner::setSameWidth()
 {
-    Q_D(QReportDocumentDesigner);
+    Q_D(LReportDocumentDesigner);
     if (!d->activeWidget) return;
 
     for (int i = 0; i < selectedWidgets().count(); i++)
@@ -2103,9 +2103,9 @@ void QReportDocumentDesigner::setSameWidth()
 
     d->resizer->refresh();
 }
-void QReportDocumentDesigner::setSameHeight()
+void LReportDocumentDesigner::setSameHeight()
 {
-    Q_D(QReportDocumentDesigner);
+    Q_D(LReportDocumentDesigner);
     if (!d->activeWidget) return;
 
     for (int i = 0; i < selectedWidgets().count(); i++)
@@ -2113,61 +2113,61 @@ void QReportDocumentDesigner::setSameHeight()
 
     d->resizer->refresh();
 }
-void QReportDocumentDesigner::alignToGridWidgets()
+void LReportDocumentDesigner::alignToGridWidgets()
 {
-    Q_D(QReportDocumentDesigner);
-    QList<QReportWidgetBase*> widgets = selectedWidgets();
+    Q_D(LReportDocumentDesigner);
+    QList<LReportWidgetBase*> widgets = selectedWidgets();
 
-    foreach(QReportWidgetBase  *widget, widgets)
+    foreach(LReportWidgetBase  *widget, widgets)
         widget->setChildRect(getGridAlignPoint(widget->sceneRect()));
 
     d->resizer->refresh();
 }
-void QReportDocumentDesigner::sendToBack()
+void LReportDocumentDesigner::sendToBack()
 {
-    Q_D(QReportDocumentDesigner);
+    Q_D(LReportDocumentDesigner);
     d->report->widgetToBack(d->activeWidget);
 }
-void QReportDocumentDesigner::bringToFront()
+void LReportDocumentDesigner::bringToFront()
 {
-    Q_D(QReportDocumentDesigner);
+    Q_D(LReportDocumentDesigner);
     d->report->widgetToFront(d->activeWidget);
 }
 
-void QReportDocumentDesigner::doCopy()
+void LReportDocumentDesigner::doCopy()
 {
     QApplication::clipboard()->setText(getSelectedWidgetXML());
 }
-void QReportDocumentDesigner::doPaste()
+void LReportDocumentDesigner::doPaste()
 {
     addContent();
 }
-void QReportDocumentDesigner::doCut()
+void LReportDocumentDesigner::doCut()
 {
     doCopy();
     doDelete();
 }
-void QReportDocumentDesigner::doDelete()
+void LReportDocumentDesigner::doDelete()
 {
-    Q_D(QReportDocumentDesigner);
-    /*foreach(QReportWidgetBase  *widget, selectedWidgets()) {
+    Q_D(LReportDocumentDesigner);
+    /*foreach(LReportWidgetBase  *widget, selectedWidgets()) {
         d->_scene->removeItem(widget);
 
         delete widget;
     }*/
 
-    QReportUndoCommand *cmd = new QReportUndoCommand(this, d->report);
+    LReportUndoCommand *cmd = new LReportUndoCommand(this, d->report);
     cmd->setText("Remove widget(s)");
     cmd->setOldState(getSelectedWidgetXML());
     d->undoStack->push(cmd);
 }
-void QReportDocumentDesigner::selectAll()
+void LReportDocumentDesigner::selectAll()
 {
-    Q_D(QReportDocumentDesigner);
+    Q_D(LReportDocumentDesigner);
     d->resizer->clear();
 
     for (int i = 0; i < d->report->widgets()->count(); i++) {
-        QReportWidgetBase *widget = d->report->widgets()->at(i);
+        LReportWidgetBase *widget = d->report->widgets()->at(i);
         qDebug() << widget->objectName();
         //widget->setSelected(true);
         //d->_scene->selectedItems().append(widget);
@@ -2182,53 +2182,53 @@ void QReportDocumentDesigner::selectAll()
   Update and redraw all selected items in designer
   \see selectedWidgets()
 */
-void QReportDocumentDesigner::updateWidgets()
+void LReportDocumentDesigner::updateWidgets()
 {
-    QList<QReportWidgetBase*>  widgets = selectedWidgets();
+    QList<LReportWidgetBase*>  widgets = selectedWidgets();
 
-    foreach(QReportWidgetBase  *widget, widgets)
+    foreach(LReportWidgetBase  *widget, widgets)
         widget->update();
 }
 
-void QReportDocumentDesigner::showWidgetProperties()
+void LReportDocumentDesigner::showWidgetProperties()
 {
-    Q_D(QReportDocumentDesigner);
-    QReportPropertyDialog *dialog = new QReportPropertyDialog(this);
-    QList<QReportPropertyPageBase*> propertyPages;
+    Q_D(LReportDocumentDesigner);
+    LReportPropertyDialog *dialog = new LReportPropertyDialog(this);
+    QList<LReportPropertyPageBase*> propertyPages;
 
-    if (selectedWidgets().count() == 1)    propertyPages.append(new QReportPropertyPageWidget());
-    if (hasWidgetClassInfo("prop_text"))   propertyPages.append(new QReportPropertyPageText());
-    if (hasWidgetClassInfo("prop_font"))   propertyPages.append(new QReportPropertyPageFont());
-    if (hasWidgetClassInfo("prop_align"))  propertyPages.append(new QReportPropertyPageAlign());
-    if (hasWidgetClassInfo("prop_format")) propertyPages.append(new QReportPropertyPageFormat());
-    if (hasWidgetClassInfo("prop_rect"))   propertyPages.append(new QReportPropertyPageRectangle());
-    if (hasWidgetClassInfo("prop_line"))   propertyPages.append(new QReportPropertyPageLineType());
-    if (hasWidgetClassInfo("prop_image"))  propertyPages.append(new QReportPropertyPageImage());
+    if (selectedWidgets().count() == 1)    propertyPages.append(new LReportPropertyPageWidget());
+    if (hasWidgetClassInfo("prop_text"))   propertyPages.append(new LReportPropertyPageText());
+    if (hasWidgetClassInfo("prop_font"))   propertyPages.append(new LReportPropertyPageFont());
+    if (hasWidgetClassInfo("prop_align"))  propertyPages.append(new LReportPropertyPageAlign());
+    if (hasWidgetClassInfo("prop_format")) propertyPages.append(new LReportPropertyPageFormat());
+    if (hasWidgetClassInfo("prop_rect"))   propertyPages.append(new LReportPropertyPageRectangle());
+    if (hasWidgetClassInfo("prop_line"))   propertyPages.append(new LReportPropertyPageLineType());
+    if (hasWidgetClassInfo("prop_image"))  propertyPages.append(new LReportPropertyPageImage());
 
     if(d->resizer->selectedWidgets().count() == 1
-            && d->resizer->selectedWidgets().at(0)->inherits("QReportBand")){
-        QReportPropertyBand *p = new QReportPropertyBand();
+            && d->resizer->selectedWidgets().at(0)->inherits("LReportBand")){
+        LReportPropertyBand *p = new LReportPropertyBand();
         p->setBand(d->activeBand);
         propertyPages.append(p);
-        propertyPages.append(new QReportPropertySort());
-        propertyPages.append(new QReportPropertyFilter());
+        propertyPages.append(new LReportPropertySort());
+        propertyPages.append(new LReportPropertyFilter());
     }
 
-    foreach(QReportPropertyPageBase  *page, propertyPages) {
+    foreach(LReportPropertyPageBase  *page, propertyPages) {
         page->setDesigner(this);
         page->load();
         dialog->addTab(page);
     }//foreach
 
     if (dialog->exec() == QDialog::Accepted) {
-        QReportUndoCommand *cmd = new QReportUndoCommand(this, d->report);
+        LReportUndoCommand *cmd = new LReportUndoCommand(this, d->report);
 
         cmd->setText(tr("Widget(s) property changed"));
         if(selectedWidgets().count() == 1)
             cmd->setOldName(d->activeWidget->objectName());
         cmd->setOldState(getSelectedWidgetXML());
 
-        foreach(QReportPropertyPageBase  *page, propertyPages){
+        foreach(LReportPropertyPageBase  *page, propertyPages){
             page->save();
         }//foreach
 
@@ -2245,9 +2245,9 @@ void QReportDocumentDesigner::showWidgetProperties()
     }//if
 }
 
-void QReportDocumentDesigner::showWidgetProperties(QReportWidgetBase *widget)
+void LReportDocumentDesigner::showWidgetProperties(LReportWidgetBase *widget)
 {
-    QReportPropertyDialog *dialog = new QReportPropertyDialog(widget, this);
+    LReportPropertyDialog *dialog = new LReportPropertyDialog(widget, this);
     dialog->exec();
     widget->update();
 }

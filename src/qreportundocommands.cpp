@@ -5,13 +5,13 @@
 
 LEAF_BEGIN_NAMESPACE
 
-class QReportUndoCommandPrivate
+class LReportUndoCommandPrivate
 {
-    QReportUndoCommand *q_ptr;
-    Q_DECLARE_PUBLIC(QReportUndoCommand)
+    LReportUndoCommand *q_ptr;
+    Q_DECLARE_PUBLIC(LReportUndoCommand)
 
 public:
-    QReportUndoCommandPrivate(QReportUndoCommand *parent) :
+    LReportUndoCommandPrivate(LReportUndoCommand *parent) :
         q_ptr(parent),
         designer(0),
         report(0),
@@ -23,95 +23,95 @@ public:
     QString oldXML, newXML;
     QString oldName, newName;
     bool changeName;
-    QReportDocumentDesigner *designer;
-    QReport *report;
+    LReportDocumentDesigner *designer;
+    LReport *report;
     bool isReady;
 };
 
-QReportUndoCommand::QReportUndoCommand() :
-    d_ptr(new QReportUndoCommandPrivate(this)),
+LReportUndoCommand::LReportUndoCommand() :
+    d_ptr(new LReportUndoCommandPrivate(this)),
     QUndoCommand()
 {
 
 }
 
-QReportUndoCommand::QReportUndoCommand(QReportDocumentDesigner *designer, QReport *report) :
-    d_ptr(new QReportUndoCommandPrivate(this))
+LReportUndoCommand::LReportUndoCommand(LReportDocumentDesigner *designer, LReport *report) :
+    d_ptr(new LReportUndoCommandPrivate(this))
 {
-    Q_D(QReportUndoCommand);
+    Q_D(LReportUndoCommand);
     d->report = report;
     d->designer = designer;
 }
 
-void QReportUndoCommand::setReady()
+void LReportUndoCommand::setReady()
 {
-    Q_D(QReportUndoCommand);
+    Q_D(LReportUndoCommand);
     d->isReady = true;
 }
 
-void QReportUndoCommand::undo()
+void LReportUndoCommand::undo()
 {
-    Q_D(const QReportUndoCommand);
+    Q_D(const LReportUndoCommand);
 
     if(!d->isReady) return;
 
     d->designer->applyXml(d->newXML, d->oldXML);
 }
 
-void QReportUndoCommand::redo()
+void LReportUndoCommand::redo()
 {
-    Q_D(const QReportUndoCommand);
+    Q_D(const LReportUndoCommand);
 
     if(!d->isReady) return;
 
     d->designer->applyXml(d->oldXML, d->newXML);
 }
 
-QReportDocumentDesigner *QReportUndoCommand::designer() const
+LReportDocumentDesigner *LReportUndoCommand::designer() const
 {
-    Q_D(const QReportUndoCommand);
+    Q_D(const LReportUndoCommand);
     return d->designer;
 }
 
-QReport *QReportUndoCommand::report() const
+LReport *LReportUndoCommand::report() const
 {
-    Q_D(const QReportUndoCommand);
+    Q_D(const LReportUndoCommand);
     return d->report;
 }
 
-void QReportUndoCommand::setDesigner(QReportDocumentDesigner *designer)
+void LReportUndoCommand::setDesigner(LReportDocumentDesigner *designer)
 {
-    Q_D(QReportUndoCommand);
+    Q_D(LReportUndoCommand);
     d->designer = designer;
 }
 
-void QReportUndoCommand::setReport(QReport *report)
+void LReportUndoCommand::setReport(LReport *report)
 {
-    Q_D(QReportUndoCommand);
+    Q_D(LReportUndoCommand);
     d->report = report;
 }
 
-void QReportUndoCommand::setOldState(QString oldState)
+void LReportUndoCommand::setOldState(QString oldState)
 {
-    Q_D(QReportUndoCommand);
+    Q_D(LReportUndoCommand);
     d->oldXML = oldState;
 }
 
-void QReportUndoCommand::setNewState(QString newState)
+void LReportUndoCommand::setNewState(QString newState)
 {
-    Q_D(QReportUndoCommand);
+    Q_D(LReportUndoCommand);
     d->newXML = newState;
 }
 
-void QReportUndoCommand::setOldName(QString oldName)
+void LReportUndoCommand::setOldName(QString oldName)
 {
-    Q_D(QReportUndoCommand);
+    Q_D(LReportUndoCommand);
     d->oldName = oldName;
 }
 
-void QReportUndoCommand::setNewName(QString newName)
+void LReportUndoCommand::setNewName(QString newName)
 {
-    Q_D(QReportUndoCommand);
+    Q_D(LReportUndoCommand);
     d->newName = newName;
 }
 

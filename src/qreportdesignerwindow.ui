@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>QReportDesignerWindow</class>
- <widget class="QMainWindow" name="QReportDesignerWindow">
+ <class>LReportDesignerWindow</class>
+ <widget class="QMainWindow" name="LReportDesignerWindow">
   <property name="geometry">
    <rect>
     <x>0</x>

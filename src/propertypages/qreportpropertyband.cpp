@@ -1,50 +1,73 @@
+/***************************************************************************
+ *   QtReport                                                              *
+ *   Qt Report Builder Soultion                                            *
+ *                                                                         *
+ *   Copyright (C) 2010 by Hamed Masafi                                    *
+ *   Hamed.Masafi@GMail.COM                                                *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, write to the                         *
+ *   Free Software Foundation, Inc.,                                       *
+ *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
+ ***************************************************************************/
+
 #include "qreportpropertyband.h"
 #include "qreportsectiondataproperties.h"
 
-#include <qreportband.h>
+#include "widgets/qreportband.h"
 #include "qreport.h"
 
 LEAF_BEGIN_NAMESPACE
 
-QReportBand *QReportPropertyBand::band() const
+LReportBand *LReportPropertyBand::band() const
 {
     return _band;
 }
 
-void QReportPropertyBand::setBand(QReportBand *band)
+void LReportPropertyBand::setBand(LReportBand *band)
 {
     _band = band;
     QWidget *w = 0;
 
     switch(band->bandType()){
     case ::Data:
-        w = new QReportSectionDataProperties();
+        w = new LReportSectionDataProperties();
         qDebug() << "------------------------------";
         break;
     }
 
     if(w)
-    widgetPropertyPage->layout()->addWidget(w);
+        widgetPropertyPage->layout()->addWidget(w);
 }
-QReportPropertyBand::QReportPropertyBand(QWidget *parent) :
-    QReportPropertyPageBase(parent)
+LReportPropertyBand::LReportPropertyBand(QWidget *parent) :
+    LReportPropertyPageBase(parent)
 {
     _title = tr("Band properties");
     setupUi(this);
 }
 
-void QReportPropertyBand::load()
+void LReportPropertyBand::load()
 {
-    foreach (QReportDataTable *table, _designer->report()->dataTables())
+    foreach (LReportDataTable *table, _designer->report()->dataTables())
         comboBox->addItem(table->objectName());
 }
 
-void QReportPropertyBand::save()
+void LReportPropertyBand::save()
 {
 
 }
 
-void QReportPropertyBand::changeEvent(QEvent *e)
+void LReportPropertyBand::changeEvent(QEvent *e)
 {
     QWidget::changeEvent(e);
     switch (e->type()) {

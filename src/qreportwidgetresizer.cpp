@@ -43,7 +43,7 @@
 LEAF_BEGIN_NAMESPACE
 
 
-QReportResizeHandle::QReportResizeHandle(qreal x, qreal y, qreal radius, QGraphicsItem *parent) :
+LReportResizeHandle::LReportResizeHandle(qreal x, qreal y, qreal radius, QGraphicsItem *parent) :
     QGraphicsEllipseItem ( x, y, radius, radius, parent ),
     _radius ( radius )
 {
@@ -51,7 +51,7 @@ QReportResizeHandle::QReportResizeHandle(qreal x, qreal y, qreal radius, QGraphi
     //this->setFlags( QGraphicsItem::ItemIsMovable );
 }
 
-void QReportResizeHandle::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
+void LReportResizeHandle::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     if ( mousePressed )
     {
@@ -63,7 +63,7 @@ void QReportResizeHandle::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     }//if
 }
 
-void QReportResizeHandle::mousePressEvent(QGraphicsSceneMouseEvent *event)
+void LReportResizeHandle::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     Q_UNUSED( event );
 
@@ -71,7 +71,7 @@ void QReportResizeHandle::mousePressEvent(QGraphicsSceneMouseEvent *event)
     mousePressed = true;
 }
 
-void QReportResizeHandle::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+void LReportResizeHandle::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     Q_UNUSED( event );
     emit moved();
@@ -79,28 +79,28 @@ void QReportResizeHandle::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 
 }
 
-QPointF QReportResizeHandle::centerPoint() const
+QPointF LReportResizeHandle::centerPoint() const
 {
     return QPointF ( pos().x() + _radius / 2,
                      pos().y() + _radius / 2 );
 }
 
-QPointF QReportResizeHandle::lastPoint() const
+QPointF LReportResizeHandle::lastPoint() const
 {
     return _lastPoint;
 }
 
-ResizeDirection QReportResizeHandle::resizeDirection() const
+ResizeDirection LReportResizeHandle::resizeDirection() const
 {
     return m_resizeDirection;
 }
 
-void QReportResizeHandle::setResizeDirection(ResizeDirection value)
+void LReportResizeHandle::setResizeDirection(ResizeDirection value)
 {
     m_resizeDirection = value;
 }
 
-void QReportResizeHandle::setScale(qreal scale)
+void LReportResizeHandle::setScale(qreal scale)
 {
     _radius = scale;
     this->setRect( 0, 0, scale, scale );
@@ -111,20 +111,20 @@ void QReportResizeHandle::setScale(qreal scale)
   Create a new RReportWidget resize manager. A resize manager show 8 circle on
   widget that user can drag them to resize the widget
 */
-QReportWidgetResizer::QReportWidgetResizer(QGraphicsScene *parent) :
+LReportWidgetResizer::LReportWidgetResizer(QGraphicsScene *parent) :
     QObject(),
     parentScene(parent),
     //_parent( 0 ),
     m_scale(1)
 {
-    resizerTL = new QReportResizeHandle(0, 0, CIRCLER);
-    resizerT  = new QReportResizeHandle(0, 0, CIRCLER);
-    resizerTR = new QReportResizeHandle(0, 0, CIRCLER);
-    resizerL  = new QReportResizeHandle(0, 0, CIRCLER);
-    resizerR  = new QReportResizeHandle(0, 0, CIRCLER);
-    resizerBL = new QReportResizeHandle(0, 0, CIRCLER);
-    resizerB  = new QReportResizeHandle(0, 0, CIRCLER);
-    resizerBR = new QReportResizeHandle(0, 0, CIRCLER);
+    resizerTL = new LReportResizeHandle(0, 0, CIRCLER);
+    resizerT  = new LReportResizeHandle(0, 0, CIRCLER);
+    resizerTR = new LReportResizeHandle(0, 0, CIRCLER);
+    resizerL  = new LReportResizeHandle(0, 0, CIRCLER);
+    resizerR  = new LReportResizeHandle(0, 0, CIRCLER);
+    resizerBL = new LReportResizeHandle(0, 0, CIRCLER);
+    resizerB  = new LReportResizeHandle(0, 0, CIRCLER);
+    resizerBR = new LReportResizeHandle(0, 0, CIRCLER);
 
     /*parent->addItem( resizerTL );
     parent->addItem( resizerT  );
@@ -157,15 +157,15 @@ QReportWidgetResizer::QReportWidgetResizer(QGraphicsScene *parent) :
     resizerB->setCursor(Qt::SizeVerCursor);
     resizerBR->setCursor(Qt::SizeFDiagCursor);
 
-    resizerT->setResizeDirection(::Top);
-    resizerL->setResizeDirection(::Left);
-    resizerR->setResizeDirection(::Right);
-    resizerB->setResizeDirection(::Bottom);
+    resizerT->setResizeDirection(Top);
+    resizerL->setResizeDirection(Left);
+    resizerR->setResizeDirection(Right);
+    resizerB->setResizeDirection(Bottom);
 
-    resizerTR->setResizeDirection(::Top    | ::Right);
-    resizerTL->setResizeDirection(::Top    | ::Left);
-    resizerBR->setResizeDirection(::Bottom | ::Right);
-    resizerBL->setResizeDirection(::Bottom | ::Left);
+    resizerTR->setResizeDirection(Top    | Right);
+    resizerTL->setResizeDirection(Top    | Left);
+    resizerBR->setResizeDirection(Bottom | Right);
+    resizerBL->setResizeDirection(Bottom | Left);
 
     for (int i = 0; i < handles.count(); i++) {
         /*QRadialGradient gradient( CIRCLER, CIRCLER, 270);
@@ -186,17 +186,17 @@ QReportWidgetResizer::QReportWidgetResizer(QGraphicsScene *parent) :
 }
 
 
-QReportWidgetResizer::~QReportWidgetResizer()
+LReportWidgetResizer::~LReportWidgetResizer()
 {
 }
 
-void QReportWidgetResizer::setVisible()
+void LReportWidgetResizer::setVisible()
 {
     if (_selectedWidgets.count() == 1) {
-        resizerT->setVisible(_selectedWidgets.at(0)->resizeDirection() & ::Top);
-        resizerL->setVisible(_selectedWidgets.at(0)->resizeDirection() & ::Left);
-        resizerR->setVisible(_selectedWidgets.at(0)->resizeDirection() & ::Right);
-        resizerB->setVisible(_selectedWidgets.at(0)->resizeDirection() & ::Bottom);
+        resizerT->setVisible(_selectedWidgets.at(0)->resizeDirection() & Top);
+        resizerL->setVisible(_selectedWidgets.at(0)->resizeDirection() & Left);
+        resizerR->setVisible(_selectedWidgets.at(0)->resizeDirection() & Right);
+        resizerB->setVisible(_selectedWidgets.at(0)->resizeDirection() & Bottom);
 
         resizerTR->setVisible(resizerT->isVisible() && resizerR->isVisible());
         resizerTL->setVisible(resizerT->isVisible() && resizerL->isVisible());
@@ -208,13 +208,13 @@ void QReportWidgetResizer::setVisible()
 
 }
 
-void QReportWidgetResizer::setVisible(bool visible)
+void LReportWidgetResizer::setVisible(bool visible)
 {
     for (int i = 0; i < handles.count(); i++)
         handles[ i ]->setVisible(visible);
 }
 
-void QReportWidgetResizer::setActiveItem(QReportWidgetBase *item)
+void LReportWidgetResizer::setActiveItem(LReportWidgetBase *item)
 {
     clear(true);
     _selectedWidgets.clear();
@@ -229,7 +229,7 @@ void QReportWidgetResizer::setActiveItem(QReportWidgetBase *item)
     setVisible();
 }
 
-void QReportWidgetResizer::setHandlesOnItem(QRectF rc)
+void LReportWidgetResizer::setHandlesOnItem(QRectF rc)
 {
     //if( !_parent ) return;
     if (!_selectedWidgets.count()) return;
@@ -249,7 +249,7 @@ void QReportWidgetResizer::setHandlesOnItem(QRectF rc)
         handles.at(i)->setZValue(999);
 }
 
-void QReportWidgetResizer::setResezeHandlePos(QGraphicsEllipseItem *handle, QPointF pos)
+void LReportWidgetResizer::setResezeHandlePos(QGraphicsEllipseItem *handle, QPointF pos)
 {
     qreal scaleHalf = m_scale  *CIRCLER / 2;
     handle->setPos(_selectedWidgets.at(0)->parentItem()->mapToParent(   //_parent->mapToParent (
@@ -257,7 +257,7 @@ void QReportWidgetResizer::setResezeHandlePos(QGraphicsEllipseItem *handle, QPoi
                        pos.y() - scaleHalf));
 }
 
-void QReportWidgetResizer::setResezeHandlePos(QGraphicsEllipseItem *handle, QPointF pos1, QPointF pos2)
+void LReportWidgetResizer::setResezeHandlePos(QGraphicsEllipseItem *handle, QPointF pos1, QPointF pos2)
 {
     qreal scaleHalf = m_scale  *CIRCLER / 2;
     handle->setPos(_selectedWidgets.at(0)->parentItem()->mapToParent(   //_parent->mapToParent (
@@ -265,20 +265,20 @@ void QReportWidgetResizer::setResezeHandlePos(QGraphicsEllipseItem *handle, QPoi
                        (pos2.y() + pos1.y()) / 2 - scaleHalf));
 }
 
-void QReportWidgetResizer::handleMoving(QPointF point)
+void LReportWidgetResizer::handleMoving(QPointF point)
 {
-    QReportResizeHandle *s = qobject_cast<QReportResizeHandle*> (sender());
+    LReportResizeHandle *s = qobject_cast<LReportResizeHandle*> (sender());
     QRectF rc = resizeRect;
 
-    QReportMoveEvent e(point, point);
+    LReportMoveEvent e(point, point);
     emit pointGridNeeded(&e);
 
     if (!e.isAccepted()) return;
 
-    if (s->resizeDirection() & ::Top) rc.setTop(e.point().y());
-    if (s->resizeDirection() & ::Left) rc.setLeft(e.point().x());
-    if (s->resizeDirection() & ::Right) rc.setRight(e.point().x());
-    if (s->resizeDirection() & ::Bottom) rc.setBottom(e.point().y());
+    if (s->resizeDirection() & Top) rc.setTop(e.point().y());
+    if (s->resizeDirection() & Left) rc.setLeft(e.point().x());
+    if (s->resizeDirection() & Right) rc.setRight(e.point().x());
+    if (s->resizeDirection() & Bottom) rc.setBottom(e.point().y());
 
     if(_selectedWidgets.count() == 1){
         if(rc.width() < _selectedWidgets.at(0)->minimumSize().width())
@@ -298,18 +298,18 @@ void QReportWidgetResizer::handleMoving(QPointF point)
 }
 
 
-qreal QReportWidgetResizer::scale()
+qreal LReportWidgetResizer::scale()
 {
     return m_scale;
 }
-void QReportWidgetResizer::setScale(qreal scale)
+void LReportWidgetResizer::setScale(qreal scale)
 {
     m_scale = scale;
     for (int i = 0; i < handles.count(); i++)
         handles.at(i)->setScale(CIRCLER  *scale);
 }
 
-void QReportWidgetResizer::proccessNewRect(QRectF rc)
+void LReportWidgetResizer::proccessNewRect(QRectF rc)
 {
     /*if( _selectedWidgets.count() == 1 )
     {
@@ -322,7 +322,7 @@ void QReportWidgetResizer::proccessNewRect(QRectF rc)
        return;
     }*/
 
-    foreach(QReportWidgetBase  *widget, _selectedWidgets) {
+    foreach(LReportWidgetBase  *widget, _selectedWidgets) {
         QRectF widgetRect = _widgetRects[widget];
         QSizeF sizeby(
             rc.width()  / selectionRect.width(),
@@ -350,32 +350,32 @@ void QReportWidgetResizer::proccessNewRect(QRectF rc)
 
 }
 
-void QReportWidgetResizer::refresh()
+void LReportWidgetResizer::refresh()
 {
     refreshWidgets();
     setVisible();
     refreshHandles();
 }
 
-void QReportWidgetResizer::refreshHandles()
+void LReportWidgetResizer::refreshHandles()
 {
     setVisible();
 }
 
 
-QList<QReportWidgetBase*> QReportWidgetResizer::selectedWidgets()
+QList<LReportWidgetBase*> LReportWidgetResizer::selectedWidgets()
 {
     return _selectedWidgets;
 }
 
-void QReportWidgetResizer::clear()
+void LReportWidgetResizer::clear()
 {
     clear(true);
 }
 
-void QReportWidgetResizer::clear(bool unselectWidgets)
+void LReportWidgetResizer::clear(bool unselectWidgets)
 {
-    foreach(QReportWidgetBase  *widget, _selectedWidgets) {
+    foreach(LReportWidgetBase  *widget, _selectedWidgets) {
         if (unselectWidgets)
             widget->setSelected(false);
 
@@ -386,23 +386,23 @@ void QReportWidgetResizer::clear(bool unselectWidgets)
     setVisible(false);
 }
 
-void QReportWidgetResizer::addWidget(QReportWidgetBase *widget)
+void LReportWidgetResizer::addWidget(LReportWidgetBase *widget)
 {
     widget->setSelected(true);
 
     _selectedWidgets.append(widget);
-    connect(widget, SIGNAL(moving(QReportMoveEvent*)),
-            this,   SLOT(widgetMoving(QReportMoveEvent*)));
+    connect(widget, SIGNAL(moving(LReportMoveEvent*)),
+            this,   SLOT(widgetMoving(LReportMoveEvent*)));
 }
 
-void QReportWidgetResizer::refreshWidgets()
+void LReportWidgetResizer::refreshWidgets()
 {
     QRectF rc;
 
     if (_selectedWidgets.count() == 0) return;
 
     rc = _selectedWidgets.at(0)->childRect();
-    foreach(QReportWidgetBase  *widget, _selectedWidgets) {
+    foreach(LReportWidgetBase  *widget, _selectedWidgets) {
         _widgetRects[widget] = widget->childRect();
         QRectF widgetRect(widget->mapToScene(0, 0), widget->size());
         rc = rc.united(widgetRect);
@@ -413,31 +413,31 @@ void QReportWidgetResizer::refreshWidgets()
     setHandlesOnItem(rc);
 }
 
-void QReportWidgetResizer::widgetMoving(QReportMoveEvent *event)
+void LReportWidgetResizer::widgetMoving(LReportMoveEvent *event)
 {
-    QReportWidgetBase *senderWidget = dynamic_cast<QReportWidgetBase*>(sender());
+    LReportWidgetBase *senderWidget = dynamic_cast<LReportWidgetBase*>(sender());
     QPointF step = senderWidget->mapFromScene(event->point());
 
     if (step.x() == 0 && step.y() == 0) return;
 
-    foreach(QReportWidgetBase  *widget, _selectedWidgets)
+    foreach(LReportWidgetBase  *widget, _selectedWidgets)
     if (widget != senderWidget)
         widget->moveBy(step.x(), step.y());
 }
 
 
-bool QReportWidgetResizer::isWidgetSelected(QReportWidgetBase *widget)
+bool LReportWidgetResizer::isWidgetSelected(LReportWidgetBase *widget)
 {
     if (!_selectedWidgets.count()) return false;
 
-    foreach(QReportWidgetBase  *w, _selectedWidgets)
+    foreach(LReportWidgetBase  *w, _selectedWidgets)
     if (widget == w)
         return true;
 
     return false;
 }
 
-QList<QReportWidgetBase *> QReportWidgetResizer::selectedWidgets() const
+QList<LReportWidgetBase *> LReportWidgetResizer::selectedWidgets() const
 {
     return _selectedWidgets;
 }

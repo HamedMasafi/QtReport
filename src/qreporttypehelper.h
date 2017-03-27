@@ -25,10 +25,10 @@
 #define QREPORTTYPEHELPER_H
 
 #include <QVariant>
-class QReportTypeHelper
+class LReportTypeHelper
 {
 public:
-    QReportTypeHelper();
+    LReportTypeHelper();
 
     static QString typeToString(QVariant::Type type);
     static QVariant::Type stringToType(QString type);

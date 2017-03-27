@@ -21,20 +21,50 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef QREPORTSECTIONDATAPROPERTIES_H
-#define QREPORTSECTIONDATAPROPERTIES_H
+#ifndef QREPORTTEXTBOX_H
+#define QREPORTTEXTBOX_H
 
-#include "ui_qreportsectiondataproperties.h"
+#include "qreportdisplaybase.h"
 
-class QReportSectionDataProperties : public QWidget, private Ui::QReportSectionDataProperties
+LEAF_BEGIN_NAMESPACE
+
+class LReportTextBox : public LReportDisplayBase
 {
-    Q_OBJECT
+   Q_OBJECT
 
-public:
-    explicit QReportSectionDataProperties(QWidget *parent = 0);
+   Q_CLASSINFO("prop_text", "true")
+   Q_CLASSINFO("prop_font", "true")
+   Q_CLASSINFO("prop_align", "true")
+   Q_CLASSINFO("prop_format", "true")
 
-protected:
-    void changeEvent(QEvent *e);
+   Q_CLASSINFO("LReportTextBox", "true")
+
+   Q_PROPERTY( QColor foreColor READ foreColor WRITE setForeColor DESIGNABLE true USER true )
+   Q_PROPERTY( QFont font READ font WRITE setFont DESIGNABLE true USER true )
+   Q_PROPERTY( QString text READ text WRITE setText DESIGNABLE true USER true )
+
+   R_PROPERTY( QColor,       foreColor, foreColor, setForeColor, m_foreColor )
+   R_PROPERTY( QFont,        font,      font,      setFont,      m_font )
+   R_PROPERTY( QString,      text,      text,      setText,      m_text )
+
+
+   public:
+      LReportTextBox ( QGraphicsItem *parent = 0 );
+
+      virtual ~LReportTextBox();
+
+
+      void paint ( QPainter *painter,
+                   const QStyleOptionGraphicsItem *option,
+                   QWidget *Widget );
+
+
+private:
+      Q_DISABLE_COPY(LReportTextBox)
 };
 
-#endif // QREPORTSECTIONDATAPROPERTIES_H
+LEAF_END_NAMESPACE
+
+Q_DECLARE_METATYPE(LEAF_WRAP_NAMESPACE(LReportTextBox*))
+
+#endif

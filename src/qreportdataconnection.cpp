@@ -27,62 +27,62 @@
 
 LEAF_BEGIN_NAMESPACE
 
-QReportDataConnection::QReportDataConnection() : QReportXMLSeriazble()
+LReportDataConnection::LReportDataConnection() : LReportXMLSeriazble()
 {
 }
 
 
-QString QReportDataConnection::driver() const
+QString LReportDataConnection::driver() const
 {
    return _driver;
 }
 
-QString QReportDataConnection::databaseName() const
+QString LReportDataConnection::databaseName() const
 {
    return _databaseName;
 }
 
-QString QReportDataConnection::serverName() const
+QString LReportDataConnection::serverName() const
 {
    return _serverName;
 }
 
-QString QReportDataConnection::username() const
+QString LReportDataConnection::username() const
 {
    return _username;
 }
 
-QString QReportDataConnection::password() const
+QString LReportDataConnection::password() const
 {
     return _password;
 }
 
-void QReportDataConnection::setDriver(QString driver)
+void LReportDataConnection::setDriver(QString driver)
 {
     _driver = driver;
 }
 
-void QReportDataConnection::setDatabaseName(QString databaseName)
+void LReportDataConnection::setDatabaseName(QString databaseName)
 {
     _databaseName = databaseName;
 }
 
-void QReportDataConnection::setServerName(QString serverName)
+void LReportDataConnection::setServerName(QString serverName)
 {
     _serverName = serverName;
 }
 
-void QReportDataConnection::setUsername(QString username)
+void LReportDataConnection::setUsername(QString username)
 {
     _username = username;
 }
 
-void QReportDataConnection::setPassword(QString password)
+void LReportDataConnection::setPassword(QString password)
 {
     _password = password;
 }
 
-void QReportDataConnection::setDatabaseInfo( QString driver,
+void LReportDataConnection::setDatabaseInfo( QString driver,
                                QString database, QString serverName,
                                QString username, QString password )
 {
@@ -93,7 +93,7 @@ void QReportDataConnection::setDatabaseInfo( QString driver,
    _password = password;
 }
 
-bool QReportDataConnection::operator ==(QReportDataConnection &other)
+bool LReportDataConnection::operator ==(LReportDataConnection &other)
 {
     return objectName() == other.objectName();
 }

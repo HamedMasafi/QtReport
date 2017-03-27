@@ -42,13 +42,13 @@
 
 LEAF_BEGIN_NAMESPACE
 
-QReportDatabaseTablesDialog::QReportDatabaseTablesDialog(QReport *report, QString connectionName, QWidget *parent) :
+LReportDatabaseTablesDialog::LReportDatabaseTablesDialog(LReport *report, QString connectionName, QWidget *parent) :
     QDialog(parent),
     _report(report)
 {
     setupUi(this);
 
-    QReportDataConnection *conn = _report->connection(connectionName);
+    LReportDataConnection *conn = _report->connection(connectionName);
 
     db = QSqlDatabase::addDatabase( conn->driver() );
     db.setHostName( conn->serverName() );
@@ -113,7 +113,7 @@ QReportDatabaseTablesDialog::QReportDatabaseTablesDialog(QReport *report, QStrin
 
 }
 
-void QReportDatabaseTablesDialog::changeEvent(QEvent *e)
+void LReportDatabaseTablesDialog::changeEvent(QEvent *e)
 {
     QDialog::changeEvent(e);
     switch (e->type())
@@ -126,12 +126,12 @@ void QReportDatabaseTablesDialog::changeEvent(QEvent *e)
     }
 }
 
-void QReportDatabaseTablesDialog::on_buttonBox_accepted()
+void LReportDatabaseTablesDialog::on_buttonBox_accepted()
 {
    for( int i = 0; i < listWidgetTables->count(); i++)
       if (listWidgetTables->item( i )->checkState() == Qt::Checked)
       {
-         /*QReportDataTable *table = new QReportDataTable;
+         /*LReportDataTable *table = new LReportDataTable;
 
          table->setName( listWidgetTables->item( i )->text() );
          QSqlRecord record = db.record( listWidgetTables->item(i)->text() );
@@ -143,7 +143,7 @@ void QReportDatabaseTablesDialog::on_buttonBox_accepted()
       }//if
 }
 
-void QReportDatabaseTablesDialog::on_toolButtonAdd_clicked()
+void LReportDatabaseTablesDialog::on_toolButtonAdd_clicked()
 {
    QTreeWidgetItem *item = treeWidget->currentItem();
 
@@ -157,13 +157,13 @@ void QReportDatabaseTablesDialog::on_toolButtonAdd_clicked()
    //item->type()
 }
 
-void QReportDatabaseTablesDialog::on_listWidgetTables_currentItemChanged(QListWidgetItem *current, QListWidgetItem*)
+void LReportDatabaseTablesDialog::on_listWidgetTables_currentItemChanged(QListWidgetItem *current, QListWidgetItem*)
 {
     textEditCustomQuery->setText(
                 QString("select  *from %1").arg(current->text()));
 }
 
-void QReportDatabaseTablesDialog::on_listWidgetParameters_itemDoubleClicked(QListWidgetItem *item)
+void LReportDatabaseTablesDialog::on_listWidgetParameters_itemDoubleClicked(QListWidgetItem *item)
 {
     textEditCustomQuery->insertPlainText(
                QString("{%1}").arg(item->text()));

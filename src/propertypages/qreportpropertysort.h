@@ -2,16 +2,16 @@
 #define QREPORTPROPERTYSORT_H
 
 #include "ui_qreportpropertysort.h"
-#include "qreportpropertypagebase.h"
+#include "propertypages/qreportpropertypagebase.h"
 
 LEAF_BEGIN_NAMESPACE
 
-class QReportPropertySort : public QReportPropertyPageBase, private Ui::QReportPropertySort
+class LReportPropertySort : public LReportPropertyPageBase, private Ui::LReportPropertySort
 {
     Q_OBJECT
 
 public:
-    explicit QReportPropertySort(QWidget *parent = 0);
+    explicit LReportPropertySort(QWidget *parent = 0);
 
     void save();
     void load();

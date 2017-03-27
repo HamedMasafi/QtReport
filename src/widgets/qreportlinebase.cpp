@@ -1,7 +1,7 @@
 /***************************************************************************
  *   QtReport                                                              *
  *   Qt Report Builder Soultion                                            *
- *                                                                         *
+ *                                                                         * 
  *   Copyright (C) 2010 by Hamed Masafi                                    *
  *   Hamed.Masafi@GMail.COM                                                *
  *                                                                         *
@@ -21,22 +21,34 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include "qreportsectiondataproperties.h"
+#include <QDomElement>
 
-QReportSectionDataProperties::QReportSectionDataProperties(QWidget *parent) :
-    QWidget(parent)
+#include "propertypages/qreportpropertypagepos.h"
+#include "propertypages/qreportpropertypagelinetype.h"
+#include "qreportlinebase.h"
+
+LEAF_BEGIN_NAMESPACE
+
+LReportLineBase::LReportLineBase(QGraphicsItem *parent): LReportWidgetBase(parent)
 {
-    setupUi(this);
+   setLineWidth( 1 );
+   setLineType( Qt::SolidLine );
+   setLineColor( Qt::black );
 }
 
-void QReportSectionDataProperties::changeEvent(QEvent *e)
+
+LReportLineBase::~LReportLineBase()
 {
-    QWidget::changeEvent(e);
-    switch (e->type()) {
-    case QEvent::LanguageChange:
-        retranslateUi(this);
-        break;
-    default:
-        break;
-    }
 }
+
+void LReportLineBase::loadDom(QDomElement *dom)
+{
+    LReportWidgetBase::loadDom(dom);
+
+    if (dom->hasAttribute("lineType")) {
+        int n = QString(dom->attribute("lineType")).toInt();
+        setLineType((Qt::PenStyle)n);
+    }//if
+}
+
+LEAF_END_NAMESPACE

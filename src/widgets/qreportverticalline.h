@@ -21,37 +21,32 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include "qreportsectionsproperties.h"
-#include "qreportdocumentdesigner.h"
-#include "qreport.h"
-#include "qreportband.h"
+#ifndef QREPORTVERTICALLINE_H
+#define QREPORTVERTICALLINE_H
+
+#include "qreportlinebase.h"
 
 LEAF_BEGIN_NAMESPACE
 
-QReportSectionsProperties::QReportSectionsProperties(QWidget *parent,
-                                                     QReportDocumentDesigner *designer,
-                                                     QReport *report) :
-    QDialog(parent),
-    _designer(designer),
-    _report(report)
+/*!
+   @author Hamed Masafi <Hamed.Masafi@GMail.COM>
+*/
+class LReportVerticalLine : public LReportLineBase
 {
-    setupUi(this);
+   Q_OBJECT
 
-    for(int i = 0; i < _report->bands()->count(); i++)
-        listWidget->addItem(_report->bands()->at(i)->header());
+   public:
+      LReportVerticalLine ( QGraphicsItem *parent =0 );
 
-}
+      ~LReportVerticalLine();
 
-void QReportSectionsProperties::changeEvent(QEvent *e)
-{
-    QDialog::changeEvent(e);
-    switch (e->type()) {
-    case QEvent::LanguageChange:
-        retranslateUi(this);
-        break;
-    default:
-        break;
-    }
-}
+      void paint ( QPainter *painter, const QStyleOptionGraphicsItem *option,
+                   QWidget *Widget );
+
+private:
+      LReportBand *_secondBand;
+};
 
 LEAF_END_NAMESPACE
+
+#endif // QREPORTVERTICALLINE_H

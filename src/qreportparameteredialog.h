@@ -6,19 +6,19 @@
 
 LEAF_BEGIN_NAMESPACE
 
-class QReport;
-class QReportParametere;
-class QReportParametereDialogPrivate;
-class QReportParametereDialog : public QDialog, private Ui::QReportParametereDialog
+class LReport;
+class LReportParametere;
+class LReportParametereDialogPrivate;
+class LReportParametereDialog : public QDialog, private Ui::LReportParametereDialog
 {
     Q_OBJECT
-    QReportParametereDialogPrivate *const d_ptr;
-    Q_DECLARE_PRIVATE(QReportParametereDialog)
+    LReportParametereDialogPrivate *const d_ptr;
+    Q_DECLARE_PRIVATE(LReportParametereDialog)
 
 public:
-    explicit QReportParametereDialog(QReport *report, QReportParametere *param = 0);
+    explicit LReportParametereDialog(LReport *report, LReportParametere *param = 0);
 
-    QReportParametere *parametere() const;
+    LReportParametere *parametere() const;
 
 protected:
     void changeEvent(QEvent *e);

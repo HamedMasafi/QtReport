@@ -24,12 +24,12 @@
 
 #include "qreportdesigneraboutdialog.h"
 
-QReportDesignerAboutDialog::QReportDesignerAboutDialog(QWidget *parent) :
+LReportDesignerAboutDialog::LReportDesignerAboutDialog(QWidget *parent) :
     QDialog(parent){
     setupUi(this);
 }
 
-void QReportDesignerAboutDialog::changeEvent(QEvent *e)
+void LReportDesignerAboutDialog::changeEvent(QEvent *e)
 {
     QDialog::changeEvent(e);
     switch (e->type()) {

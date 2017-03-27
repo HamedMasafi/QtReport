@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>QReportPropertyPageWidget</class>
- <widget class="QWidget" name="QReportPropertyPageWidget">
+ <class>LReportPropertyPageWidget</class>
+ <widget class="QWidget" name="LReportPropertyPageWidget">
   <property name="geometry">
    <rect>
     <x>0</x>

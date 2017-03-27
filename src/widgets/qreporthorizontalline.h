@@ -28,14 +28,14 @@
 
 LEAF_BEGIN_NAMESPACE
 
-class QReportHorizontalLine : public QReportLineBase
+class LReportHorizontalLine : public LReportLineBase
 {
    Q_OBJECT
 
    public:
-      QReportHorizontalLine ( QGraphicsItem *parent = 0 );
+      LReportHorizontalLine ( QGraphicsItem *parent = 0 );
 
-      ~QReportHorizontalLine();
+      ~LReportHorizontalLine();
 
       void paint ( QPainter *painter, const QStyleOptionGraphicsItem *option,
                    QWidget *Widget );

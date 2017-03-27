@@ -1,7 +1,7 @@
 /***************************************************************************
  *   QtReport                                                              *
  *   Qt Report Builder Soultion                                            *
- *                                                                         * 
+ *                                                                         *
  *   Copyright (C) 2010 by Hamed Masafi                                    *
  *   Hamed.Masafi@GMail.COM                                                *
  *                                                                         *
@@ -21,41 +21,33 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include "qreporthorizontalline.h"
+#ifndef QREPORTSECTIONSPROPERTIES_H
+#define QREPORTSECTIONSPROPERTIES_H
+
+#include "qtreportglobal.h"
+#include "ui_qreportsectionsproperties.h"
 
 LEAF_BEGIN_NAMESPACE
 
-QReportHorizontalLine::QReportHorizontalLine(QGraphicsItem *parent): QReportLineBase(parent)
-{
-   this->setResizeDirection( ::Top | ::Bottom );
-   this->setWidth( 7 );
-   this->setHeight( 90 );
-   this->setMarginPos( 4, 0 );
-   setFixedSize(7, 0);
-}
+class LReportDocumentDesigner;
+class LReport;
 
-
-QReportHorizontalLine::~QReportHorizontalLine()
+class LReportSectionsProperties : public QDialog, private Ui::LReportSectionsProperties
 {
-}
+    Q_OBJECT
 
-void QReportHorizontalLine::paint ( QPainter *painter, const QStyleOptionGraphicsItem *option,
-                       QWidget *widget )
-{
-  Q_UNUSED( option );
-  Q_UNUSED( widget );
-  
-  QPen pen;
-  pen.setStyle( lineType() );
-  pen.setColor( lineColor() );
-  pen.setWidth( lineWidth() );
-  painter->setPen( pen );
-  painter->drawLine( 4,
-                     0, 
-                     4,
-                     this->boundingRect().height() );
-  
-  //TODO -> RLineBase::paint( painter, option, widget );
-}
+public:
+    explicit LReportSectionsProperties(QWidget *parent,
+                                       LReportDocumentDesigner *designer,
+                                       LReport *report);
+
+protected:
+    void changeEvent(QEvent *e);
+
+    LReportDocumentDesigner *_designer;
+    LReport *_report;
+};
 
 LEAF_END_NAMESPACE
+
+#endif // QREPORTSECTIONSPROPERTIES_H

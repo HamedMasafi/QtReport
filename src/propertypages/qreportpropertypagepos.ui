@@ -2,8 +2,8 @@
  <author/>
  <comment/>
  <exportmacro/>
- <class>QReportPropertyPagePos</class>
- <widget class="QWidget" name="QReportPropertyPagePos">
+ <class>LReportPropertyPagePos</class>
+ <widget class="QWidget" name="LReportPropertyPagePos">
   <property name="geometry">
    <rect>
     <x>0</x>

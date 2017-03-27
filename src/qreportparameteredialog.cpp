@@ -33,26 +33,26 @@
 
 LEAF_BEGIN_NAMESPACE
 
-class QReportParametereDialogPrivate{
-    QReport *report;
-    QReportParametere *paremetere;
+class LReportParametereDialogPrivate{
+    LReport *report;
+    LReportParametere *paremetere;
 
-    QReportParametereDialog *q_ptr;
-    Q_DECLARE_PUBLIC(QReportParametereDialog)
+    LReportParametereDialog *q_ptr;
+    Q_DECLARE_PUBLIC(LReportParametereDialog)
 
 public:
-    QReportParametereDialogPrivate(QReportParametereDialog *parent) : q_ptr(parent){
+    LReportParametereDialogPrivate(LReportParametereDialog *parent) : q_ptr(parent){
 
     }
 };
 
-QReportParametereDialog::QReportParametereDialog(QReport *report, QReportParametere *param) :
+LReportParametereDialog::LReportParametereDialog(LReport *report, LReportParametere *param) :
     QDialog(),
-    d_ptr(new QReportParametereDialogPrivate(this))
+    d_ptr(new LReportParametereDialogPrivate(this))
 {
     setupUi(this);
 
-    Q_D(QReportParametereDialog);
+    Q_D(LReportParametereDialog);
 
     d->report = report;
     d->paremetere = param;
@@ -60,7 +60,7 @@ QReportParametereDialog::QReportParametereDialog(QReport *report, QReportParamet
     if(param){
         lineEditName->setText(param->objectName());
         lineEditDefValue->setText(param->defaultValue().toString());
-        comboBoxType->setCurrentIndex(comboBoxType->findText(QReportTypeHelper::typeToString((QVariant::Type)param->type())));
+        comboBoxType->setCurrentIndex(comboBoxType->findText(LReportTypeHelper::typeToString((QVariant::Type)param->type())));
 
         setWindowTitle(tr("Edit parametere"));
     } else {
@@ -71,13 +71,13 @@ QReportParametereDialog::QReportParametereDialog(QReport *report, QReportParamet
     lineEditName->setValidator(validator);
 }
 
-QReportParametere *QReportParametereDialog::parametere() const
+LReportParametere *LReportParametereDialog::parametere() const
 {
-    Q_D(const QReportParametereDialog);
+    Q_D(const LReportParametereDialog);
     return d->paremetere;
 }
 
-void QReportParametereDialog::changeEvent(QEvent *e)
+void LReportParametereDialog::changeEvent(QEvent *e)
 {
     QDialog::changeEvent(e);
     switch (e->type())
@@ -92,9 +92,9 @@ void QReportParametereDialog::changeEvent(QEvent *e)
 }
 
 
-void QReportParametereDialog::on_buttonBox_accepted()
+void LReportParametereDialog::on_buttonBox_accepted()
 {
-    Q_D(QReportParametereDialog);
+    Q_D(LReportParametereDialog);
 
     if(lineEditName->text().isEmpty()){
         QMessageBox::warning(this,
@@ -104,7 +104,7 @@ void QReportParametereDialog::on_buttonBox_accepted()
         return;
     }
 
-    QReportParametere *p = d->report->parameter(lineEditName->text());
+    LReportParametere *p = d->report->parameter(lineEditName->text());
     if(p && p != d->paremetere) {
         QMessageBox::information(this,
                                  windowTitle(),
@@ -112,11 +112,11 @@ void QReportParametereDialog::on_buttonBox_accepted()
                                  QMessageBox::Ok);
     } else {
         if(!d->paremetere)
-            d->paremetere = new QReportParametere();
+            d->paremetere = new LReportParametere();
 
         d->paremetere->setObjectName(lineEditName->text());
         d->paremetere->setDefaultValue(lineEditDefValue->text());
-        d->paremetere->setType(QReportTypeHelper::stringToType(comboBoxType->currentText()));
+        d->paremetere->setType(LReportTypeHelper::stringToType(comboBoxType->currentText()));
 
         accept();
     }

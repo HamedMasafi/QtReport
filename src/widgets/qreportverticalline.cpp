@@ -1,7 +1,7 @@
 /***************************************************************************
  *   QtReport                                                              *
  *   Qt Report Builder Soultion                                            *
- *                                                                         *
+ *                                                                         * 
  *   Copyright (C) 2010 by Hamed Masafi                                    *
  *   Hamed.Masafi@GMail.COM                                                *
  *                                                                         *
@@ -21,55 +21,40 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef RRECTANGLEBASE_H
-#define RRECTANGLEBASE_H
-
-#include "qreportwidgetbase.h"
+#include "qreportverticalline.h"
 
 LEAF_BEGIN_NAMESPACE
 
-class QReportRectangle : public QReportWidgetBase
+LReportVerticalLine::LReportVerticalLine(QGraphicsItem *parent): LReportLineBase(parent)
 {
-   Q_OBJECT
-
-   Q_CLASSINFO("prop_rect", "true")
-
-   R_PROPERTY( int,            lineWidth, lineWidth, setLineWidth, m_lineWidth )
-   Q_PROPERTY( int lineWidth READ lineWidth WRITE setLineWidth DESIGNABLE true USER true )
-
-   R_PROPERTY( QColor,         lineColor, lineColor, setLineColor, m_lineColor )
-   Q_PROPERTY( QColor lineColor READ lineColor WRITE setLineColor DESIGNABLE true USER true )
-
-   R_PROPERTY( Qt::PenStyle,   lineType,  lineType,  setLineType,  m_lineType  )
-   Q_PROPERTY( Qt::PenStyle  lineType READ lineType WRITE setLineType DESIGNABLE true USER true )
-
-   R_PROPERTY( Qt::BrushStyle, fillType,  fillType,  setFillType,  m_fillType )
-   Q_PROPERTY( Qt::BrushStyle fillType READ fillType WRITE setFillType  DESIGNABLE true USER true)
-
-   R_PROPERTY( QColor,         fillColor, fillColor, setFillColor, m_fillColor )
-   Q_PROPERTY( QColor fillColor READ fillColor WRITE setFillColor DESIGNABLE true USER true )
+   this->setResizeDirection( Left | Right );
+   this->setHeight( 7 );
+   this->setWidth( 90 );
+   this->setMarginPos( 0, 4 );
+   setFixedSize(0, 7);
+}
 
 
-   public:
-      QReportRectangle ( QGraphicsItem *parent = 0 );
-      ~QReportRectangle();
+LReportVerticalLine::~LReportVerticalLine()
+{
+}
 
-      void paint ( QPainter *painter,
-                   const QStyleOptionGraphicsItem *option,
-                   QWidget *Widget );
+void LReportVerticalLine::paint ( QPainter *painter, const QStyleOptionGraphicsItem *option,
+                       QWidget *widget )
+{
+  Q_UNUSED( option );
+  Q_UNUSED( widget );
+  
+  QPen pen;
+  pen.setStyle( lineType() );
+  pen.setColor( lineColor() );
+  pen.setWidth( lineWidth() );
+  painter->setPen( pen );
+  painter->drawLine( 0,
+                     4,
+                     this->boundingRect().width(), 
+                     4 );
 
-
-      QRectF insideRect() const;
-
-      QString _sample;
-      QString sample() const{ return _sample; }
-      void setSample( QString v ){ _sample = v; }
-
-
-      void loadDom( QDomElement *dom );
-
-};
+}
 
 LEAF_END_NAMESPACE
-
-#endif

@@ -38,7 +38,7 @@ LEAF_BEGIN_NAMESPACE
   *Define a new ruler.
  */
 
-QReportRuler::QReportRuler ( QWidget *parent, Qt::Orientation direction ) : QWidget ( parent, 0 )
+LReportRuler::LReportRuler ( QWidget *parent, Qt::Orientation direction ) : QWidget ( parent, 0 )
 		, _fontMetrics ( this->font() )
 {
    _pixelPerUnit = 0;
@@ -60,12 +60,12 @@ QReportRuler::QReportRuler ( QWidget *parent, Qt::Orientation direction ) : QWid
 }
 
 
-QReportRuler::~QReportRuler()
+LReportRuler::~LReportRuler()
 {
 }
 
 
-void QReportRuler::paintEvent ( QPaintEvent * )
+void LReportRuler::paintEvent ( QPaintEvent * )
 {
 	QPainter p ( this );
 
@@ -100,7 +100,7 @@ void QReportRuler::paintEvent ( QPaintEvent * )
                             textWidth  *2,     textHeight );
 
 			if ( s != "0" )
-				p.drawText ( rcPart, s, Qt::AlignHCenter | Qt::AlignVCenter );
+                p.drawText ( rcPart, Qt::AlignCenter, s );
 
          p.drawLine ( i + ( _pixelPerUnit / 2 ) ,          rcPart.top(),
                       i + ( _pixelPerUnit / 2 ),           rcPart.bottom() );
@@ -145,7 +145,7 @@ void QReportRuler::paintEvent ( QPaintEvent * )
                          textWidth,    textHeight  *2 );
 
          if ( s != "0" )
-            p.drawText ( rcPart, s, Qt::AlignHCenter | Qt::AlignVCenter );
+            p.drawText ( rcPart, Qt::AlignCenter, s );
 
          p.drawLine ( rcPart.left(),  i + ( _pixelPerUnit / 2 ),
                       rcPart.right(), i + ( _pixelPerUnit / 2 ) );
@@ -165,7 +165,7 @@ void QReportRuler::paintEvent ( QPaintEvent * )
 }
 
 
-void QReportRuler::mouseMoveEvent ( QMouseEvent * )
+void LReportRuler::mouseMoveEvent ( QMouseEvent * )
 {
    /* not in current plan :)
    _resizeMode = NoResize;
@@ -184,37 +184,37 @@ void QReportRuler::mouseMoveEvent ( QMouseEvent * )
 }
 
 
-void QReportRuler::setDirection( Qt::Orientation direction )
+void LReportRuler::setDirection( Qt::Orientation direction )
 {
    _direction = direction;
 
 }
 
-void QReportRuler::setPixelPerUnit(int v)
+void LReportRuler::setPixelPerUnit(int v)
 {
    _pixelPerUnit = v;
 
 }
 
-void QReportRuler::setStartPos(int v)
+void LReportRuler::setStartPos(int v)
 {
    _startPos = v;
 
 }
 
-void QReportRuler::setRuleWidth(int v)
+void LReportRuler::setRuleWidth(int v)
 {
    _ruleWidth = v;
 
 }
 
-void QReportRuler::setStartMargin(int v)
+void LReportRuler::setStartMargin(int v)
 {
    _startMargin = v;
 
 }
 
-void QReportRuler::setEndMargin(int v)
+void LReportRuler::setEndMargin(int v)
 {
    _endMargin = v;
 

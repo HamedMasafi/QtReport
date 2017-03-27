@@ -111,7 +111,7 @@ public:
       }
 
       painter->drawRect( rc );
-      painter->drawText( rc, text, Qt::AlignHCenter | Qt::AlignVCenter );
+      painter->drawText( rc, Qt::AlignCenter, text );
    }
 
    void paintEvent ( QPaintEvent * )
@@ -134,8 +134,8 @@ public:
       painter.setPen(Qt::black);
       painter.drawRect( 0, 0, width() - 1, height() - 1 );
       painter.drawText( QRect( 10, MARGINY - 19, this->width(), 19 ),
-                         tr( "Standard" ),
-                         Qt::AlignLeft | Qt::AlignVCenter );
+                        (Qt::AlignLeft | Qt::AlignVCenter),
+                        tr( "Standard" ));
 
       int col, row;
 

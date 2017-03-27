@@ -65,12 +65,12 @@
 
 LEAF_BEGIN_NAMESPACE
 
-QReportDesignerFactory::QReportDesignerFactory(QMainWindow *window) :
+LReportDesignerFactory::LReportDesignerFactory(QMainWindow *window) :
     mainWindow(window)
 {
-    _report = new QReport();
+    _report = new LReport();
 
-    _designer = new QReportDocumentDesigner(mainWindow, _report);
+    _designer = new LReportDocumentDesigner(mainWindow, _report);
     _designer->setObjectName(QString::fromUtf8("doc"));
 
     initWidgets();
@@ -112,7 +112,7 @@ QReportDesignerFactory::QReportDesignerFactory(QMainWindow *window) :
 }
 
 
-void QReportDesignerFactory::initActions()
+void LReportDesignerFactory::initActions()
 {
     actionZoom25 = new QAction(this);
     actionZoom25->setObjectName(QString::fromUtf8("actionZoom25"));
@@ -185,62 +185,62 @@ void QReportDesignerFactory::initActions()
     actionInsertTextbox = new QAction(this);
     actionInsertTextbox->setObjectName(QString::fromUtf8("actionInsertTextbox"));
     actionInsertTextbox->setIcon(QIcon(":/designer/textbox"));
-    actionInsertTextbox->setData("QReportTextBox");
+    actionInsertTextbox->setData("LReportTextBox");
 
     actionInsertImage = new QAction(this);
     actionInsertImage->setObjectName(QString::fromUtf8("actionInsertImage"));
     actionInsertImage->setIcon(QIcon(":/designer/image"));
-    actionInsertImage->setData("QReportImage");
+    actionInsertImage->setData("LReportImage");
 
     actionInsertVerticalLine = new QAction(this);
     actionInsertVerticalLine->setObjectName(QString::fromUtf8("actionInsertVerticalLine"));
     actionInsertVerticalLine->setIcon(QIcon(":/designer/vline"));
-    actionInsertVerticalLine->setData("QReportVerticalLine");
+    actionInsertVerticalLine->setData("LReportVerticalLine");
 
     actionInsertHorizontalLine = new QAction(this);
     actionInsertHorizontalLine->setObjectName(QString::fromUtf8("actionInsertHorizontalLine"));
     actionInsertHorizontalLine->setIcon(QIcon(":/designer/hline"));
-    actionInsertHorizontalLine->setData("QReportHorizontalLine");
+    actionInsertHorizontalLine->setData("LReportHorizontalLine");
 
     actionInsertPageHeader = new QAction(this);
     actionInsertPageHeader->setObjectName(QString::fromUtf8("actionInsertPageHeader"));
     actionInsertPageHeader->setIcon(QIcon(":/designer/section_page_header"));
-    actionInsertPageHeader->setData(::PageHeader);
+    actionInsertPageHeader->setData(PageHeader);
 
     actionInsertReportHeader = new QAction(this);
     actionInsertReportHeader->setObjectName(QString::fromUtf8("actionInsertReportHeader"));
     actionInsertReportHeader->setIcon(QIcon(":/designer/section_report_header"));
-    actionInsertReportHeader->setData(::ReportHeader);
+    actionInsertReportHeader->setData(ReportHeader);
 
     actionInsertGroupHeader = new QAction(this);
     actionInsertGroupHeader->setObjectName(QString::fromUtf8("actionInsertGroupHeader"));
     actionInsertGroupHeader->setIcon(QIcon(":/designer/section_group_header"));
-    actionInsertGroupHeader->setData(::GroupHeader);
+    actionInsertGroupHeader->setData(GroupHeader);
 
     actionInsertData = new QAction(this);
     actionInsertData->setObjectName(QString::fromUtf8("actionInsertData"));
     actionInsertData->setIcon(QIcon(":/designer/section_data"));
-    actionInsertData->setData(::Data);
+    actionInsertData->setData(Data);
 
     actionInsertGroupFooter = new QAction(this);
     actionInsertGroupFooter->setObjectName(QString::fromUtf8("actionInsertGroupFooter"));
     actionInsertGroupFooter->setIcon(QIcon(":/designer/section_group_footer"));
-    actionInsertGroupFooter->setData(::GroupFooter);
+    actionInsertGroupFooter->setData(GroupFooter);
 
     actionInsertReportFooter = new QAction(this);
     actionInsertReportFooter->setObjectName(QString::fromUtf8("actionInsertReportFooter"));
     actionInsertReportFooter->setIcon(QIcon(":/designer/section_report_footer"));
-    actionInsertReportFooter->setData(::ReportFooter);
+    actionInsertReportFooter->setData(ReportFooter);
 
     actionInsertPageFooter = new QAction(this);
     actionInsertPageFooter->setObjectName(QString::fromUtf8("actionInsertPageFooter"));
     actionInsertPageFooter->setIcon(QIcon(":/designer/section_page_footer"));
-    actionInsertPageFooter->setData(::PageFooter);
+    actionInsertPageFooter->setData(PageFooter);
 
     actionInsertRectangle = new QAction(this);
     actionInsertRectangle->setObjectName(QString::fromUtf8("actionInsertRectangle"));
     actionInsertRectangle->setIcon(QIcon(":/designer/rectangle"));
-    actionInsertRectangle->setData("QReportRectangle");
+    actionInsertRectangle->setData("LReportRectangle");
 
     actionAlignToGridOption = new QAction(this);
     actionAlignToGridOption->setObjectName(QString::fromUtf8("actionAlignToGridOption"));
@@ -519,7 +519,7 @@ void QReportDesignerFactory::initActions()
     connect(actionInsertReportFooter, SIGNAL(triggered()), this, SLOT(actionInsertBand_triggered()));
 }
 
-void QReportDesignerFactory::initActionGroups()
+void LReportDesignerFactory::initActionGroups()
 {
     QActionGroup *groupAlign = new QActionGroup(mainWindow);
     groupAlign->addAction(actionAlignRight);
@@ -556,7 +556,7 @@ void QReportDesignerFactory::initActionGroups()
     actionSelectTool->setChecked(true);
 }
 
-void QReportDesignerFactory::initMenubar()
+void LReportDesignerFactory::initMenubar()
 {
     menubar = new QMenuBar(mainWindow);
     menubar->setObjectName(QString::fromUtf8("menubar"));
@@ -699,7 +699,7 @@ void QReportDesignerFactory::initMenubar()
     mainWindow->setMenuBar(menubar);
 }
 
-void QReportDesignerFactory::initToolbars()
+void LReportDesignerFactory::initToolbars()
 {
     toolBarStandard = new QToolBar("Standard", mainWindow);
     toolBarStandard->setObjectName("standardToolBar");
@@ -798,13 +798,13 @@ void QReportDesignerFactory::initToolbars()
 
 }
 
-void QReportDesignerFactory::initDockWidgets()
+void LReportDesignerFactory::initDockWidgets()
 {
     // Report items
     reportItemsDock = new QDockWidget(mainWindow);
     reportItemsDock->setObjectName("reportItemsDock");
     reportItemsDock->setWindowTitle("Report items");
-    treeWidgetFields = new QReportTreeManager(mainWindow, _designer, _report);
+    treeWidgetFields = new LReportTreeManager(mainWindow, _designer, _report);
     treeWidgetFields->setObjectName("treeWidgetFields");
 
     reportItemsDock->setWidget(treeWidgetFields);
@@ -823,7 +823,7 @@ void QReportDesignerFactory::initDockWidgets()
 
 }
 
-void QReportDesignerFactory::initStatusBar()
+void LReportDesignerFactory::initStatusBar()
 {
     statusbar = new QStatusBar(mainWindow);
     statusbar->setObjectName(QString::fromUtf8("statusbar"));
@@ -839,7 +839,7 @@ void QReportDesignerFactory::initStatusBar()
     connect(sliderZoom, SIGNAL(valueChanged(int)), this, SLOT(sliderZoom_valueChanged(int)));
 }
 
-void QReportDesignerFactory::initWidgets()
+void LReportDesignerFactory::initWidgets()
 {
     fontComboBox = new QFontComboBox(mainWindow);
     fontComboBox->setObjectName("fontComboBox");
@@ -862,7 +862,7 @@ void QReportDesignerFactory::initWidgets()
 }
 
 
-void QReportDesignerFactory::retranslateUi()
+void LReportDesignerFactory::retranslateUi()
 {
     actionNew->setShortcut(tr("Ctrl+N"));
     actionSave->setShortcut(tr("Ctrl+S"));
@@ -979,20 +979,20 @@ void QReportDesignerFactory::retranslateUi()
 
 
 
-void QReportDesignerFactory::actionInsertWidget_triggered()
+void LReportDesignerFactory::actionInsertWidget_triggered()
 {
    _designer->addContent(dynamic_cast<QAction*>(sender())->data().toString());
 }
 
-void QReportDesignerFactory::actionInsertBand_triggered()
+void LReportDesignerFactory::actionInsertBand_triggered()
 {
    BandType type = (BandType)dynamic_cast<QAction*>(sender())->data().toInt();
-   QReportBand *band = new QReportBand(type);
+   LReportBand *band = new LReportBand(type);
    band->setBandHeight(50);
    _designer->addBand(band);
 }
 
-void QReportDesignerFactory::doc_widgetContextMenuEvent()
+void LReportDesignerFactory::doc_widgetContextMenuEvent()
 {
     QMenu menu;
 
@@ -1020,43 +1020,43 @@ void QReportDesignerFactory::doc_widgetContextMenuEvent()
 
 // Actions events
 
-void QReportDesignerFactory::on_actionZoom50_triggered()
+void LReportDesignerFactory::on_actionZoom50_triggered()
 {
     _designer->setZoom(50);
 }
 
-void QReportDesignerFactory::on_actionZoom400_triggered()
+void LReportDesignerFactory::on_actionZoom400_triggered()
 {
     _designer->setZoom(400);
 }
 
-void QReportDesignerFactory::on_actionZoom25_triggered()
+void LReportDesignerFactory::on_actionZoom25_triggered()
 {
     _designer->setZoom(25);
 }
 
-void QReportDesignerFactory::on_actionZoom75_triggered()
+void LReportDesignerFactory::on_actionZoom75_triggered()
 {
     _designer->setZoom(75);
 }
 
-void QReportDesignerFactory::on_actionZoom100_triggered()
+void LReportDesignerFactory::on_actionZoom100_triggered()
 {
     _designer->setZoom(100);
 }
 
-void QReportDesignerFactory::on_actionZoom200_triggered()
+void LReportDesignerFactory::on_actionZoom200_triggered()
 {
     _designer->setZoom(200);
 }
 
-void QReportDesignerFactory::on_actionAbout_triggered()
+void LReportDesignerFactory::on_actionAbout_triggered()
 {
-    QReportDesignerAboutDialog about(mainWindow);
+    LReportDesignerAboutDialog about(mainWindow);
     about.exec();
 }
 
-void QReportDesignerFactory::on_actionSave_triggered()
+void LReportDesignerFactory::on_actionSave_triggered()
 {
     if(_report->filePath().isEmpty())
         on_actionSave_As_triggered();
@@ -1064,7 +1064,7 @@ void QReportDesignerFactory::on_actionSave_triggered()
         _report->save();
 }
 
-void QReportDesignerFactory::on_actionPrint_Setup_triggered()
+void LReportDesignerFactory::on_actionPrint_Setup_triggered()
 {
     /* QPageSetupDialog *dialog = new QPageSetupDialog( mainWindow );
 
@@ -1077,47 +1077,47 @@ void QReportDesignerFactory::on_actionPrint_Setup_triggered()
     _designer->showPageSetup();
 }
 
-void QReportDesignerFactory::on_actionGridDots_triggered()
+void LReportDesignerFactory::on_actionGridDots_triggered()
 {
-    _designer->setGridType(::DotGrid);
+    _designer->setGridType(DotGrid);
 }
 
-void QReportDesignerFactory::on_actionGridLines_triggered()
+void LReportDesignerFactory::on_actionGridLines_triggered()
 {
-    _designer->setGridType(::LinesGrid);
+    _designer->setGridType(LinesGrid);
 }
 
-void QReportDesignerFactory::on_actionGridNone_triggered()
+void LReportDesignerFactory::on_actionGridNone_triggered()
 {
-    _designer->setGridType(::NoGrid);
+    _designer->setGridType(NoGrid);
 }
 
-void QReportDesignerFactory::on_actionAbout_Qt_triggered()
+void LReportDesignerFactory::on_actionAbout_Qt_triggered()
 {
     qApp->aboutQt();
 }
 
-void QReportDesignerFactory::on_actionAlignToGridOption_triggered()
+void LReportDesignerFactory::on_actionAlignToGridOption_triggered()
 {
     _designer->setAlignToGrid(actionAlignToGridOption->isChecked());
 }
 
-void QReportDesignerFactory::on_actionShowRulers_triggered()
+void LReportDesignerFactory::on_actionShowRulers_triggered()
 {
     _designer->setShowRulers(actionShowRulers->isChecked());
 }
 
-void QReportDesignerFactory::on_actionExit_triggered()
+void LReportDesignerFactory::on_actionExit_triggered()
 {
     qApp->quit();
 }
 
-void QReportDesignerFactory::on_actionNew_triggered()
+void LReportDesignerFactory::on_actionNew_triggered()
 {
     /*
-    QReportDatabaseInfoDialog *dialog = new QReportDatabaseInfoDialog(_report);
+    LReportDatabaseInfoDialog *dialog = new LReportDatabaseInfoDialog(_report);
     dialog->exec();
-    QReportDatabaseTablesDialog *tablesDialog = new QReportDatabaseTablesDialog(_report);
+    LReportDatabaseTablesDialog *tablesDialog = new LReportDatabaseTablesDialog(_report);
     tablesDialog->exec();
 
     for (int i = 0; i < nodeDataSource->childCount(); i++)
@@ -1140,14 +1140,14 @@ void QReportDesignerFactory::on_actionNew_triggered()
     _designer->clear();
 }
 
-void QReportDesignerFactory::on_actionCopy_triggered()
+void LReportDesignerFactory::on_actionCopy_triggered()
 {
     //RReportWidgetBase *w = doc->activeWidget();
     //QClipboard::setUserData
 }
 
 
-void QReportDesignerFactory::updateActions()
+void LReportDesignerFactory::updateActions()
 {
     if (_designer->hasWidgetProperty("font")) {
         QFont font = _designer->widgetProperty("font").value<QFont>();
@@ -1170,7 +1170,7 @@ void QReportDesignerFactory::updateActions()
     }
 }
 
-void QReportDesignerFactory::doc_activeWidgetChanged()
+void LReportDesignerFactory::doc_activeWidgetChanged()
 {
     int count = _designer->selectedWidgets().count();
     actionCut->setEnabled(count);
@@ -1231,13 +1231,13 @@ void QReportDesignerFactory::doc_activeWidgetChanged()
     actionProperties->setEnabled(true);
 }
 
-void QReportDesignerFactory::doc_dataDirectoryModified()
+void LReportDesignerFactory::doc_dataDirectoryModified()
 {
     qDebug() << "doc_dataDirectoryModified";
     treeWidgetFields->initTreeItems();
 }
 
-void QReportDesignerFactory::on_actionSave_As_triggered()
+void LReportDesignerFactory::on_actionSave_As_triggered()
 {
     QString filePath =
         QFileDialog::getSaveFileName(mainWindow,
@@ -1247,7 +1247,7 @@ void QReportDesignerFactory::on_actionSave_As_triggered()
     _report->save(filePath);
 }
 
-void QReportDesignerFactory::on_actionOpen_triggered()
+void LReportDesignerFactory::on_actionOpen_triggered()
 {
     QString filePath =
         QFileDialog::getOpenFileName(mainWindow,
@@ -1261,22 +1261,22 @@ void QReportDesignerFactory::on_actionOpen_triggered()
     treeWidgetFields->initTreeItems();
 }
 
-void QReportDesignerFactory::on_actionProperties_triggered()
+void LReportDesignerFactory::on_actionProperties_triggered()
 {
     _designer->showWidgetProperties();
 }
 
-void QReportDesignerFactory::on_actionSetDatabase_triggered()
+void LReportDesignerFactory::on_actionSetDatabase_triggered()
 {
-    QReportDatabaseInfoDialog *dialog = new QReportDatabaseInfoDialog(_report);
+    LReportDatabaseInfoDialog *dialog = new LReportDatabaseInfoDialog(_report);
     dialog->exec();
     delete dialog;
 }
 
-void QReportDesignerFactory::on_actionSetDataSource_triggered()
+void LReportDesignerFactory::on_actionSetDataSource_triggered()
 {
     /*TODO
-    QReportDatabaseTablesDialog *tablesDialog = new QReportDatabaseTablesDialog(_report);
+    LReportDatabaseTablesDialog *tablesDialog = new LReportDatabaseTablesDialog(_report);
     tablesDialog->exec();
 
     for (int i = 0; i < nodeDataSource->childCount(); i++)
@@ -1300,40 +1300,40 @@ void QReportDesignerFactory::on_actionSetDataSource_triggered()
     */
 }
 
-void QReportDesignerFactory::on_actionSendToBack_triggered()
+void LReportDesignerFactory::on_actionSendToBack_triggered()
 {
     _designer->sendToBack();
 }
 
-void QReportDesignerFactory::on_actionBringToFront_triggered()
+void LReportDesignerFactory::on_actionBringToFront_triggered()
 {
     _designer->bringToFront();
 }
 
-void QReportDesignerFactory::on_actionPointerTool_triggered()
+void LReportDesignerFactory::on_actionPointerTool_triggered()
 {
     //TODO: _document moved to Private class
     //    _designer->_document->setDragMode(QGraphicsView::NoDrag);
 }
 
-void QReportDesignerFactory::on_actionHandTool_triggered()
+void LReportDesignerFactory::on_actionHandTool_triggered()
 {
     //TODO: _document moved to Private class
     //    _designer->_document->setDragMode(QGraphicsView::ScrollHandDrag);
-    _designer->setMouseTool(::Hand);
+    _designer->setMouseTool(Hand);
 }
 
-void QReportDesignerFactory::on_actionSelectTool_triggered()
+void LReportDesignerFactory::on_actionSelectTool_triggered()
 {
     //TODO: _document moved to Private class
     //    _designer->_document->setDragMode(QGraphicsView::RubberBandDrag);
-    _designer->setMouseTool(::Pointer);
+    _designer->setMouseTool(Pointer);
 }
 
-void QReportDesignerFactory::on_actionAddParametere_triggered()
+void LReportDesignerFactory::on_actionAddParametere_triggered()
 {
     /*
-    QReportParametereDialog *dialog = new QReportParametereDialog(mainWindow);
+    LReportParametereDialog *dialog = new LReportParametereDialog(mainWindow);
     dialog->exec();
 
     if (dialog->result() == QDialog::Accepted) {
@@ -1352,7 +1352,7 @@ void QReportDesignerFactory::on_actionAddParametere_triggered()
     */
 }
 
-void QReportDesignerFactory::on_actionBold_triggered()
+void LReportDesignerFactory::on_actionBold_triggered()
 {
     QFont font = _designer->widgetProperty("font").value<QFont>();
     font.setBold(actionBold->isChecked());
@@ -1360,7 +1360,7 @@ void QReportDesignerFactory::on_actionBold_triggered()
     _designer->updateWidgets();
 }
 
-void QReportDesignerFactory::on_actionItalic_triggered()
+void LReportDesignerFactory::on_actionItalic_triggered()
 {
     QFont font = _designer->widgetProperty("font").value<QFont>();
     font.setItalic(actionItalic->isChecked());
@@ -1368,7 +1368,7 @@ void QReportDesignerFactory::on_actionItalic_triggered()
     _designer->updateWidgets();
 }
 
-void QReportDesignerFactory::on_actionUnderline_triggered()
+void LReportDesignerFactory::on_actionUnderline_triggered()
 {
     QFont font = _designer->widgetProperty("font").value<QFont>();
     font.setUnderline(actionUnderline->isChecked());
@@ -1376,33 +1376,33 @@ void QReportDesignerFactory::on_actionUnderline_triggered()
     _designer->updateWidgets();
 }
 
-void QReportDesignerFactory::on_actionSameLeft_triggered()
+void LReportDesignerFactory::on_actionSameLeft_triggered()
 {
-    _designer->setAlign(::Left);
+    _designer->setAlign(Left);
 }
 
-void QReportDesignerFactory::on_actionSameTop_triggered()
+void LReportDesignerFactory::on_actionSameTop_triggered()
 {
-    _designer->setAlign(::Top);
+    _designer->setAlign(Top);
 }
 
-void QReportDesignerFactory::on_actionSameRight_triggered()
+void LReportDesignerFactory::on_actionSameRight_triggered()
 {
-    _designer->setAlign(::Right);
+    _designer->setAlign(Right);
 }
 
-void QReportDesignerFactory::on_actionSameBottom_triggered()
+void LReportDesignerFactory::on_actionSameBottom_triggered()
 {
-    _designer->setAlign(::Bottom);
+    _designer->setAlign(Bottom);
 }
 
-void QReportDesignerFactory::on_actionSectionsProperties_triggered()
+void LReportDesignerFactory::on_actionSectionsProperties_triggered()
 {
-    QReportSectionsProperties prop(mainWindow, _designer, _report);
+    LReportSectionsProperties prop(mainWindow, _designer, _report);
     prop.exec();
 }
 
-void QReportDesignerFactory::comboboxFontSize_currentIndexChanged(const QString& text)
+void LReportDesignerFactory::comboboxFontSize_currentIndexChanged(const QString& text)
 {
     bool ok;
     int size = text.toInt(&ok);
@@ -1414,7 +1414,7 @@ void QReportDesignerFactory::comboboxFontSize_currentIndexChanged(const QString&
     }//if
 }
 
-void QReportDesignerFactory::fontComboBox_currentIndexChanged(const QString& text)
+void LReportDesignerFactory::fontComboBox_currentIndexChanged(const QString& text)
 {
     QFont font = _designer->widgetProperty("font").value<QFont>();
     font.setFamily(text);
@@ -1422,7 +1422,7 @@ void QReportDesignerFactory::fontComboBox_currentIndexChanged(const QString& tex
     _designer->updateWidgets();
 }
 
-void QReportDesignerFactory::actionAlign_triggered()
+void LReportDesignerFactory::actionAlign_triggered()
 {
     int align = 0;
 
@@ -1438,7 +1438,7 @@ void QReportDesignerFactory::actionAlign_triggered()
     _designer->updateWidgets();
 }
 
-void QReportDesignerFactory::sliderZoom_valueChanged(int value)
+void LReportDesignerFactory::sliderZoom_valueChanged(int value)
 {
     if(abs(100 - value) < 5){
         qobject_cast<QSlider*>(sender())->setValue(100);
@@ -1458,7 +1458,7 @@ void QReportDesignerFactory::sliderZoom_valueChanged(int value)
         action->setChecked(action->text() == sZoom);
 }
 
-void QReportDesignerFactory::clipboard_dataChanged()
+void LReportDesignerFactory::clipboard_dataChanged()
 {
     actionPaste->setEnabled(
           QApplication::clipboard()->text().startsWith("<!DOCTYPE ReportDocument>"));

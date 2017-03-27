@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>QReportDatabaseInfoDialog</class>
- <widget class="QDialog" name="QReportDatabaseInfoDialog">
+ <class>LReportDatabaseInfoDialog</class>
+ <widget class="QDialog" name="LReportDatabaseInfoDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -201,7 +201,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>QReportDatabaseInfoDialog</receiver>
+   <receiver>LReportDatabaseInfoDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

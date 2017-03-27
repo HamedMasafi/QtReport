@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>QReportQueryBuilderDialog</class>
- <widget class="QDialog" name="QReportQueryBuilderDialog">
+ <class>LReportQueryBuilderDialog</class>
+ <widget class="QDialog" name="LReportQueryBuilderDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -93,7 +93,7 @@ QTabBar::tab:selected, QTabBar::tab:hover {
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>QReportQueryBuilderDialog</receiver>
+   <receiver>LReportQueryBuilderDialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -109,7 +109,7 @@ QTabBar::tab:selected, QTabBar::tab:hover {
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>QReportQueryBuilderDialog</receiver>
+   <receiver>LReportQueryBuilderDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

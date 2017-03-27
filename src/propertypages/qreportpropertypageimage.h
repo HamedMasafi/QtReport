@@ -3,17 +3,17 @@
 
 class QPixmap;
 
-#include "qreportpropertypagebase.h"
+#include "propertypages/qreportpropertypagebase.h"
 #include "ui_qreportpropertypageimage.h"
 
 LEAF_BEGIN_NAMESPACE
 
-class QReportPropertyPageImage : public QReportPropertyPageBase, private Ui::QReportPropertyPageImage
+class LReportPropertyPageImage : public LReportPropertyPageBase, private Ui::LReportPropertyPageImage
 {
     Q_OBJECT
 
 public:
-    QReportPropertyPageImage(QWidget *parent = 0);
+    LReportPropertyPageImage(QWidget *parent = 0);
 
     void load();
     void save();

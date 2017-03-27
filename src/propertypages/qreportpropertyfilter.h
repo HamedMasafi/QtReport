@@ -2,16 +2,16 @@
 #define QREPORTPROPERTYFILTER_H
 
 #include "ui_qreportpropertyfilter.h"
-#include "qreportpropertypagebase.h"
+#include "propertypages/qreportpropertypagebase.h"
 
 LEAF_BEGIN_NAMESPACE
 
-class QReportPropertyFilter : public QReportPropertyPageBase, private Ui::QReportPropertyFilter
+class LReportPropertyFilter : public LReportPropertyPageBase, private Ui::LReportPropertyFilter
 {
     Q_OBJECT
 
 public:
-    explicit QReportPropertyFilter(QWidget *parent = 0);
+    explicit LReportPropertyFilter(QWidget *parent = 0);
 
     void load();
     void save();

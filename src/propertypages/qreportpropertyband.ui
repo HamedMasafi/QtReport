@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>QReportPropertyBand</class>
- <widget class="QWidget" name="QReportPropertyBand">
+ <class>LReportPropertyBand</class>
+ <widget class="QWidget" name="LReportPropertyBand">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>427</width>
-    <height>344</height>
+    <width>411</width>
+    <height>279</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -30,7 +30,7 @@
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_2"/>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>9</x>
@@ -88,15 +88,8 @@
     </item>
    </layout>
   </widget>
-  <zorder>label</zorder>
-  <zorder>lineEdit</zorder>
+  <zorder>layoutWidget</zorder>
   <zorder>widgetPropertyPage</zorder>
-  <zorder>checkBox</zorder>
-  <zorder>checkBox_2</zorder>
-  <zorder>pushButton</zorder>
-  <zorder>comboBox</zorder>
-  <zorder>label</zorder>
-  <zorder>label_2</zorder>
  </widget>
  <resources/>
  <connections/>

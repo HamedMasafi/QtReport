@@ -21,40 +21,22 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef QREPORTIMAGE_H
-#define QREPORTIMAGE_H
+#include "qreportsectiondataproperties.h"
 
-#include "qreportdisplaybase.h"
-
-LEAF_BEGIN_NAMESPACE
-
-class QReportImage : public QReportDisplayBase
+LReportSectionDataProperties::LReportSectionDataProperties(QWidget *parent) :
+    QWidget(parent)
 {
-        Q_OBJECT
+    setupUi(this);
+}
 
-        Q_CLASSINFO("prop_image", "true")
-        Q_CLASSINFO("prop_align", "true")
-
-        Q_PROPERTY(QPixmap image       READ image       WRITE setImage       USER true)
-        Q_PROPERTY(bool    scaleImage  READ scaleImage  WRITE setScaleImage  USER true)
-        Q_PROPERTY(bool    acceptRatio READ acceptRatio WRITE setAcceptRatio USER true)
-
-        R_PROPERTY(QPixmap,       image,       image,       setImage,       m_image)
-        R_PROPERTY(bool,          scaleImage,  scaleImage,  setScaleImage,  m_scaleImage)
-        R_PROPERTY(bool,          acceptRatio, acceptRatio, setAcceptRatio, m_acceptRatio)
-
-    public:
-        QReportImage(QGraphicsItem *parent = 0);
-        ~QReportImage();
-
-        void paint(QPainter *painter,
-                   const QStyleOptionGraphicsItem *option,
-                   QWidget *Widget);
-
-        void saveDom(QDomElement *dom);
-        void loadDom(QDomElement *dom);
-};
-
-LEAF_END_NAMESPACE
-
-#endif
+void LReportSectionDataProperties::changeEvent(QEvent *e)
+{
+    QWidget::changeEvent(e);
+    switch (e->type()) {
+    case QEvent::LanguageChange:
+        retranslateUi(this);
+        break;
+    default:
+        break;
+    }
+}

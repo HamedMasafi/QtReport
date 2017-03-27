@@ -21,20 +21,20 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-
-#include "qreportpropertypagetext.h"
-#include "qreporttextbox.h"
+#include "qreportdocumentdesigner.h"
+#include "propertypages/qreportpropertypagetext.h"
+#include "widgets/qreporttextbox.h"
 
 LEAF_BEGIN_NAMESPACE
 
-QReportPropertyPageText::QReportPropertyPageText(QWidget *parent) :
-    QReportPropertyPageBase(parent)
+LReportPropertyPageText::LReportPropertyPageText(QWidget *parent) :
+    LReportPropertyPageBase(parent)
 {
     setupUi(this);
     _title = tr( "Text" );
 }
 
-void QReportPropertyPageText::changeEvent(QEvent *e)
+void LReportPropertyPageText::changeEvent(QEvent *e)
 {
     QWidget::changeEvent(e);
     switch (e->type()) {
@@ -46,12 +46,12 @@ void QReportPropertyPageText::changeEvent(QEvent *e)
     }
 }
 
-void QReportPropertyPageText::load()
+void LReportPropertyPageText::load()
 {
    textEdit->setPlainText(_designer->widgetProperty("text").toString());
 }
 
-void QReportPropertyPageText::save()
+void LReportPropertyPageText::save()
 {
    _designer->setWidgetProperty("text", textEdit->toPlainText());
 }

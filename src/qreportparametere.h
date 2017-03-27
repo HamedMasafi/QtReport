@@ -34,7 +34,7 @@ class QString;
 
 LEAF_BEGIN_NAMESPACE
 
-class QReportParametere : public QReportXMLSeriazble
+class LReportParametere : public LReportXMLSeriazble
 {
     Q_OBJECT
 
@@ -48,7 +48,7 @@ class QReportParametere : public QReportXMLSeriazble
 
 
     public:
-        QReportParametere(QString name = "",
+        LReportParametere(QString name = "",
                           QVariant value = QVariant(),
                           QVariant::Type type = QVariant::String);
 };

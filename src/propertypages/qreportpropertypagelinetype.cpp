@@ -21,13 +21,8 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-
-#include "qreportpropertypagelinetype.h"
-
-#include "qreportcolorpicker.h"
-#include "qreportlinebase.h"
-
 #include <QAction>
+
 #include <QButtonGroup>
 #include <QComboBox>
 #include <QGridLayout>
@@ -41,10 +36,15 @@
 #include <QColorDialog>
 #include <QGridLayout>
 
+#include "propertypages/qreportpropertypagelinetype.h"
+#include "qreportdocumentdesigner.h"
+#include "qreportcolorpicker.h"
+#include "widgets/qreportlinebase.h"
+
 LEAF_BEGIN_NAMESPACE
 
-QReportPropertyPageLineType::QReportPropertyPageLineType(QWidget *parent)
-   : QReportPropertyPageBase(parent)
+LReportPropertyPageLineType::LReportPropertyPageLineType(QWidget *parent)
+   : LReportPropertyPageBase(parent)
 {
    gridLayout_2 = new QGridLayout( this );
    gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
@@ -172,7 +172,7 @@ QReportPropertyPageLineType::QReportPropertyPageLineType(QWidget *parent)
 
 }
 
-void QReportPropertyPageLineType::load()
+void LReportPropertyPageLineType::load()
 {
    comboBoxType->setCurrentIndex(_designer->widgetProperty("lineType").toInt());
    picker->setColor(QColor(_designer->widgetProperty("lineColor").toString()));
@@ -181,7 +181,7 @@ void QReportPropertyPageLineType::load()
    picker->update();
 }
 
-void QReportPropertyPageLineType::save()
+void LReportPropertyPageLineType::save()
 {
    _designer->setWidgetProperty( "lineColor", picker->color() );
    _designer->setWidgetProperty( "lineType", comboBoxType->currentIndex() );
@@ -189,7 +189,7 @@ void QReportPropertyPageLineType::save()
 }
 
 
-void QReportPropertyPageLineType::on_pushButtonSelectColor_clicked()
+void LReportPropertyPageLineType::on_pushButtonSelectColor_clicked()
 {
    QColorDialog *dlg = new QColorDialog();
    dlg->exec();

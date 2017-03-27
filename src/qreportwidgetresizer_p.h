@@ -36,15 +36,15 @@ class QPoinF;
 
 LEAF_BEGIN_NAMESPACE
 
-class QReportWidgetBase;
-class QReportMoveEvent;
-class QReportResizeEvent;
-class QReportResizeHandle :  public QObject, public QGraphicsEllipseItem
+class LReportWidgetBase;
+class LReportMoveEvent;
+class LReportResizeEvent;
+class LReportResizeHandle :  public QObject, public QGraphicsEllipseItem
 {
       Q_OBJECT
 
    public:
-      QReportResizeHandle ( qreal x, qreal y, qreal radius, QGraphicsItem  *parent = 0 );
+      LReportResizeHandle ( qreal x, qreal y, qreal radius, QGraphicsItem  *parent = 0 );
 
       void mouseMoveEvent ( QGraphicsSceneMouseEvent  *event );
       void mousePressEvent ( QGraphicsSceneMouseEvent  *event );
@@ -69,40 +69,40 @@ class QReportResizeHandle :  public QObject, public QGraphicsEllipseItem
       void moved();
 };
 
-class QReportWidgetResizer : public QObject
+class LReportWidgetResizer : public QObject
 {
       Q_OBJECT
 
    public:
-      QReportWidgetResizer ( QGraphicsScene *parent );
-      ~QReportWidgetResizer();
+      LReportWidgetResizer ( QGraphicsScene *parent );
+      ~LReportWidgetResizer();
 
       void setVisible ();
       void setVisible ( bool visible );
-      void setActiveItem ( QReportWidgetBase *item );
+      void setActiveItem ( LReportWidgetBase *item );
       void setHandlesOnItem ( QRectF rc );
       qreal scale();
       void setScale ( qreal scale );
       void refreshHandles();
       void refresh();
 
-      QList<QReportWidgetBase*> selectedWidgets();
+      QList<LReportWidgetBase*> selectedWidgets();
       void clear();
       void clear(bool unselectWidgets);
-      void addWidget( QReportWidgetBase *Widget );
+      void addWidget( LReportWidgetBase *Widget );
 
       void refreshWidgets();
 
-      bool isWidgetSelected(QReportWidgetBase *Widget);
+      bool isWidgetSelected(LReportWidgetBase *Widget);
 
-      QList<QReportWidgetBase *> selectedWidgets() const;
+      QList<LReportWidgetBase *> selectedWidgets() const;
    private:
       QGraphicsScene parent;
 
-      QReportResizeHandle  *resizerTL,   *resizerT,   *resizerTR;
-      QReportResizeHandle  *resizerL ,                *resizerR ;
-      QReportResizeHandle  *resizerBL,   *resizerB,   *resizerBR;
-      QList<QReportResizeHandle*> handles;
+      LReportResizeHandle  *resizerTL,   *resizerT,   *resizerTR;
+      LReportResizeHandle  *resizerL ,                *resizerR ;
+      LReportResizeHandle  *resizerBL,   *resizerB,   *resizerBR;
+      QList<LReportResizeHandle*> handles;
 
       QGraphicsScene *parentScene;
 
@@ -114,9 +114,9 @@ class QReportWidgetResizer : public QObject
 
       QRectF selectionRect;
       QRectF resizeRect;
-      QHash<QReportWidgetBase*, QRectF>  _widgetRects;
+      QHash<LReportWidgetBase*, QRectF>  _widgetRects;
 
-      QList<QReportWidgetBase *> _selectedWidgets;
+      QList<LReportWidgetBase *> _selectedWidgets;
 
       void setResezeHandlePos ( QGraphicsEllipseItem *handle, QPointF pos );
       void setResezeHandlePos ( QGraphicsEllipseItem *handle, QPointF pos1, QPointF pos2 );
@@ -124,13 +124,13 @@ class QReportWidgetResizer : public QObject
       void proccessNewRect( QRectF rc );
 
    signals:
-      void pointGridNeeded( QReportMoveEvent* );
-      void sizeGridNeeded( QReportResizeEvent* );
+      void pointGridNeeded( LReportMoveEvent* );
+      void sizeGridNeeded( LReportResizeEvent* );
       void resized();
 
    public slots:
       void handleMoving ( QPointF point );
-      void widgetMoving ( QReportMoveEvent *event );
+      void widgetMoving ( LReportMoveEvent *event );
 };
 
 LEAF_END_NAMESPACE

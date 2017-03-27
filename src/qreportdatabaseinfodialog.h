@@ -30,18 +30,18 @@
 
 LEAF_BEGIN_NAMESPACE
 
-class QReport;
-class QReportDataConnection;
-class QReportDatabaseInfoDialogPrivate;
-class QReportDatabaseInfoDialog : public QDialog, private Ui::QReportDatabaseInfoDialog
+class LReport;
+class LReportDataConnection;
+class LReportDatabaseInfoDialogPrivate;
+class LReportDatabaseInfoDialog : public QDialog, private Ui::LReportDatabaseInfoDialog
 {
     Q_OBJECT
-    QReportDatabaseInfoDialogPrivate  *const d_ptr;
-    Q_DECLARE_PRIVATE(QReportDatabaseInfoDialog)
+    LReportDatabaseInfoDialogPrivate  *const d_ptr;
+    Q_DECLARE_PRIVATE(LReportDatabaseInfoDialog)
 
 
 public:
-    QReportDatabaseInfoDialog(QReport *report, QReportDataConnection *dataConnection = 0);
+    LReportDatabaseInfoDialog(LReport *report, LReportDataConnection *dataConnection = 0);
 
 //    QString name() const;
 //    QString driver() const;
@@ -62,8 +62,8 @@ public:
                                    QString username, QString password );
 
 
-    QReportDataConnection *dataConnection() const;
-    void setDataConnection(const QReportDataConnection *dataConnection);
+    LReportDataConnection *dataConnection() const;
+    void setDataConnection(const LReportDataConnection *dataConnection);
 
 protected:
     void changeEvent(QEvent *e);

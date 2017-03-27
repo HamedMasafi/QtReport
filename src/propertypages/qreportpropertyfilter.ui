@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>QReportPropertyFilter</class>
- <widget class="QWidget" name="QReportPropertyFilter">
+ <class>LReportPropertyFilter</class>
+ <widget class="QWidget" name="LReportPropertyFilter">
   <property name="geometry">
    <rect>
     <x>0</x>

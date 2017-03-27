@@ -48,16 +48,16 @@ class QActionGroup;
 
 LEAF_BEGIN_NAMESPACE
 
-class QReportDocumentDesigner;
-class QReport;
-class QReportTreeManager;
+class LReportDocumentDesigner;
+class LReport;
+class LReportTreeManager;
 
-class QReportDesignerFactory : public QObject
+class LReportDesignerFactory : public QObject
 {
     Q_OBJECT
 
 public:
-    QReportDesignerFactory(QMainWindow *window);
+    LReportDesignerFactory(QMainWindow *window);
 
     void initWindow( QMainWindow * );
 
@@ -179,7 +179,7 @@ private:
    QVBoxLayout *undoViewLayout;
 
    QUndoView *undoView;
-   QReportTreeManager *treeWidgetFields;
+   LReportTreeManager *treeWidgetFields;
 
    QToolBar *toolBarToolbox;
    QToolBar *toolBarStandard;
@@ -191,8 +191,8 @@ private:
    QColorPickerTool *p;
 
 
-   QReportDocumentDesigner *_designer;
-   QReport *_report;
+   LReportDocumentDesigner *_designer;
+   LReport *_report;
 
    QList<QAction*> currentWidgetAtions;
 

@@ -27,14 +27,14 @@
 
 LEAF_BEGIN_NAMESPACE
 
-QReportDisplayBase::QReportDisplayBase ( QGraphicsItem *parent ) : 
-      QReportRectangle ( parent )
+LReportDisplayBase::LReportDisplayBase ( QGraphicsItem *parent ) : 
+      LReportRectangle ( parent )
 {
     this->setAlign( Qt::AlignLeft | Qt::AlignTop );
 }
 
 
-QReportDisplayBase::~QReportDisplayBase()
+LReportDisplayBase::~LReportDisplayBase()
 {
 }
 

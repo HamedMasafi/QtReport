@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>QReportPropertyPageAlign</class>
- <widget class="QWidget" name="QReportPropertyPageAlign">
+ <class>LReportPropertyPageAlign</class>
+ <widget class="QWidget" name="LReportPropertyPageAlign">
   <property name="geometry">
    <rect>
     <x>0</x>

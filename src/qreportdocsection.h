@@ -29,14 +29,14 @@
 /**
 	@author Hamed Masafi <Hamed.Masafi@gmAIL.COM>
 */
-class QReportDocSection : public QGraphicsItem
+class LReportDocSection : public QGraphicsItem
 {
 	public:
-		QReportDocSection ( QGraphicsItemPrivate& dd, QGraphicsItem *parent, QGraphicsScene *scene );
+		LReportDocSection ( QGraphicsItemPrivate& dd, QGraphicsItem *parent, QGraphicsScene *scene );
 
-		QReportDocSection ( QGraphicsItem *parent, QGraphicsScene *scene );
+		LReportDocSection ( QGraphicsItem *parent, QGraphicsScene *scene );
 
-		~QReportDocSection();
+		~LReportDocSection();
 
 };
 

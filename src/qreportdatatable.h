@@ -35,8 +35,8 @@ class QSqlRecord;
 
 LEAF_BEGIN_NAMESPACE
 
-class QReportDataConnection;
-class QReportDataField : public QReportXMLSeriazble
+class LReportDataConnection;
+class LReportDataField : public LReportXMLSeriazble
 {
     Q_OBJECT
 
@@ -47,12 +47,12 @@ class QReportDataField : public QReportXMLSeriazble
     R_PROPERTY(int, type, type, setType, _type)
 
 public:
-    QReportDataField(QString name) {
+    LReportDataField(QString name) {
         setObjectName(name);
     }
 };
 
-class QReportDataTable : public QReportXMLSeriazble
+class LReportDataTable : public LReportXMLSeriazble
 {
     Q_OBJECT
 
@@ -63,22 +63,22 @@ class QReportDataTable : public QReportXMLSeriazble
     R_PROPERTY(QString, selectCommand, selectCommand, setSelectCommand, _selectCommand)
 
     public:
-        QReportDataTable(QString connectionName);
+        LReportDataTable(QString connectionName);
 
-        void remove(QReportDataField *field);
+        void remove(LReportDataField *field);
         void clear();
-        void append(QReportDataField *field);
+        void append(LReportDataField *field);
         void append(QString fieldName);
 
         void appendRecordFields(QSqlRecord *record);
 
-        QList<QReportDataField*> fields() const;
+        QList<LReportDataField*> fields() const;
 
         void saveDom(QDomElement *dom);
         void loadDom(QDomElement *dom);
 
     private:
-        QList<QReportDataField*> _fields;
+        QList<LReportDataField*> _fields;
 
 };
 

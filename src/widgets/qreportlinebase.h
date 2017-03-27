@@ -21,34 +21,39 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include <QDomElement>
+#ifndef RLINEBASE_H
+#define RLINEBASE_H
 
-#include "qreportpropertypagepos.h"
-#include "qreportpropertypagelinetype.h"
-#include "qreportlinebase.h"
+#include "qreportwidgetbase.h"
 
 LEAF_BEGIN_NAMESPACE
 
-QReportLineBase::QReportLineBase(QGraphicsItem *parent): QReportWidgetBase(parent)
+class LReportLineBase : public LReportWidgetBase
 {
-   setLineWidth( 1 );
-   setLineType( Qt::SolidLine );
-   setLineColor( Qt::black );
-}
+   Q_OBJECT
+
+   Q_CLASSINFO("prop_line", "true")
+
+   R_PROPERTY( int,            lineWidth, lineWidth, setLineWidth, m_lineWidth )
+   Q_PROPERTY( int lineWidth READ lineWidth WRITE setLineWidth DESIGNABLE true USER true )
+
+   R_PROPERTY( QColor,         lineColor, lineColor, setLineColor, m_lineColor )
+   Q_PROPERTY( QColor lineColor READ lineColor WRITE setLineColor DESIGNABLE true USER true )
+
+   R_PROPERTY( Qt::PenStyle,   lineType,  lineType,  setLineType,  m_lineType  )
+   Q_PROPERTY( Qt::PenStyle  lineType READ lineType WRITE setLineType DESIGNABLE true USER true )
 
 
-QReportLineBase::~QReportLineBase()
-{
-}
 
-void QReportLineBase::loadDom(QDomElement *dom)
-{
-    QReportWidgetBase::loadDom(dom);
+public:
+    LReportLineBase(QGraphicsItem *parent);
 
-    if (dom->hasAttribute("lineType")) {
-        int n = QString(dom->attribute("lineType")).toInt();
-        setLineType((Qt::PenStyle)n);
-    }//if
-}
+    ~LReportLineBase();
+
+   void loadDom(QDomElement *dom);
+
+};
 
 LEAF_END_NAMESPACE
+
+#endif

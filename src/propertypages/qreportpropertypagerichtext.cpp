@@ -21,17 +21,17 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include "qreportpropertypagerichtext.h"
+#include "propertypages/qreportpropertypagerichtext.h"
 
 LEAF_BEGIN_NAMESPACE
 
-QReportPropertyPageRichText::QReportPropertyPageRichText(QWidget *parent) :
-    QReportPropertyPageBase(parent)
+LReportPropertyPageRichText::LReportPropertyPageRichText(QWidget *parent) :
+    LReportPropertyPageBase(parent)
 {
     setupUi(this);
 }
 
-void QReportPropertyPageRichText::changeEvent(QEvent *e)
+void LReportPropertyPageRichText::changeEvent(QEvent *e)
 {
     QWidget::changeEvent(e);
     switch (e->type()) {
@@ -44,12 +44,12 @@ void QReportPropertyPageRichText::changeEvent(QEvent *e)
 }
 
 
-void QReportPropertyPageRichText::save(QReportWidgetBase *)
+void LReportPropertyPageRichText::save(LReportWidgetBase *)
 {
 
 }
 
-void QReportPropertyPageRichText::load(QReportWidgetBase *)
+void LReportPropertyPageRichText::load(LReportWidgetBase *)
 {
 
 }

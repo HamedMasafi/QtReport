@@ -12,9 +12,9 @@ TRANSLATIONS = ../translations/qtreport_en.ts \
 
 CONFIG += staticlib
 
-HEADERS +=  qreportwidgetbase.h \
+HEADERS +=  widgets/qreportwidgetbase.h \
             QtReport \
-            qreportwidget.h \
+            widgets/qreportwidget.h \
             propertypages/qreportpropertypagebase.h \
             propertypages/qreportpropertydialog.h \
             qreport.h \
@@ -37,11 +37,11 @@ HEADERS +=  qreportwidgetbase.h \
             propertypages/qreportpropertypagebarcode.h \
             propertypages/qreportpropertypagewidget.h \
             propertypages/qreportpropertypageformat.h \
-            qreporttextbox.h \
-            qreportimage.h \
+            widgets/qreporttextbox.h \
+            widgets/qreportimage.h \
             qreportevent.h \
-            qreporthorizontalline.h \
-            qreportlinebase.h \
+            widgets/qreporthorizontalline.h \
+            widgets/qreportlinebase.h \
             qreportdocumentview.h \
             qreportdocumentdesigner.h \
             qreportdocpage.h \
@@ -49,19 +49,19 @@ HEADERS +=  qreportwidgetbase.h \
             qreportdisplaybase.h \
             qreportruler.h \
             qtreportglobal.h \
-            qreportverticalline.h \
-            qreportrectanglebase.h \
-            qreportpanel.h \
+            widgets/qreportverticalline.h \
+            widgets/qreportrectanglebase.h \
+            widgets/qreportpanel.h \
             qreportscene.h \
-            qreportsectiondataproperties.h \
-            qreportsectionsproperties.h \
+            propertypages/qreportsectiondataproperties.h \
+            propertypages/qreportsectionsproperties.h \
             qreporttreemanager.h \
             qreportxmlseriazble.h \
             qreportparametere.h \
             qreportquerybuilderdialog.h \
             qreporttypehelper.h \
             propertypages/qreportpropertypagealign.h \
-    qreportband.h \
+    widgets/qreportband.h \
     qreportdataconnection.h \
     qreportdatatabledialog.h \
     propertypages/qreportpropertyband.h \
@@ -69,9 +69,9 @@ HEADERS +=  qreportwidgetbase.h \
     propertypages/qreportpropertyfilter.h \
     qreportwidgetresizer_p.h
 
-SOURCES +=  qreportwidgetbase.cpp \
+SOURCES +=  widgets/qreportwidgetbase.cpp \
             qreportwidgetresizer.cpp \
-            qreportwidget.cpp \
+            widgets/qreportwidget.cpp \
             propertypages/qreportpropertypagebase.cpp \
             propertypages/qreportpropertydialog.cpp \
             qreport.cpp \
@@ -94,29 +94,29 @@ SOURCES +=  qreportwidgetbase.cpp \
             propertypages/qreportpropertypagebarcode.cpp \
             propertypages/qreportpropertypagewidget.cpp \
             propertypages/qreportpropertypageformat.cpp \
-            qreporttextbox.cpp \
-            qreportimage.cpp \
-            qreportlinebase.cpp \
-            qreporthorizontalline.cpp \
+            widgets/qreporttextbox.cpp \
+            widgets/qreportimage.cpp \
+            widgets/qreportlinebase.cpp \
+            widgets/qreporthorizontalline.cpp \
             qreportdocumentview.cpp \
             qreportdocumentdesigner.cpp \
             qreportdocpage.cpp \
             qreportcolorpicker.cpp \
             qreportdisplaybase.cpp \
             qreportruler.cpp \
-            qreportverticalline.cpp \
-            qreportrectanglebase.cpp \
-            qreportpanel.cpp \
+            widgets/qreportverticalline.cpp \
+            widgets/qreportrectanglebase.cpp \
+            widgets/qreportpanel.cpp \
             qreportscene.cpp \
-            qreportsectiondataproperties.cpp \
-            qreportsectionsproperties.cpp \
+            propertypages/qreportsectiondataproperties.cpp \
+            propertypages/qreportsectionsproperties.cpp \
             qreporttreemanager.cpp \
             qreportxmlseriazble.cpp \
             qreportparametere.cpp \
             qreportquerybuilderdialog.cpp \
             qreporttypehelper.cpp \
             propertypages/qreportpropertypagealign.cpp \
-    qreportband.cpp \
+    widgets/qreportband.cpp \
     qreportdataconnection.cpp \
     qreportdatatabledialog.cpp \
     propertypages/qreportpropertyband.cpp \
@@ -139,8 +139,8 @@ FORMS += \
     propertypages/qreportpropertypagebarcode.ui \
     propertypages/qreportpropertypagewidget.ui \
     propertypages/qreportpropertypageformat.ui \
-    qreportsectiondataproperties.ui \
-    qreportsectionsproperties.ui \
+    propertypages/qreportsectiondataproperties.ui \
+    propertypages/qreportsectionsproperties.ui \
     qreportquerybuilderdialog.ui \
     propertypages/qreportpropertypagealign.ui \
     qreportdatatabledialog.ui \

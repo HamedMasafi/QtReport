@@ -30,65 +30,65 @@
 
 LEAF_BEGIN_NAMESPACE
 
-QReportDataTable::QReportDataTable(QString connectionName) :
-    QReportXMLSeriazble(),
+LReportDataTable::LReportDataTable(QString connectionName) :
+    LReportXMLSeriazble(),
     _connectionName(connectionName)
 {
 }
 
-void QReportDataTable::remove(QReportDataField *field)
+void LReportDataTable::remove(LReportDataField *field)
 {
     _fields.removeOne(field);
 }
 
-void QReportDataTable::clear()
+void LReportDataTable::clear()
 {
     _fields.clear();
 }
 
-void QReportDataTable::append(QReportDataField *field)
+void LReportDataTable::append(LReportDataField *field)
 {
     _fields.append(field);
 }
 
-void QReportDataTable::append(QString fieldName)
+void LReportDataTable::append(QString fieldName)
 {
-    QReportDataField *f = new QReportDataField(fieldName);
+    LReportDataField *f = new LReportDataField(fieldName);
     _fields.append(f);
 }
 
-void QReportDataTable::appendRecordFields(QSqlRecord *record)
+void LReportDataTable::appendRecordFields(QSqlRecord *record)
 {
     for (int i = 0; i < record->count(); i++)
         append(record->fieldName(i));
 }
 
-QList<QReportDataField*> QReportDataTable::fields() const
+QList<LReportDataField*> LReportDataTable::fields() const
 {
     return _fields;
 }
 
-void QReportDataTable::saveDom(QDomElement *dom)
+void LReportDataTable::saveDom(QDomElement *dom)
 {
-    QReportXMLSeriazble::saveDom(dom);
+    LReportXMLSeriazble::saveDom(dom);
 
-    foreach(QReportDataField *field, _fields){
+    foreach(LReportDataField *field, _fields){
         QDomElement elParam = dom->ownerDocument().createElement("Field");
         field->saveDom(&elParam);
         dom->appendChild(elParam);
     }//foreach
 }
 
-void QReportDataTable::loadDom(QDomElement *dom)
+void LReportDataTable::loadDom(QDomElement *dom)
 {
     QDomNodeList fieldsList = dom->elementsByTagName("Field");
     for(int i = 0; i < fieldsList.count(); i++){
         QDomElement el = fieldsList.at(i).toElement();
-        QReportDataField *field = new QReportDataField(el.attribute("objectName"));
+        LReportDataField *field = new LReportDataField(el.attribute("objectName"));
         field->loadDom(&el);
         _fields.append(field);
     }
-    QReportXMLSeriazble::loadDom(dom);
+    LReportXMLSeriazble::loadDom(dom);
 }
 
 LEAF_END_NAMESPACE

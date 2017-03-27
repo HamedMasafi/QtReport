@@ -27,7 +27,7 @@
 
 #include <QFont>
 
-#include "qreportrectanglebase.h"
+#include "widgets/qreportrectanglebase.h"
 
 LEAF_BEGIN_NAMESPACE
 
@@ -35,7 +35,7 @@ LEAF_BEGIN_NAMESPACE
   *This class is base class for all display class that display a thing
   *in a rectangle region such as textbox, image and rectangle
  */
-class QReportDisplayBase : public QReportRectangle
+class LReportDisplayBase : public LReportRectangle
 {
    Q_OBJECT
 
@@ -44,9 +44,9 @@ class QReportDisplayBase : public QReportRectangle
 
 
    public:
-      QReportDisplayBase ( QGraphicsItem *parent = 0 );
+      LReportDisplayBase ( QGraphicsItem *parent = 0 );
 
-      ~QReportDisplayBase();
+      ~LReportDisplayBase();
 
 };
 

@@ -21,18 +21,18 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include "qreportpropertypagealign.h"
+#include "propertypages/qreportpropertypagealign.h"
 
 LEAF_BEGIN_NAMESPACE
 
-QReportPropertyPageAlign::QReportPropertyPageAlign(QWidget *parent) :
-    QReportPropertyPageBase(parent)
+LReportPropertyPageAlign::LReportPropertyPageAlign(QWidget *parent) :
+    LReportPropertyPageBase(parent)
 {
     setupUi(this);
     _title = tr( "Alignment" );
 }
 
-void QReportPropertyPageAlign::changeEvent(QEvent *e)
+void LReportPropertyPageAlign::changeEvent(QEvent *e)
 {
     QWidget::changeEvent(e);
     switch (e->type()) {
@@ -44,7 +44,7 @@ void QReportPropertyPageAlign::changeEvent(QEvent *e)
     }
 }
 
-void QReportPropertyPageAlign::load()
+void LReportPropertyPageAlign::load()
 {
    bool ok;
    int align = _designer->widgetProperty("align").toInt(&ok);
@@ -63,7 +63,7 @@ void QReportPropertyPageAlign::load()
    }
 }
 
-void QReportPropertyPageAlign::save()
+void LReportPropertyPageAlign::save()
 {
    Qt::Alignment align;
 

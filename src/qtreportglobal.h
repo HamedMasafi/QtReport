@@ -54,7 +54,7 @@
 #endif
 
 
-QT_BEGIN_NAMESPACE
+//LEAF_BEGIN_NAMESPACE
 
 enum WidgetTypeFlag
 {
@@ -117,6 +117,6 @@ Q_DECLARE_FLAGS(MouseTool, MouseToolFlag)
 Q_DECLARE_OPERATORS_FOR_FLAGS(MouseTool)
 
 
-QT_END_NAMESPACE
+//LEAF_END_NAMESPACE
 
 #endif
