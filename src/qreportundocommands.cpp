@@ -3,6 +3,8 @@
 #include "qreportundocommands.h"
 #include "qreportdocumentdesigner.h"
 
+LEAF_BEGIN_NAMESPACE
+
 class QReportUndoCommandPrivate
 {
     QReportUndoCommand *q_ptr;
@@ -113,3 +115,4 @@ void QReportUndoCommand::setNewName(QString newName)
     d->newName = newName;
 }
 
+LEAF_END_NAMESPACE

@@ -1,8 +1,10 @@
 #ifndef QREPORTUNDOCOMMANDS_H
 #define QREPORTUNDOCOMMANDS_H
 
+#include "qtreportglobal.h"
 #include <QUndoCommand>
 
+LEAF_BEGIN_NAMESPACE
 
 class QReport;
 class QReportDocumentDesigner;
@@ -37,5 +39,7 @@ public:
     void setNewName(QString newName);
 
 };
+
+LEAF_END_NAMESPACE
 
 #endif // QREPORTUNDOCOMMANDS_H

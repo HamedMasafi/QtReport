@@ -24,11 +24,15 @@
 #ifndef QREPORTTREEMANAGER_H
 #define QREPORTTREEMANAGER_H
 
+#include "qtreportglobal.h"
 #include <QTreeWidget>
 
-class QReport;
 class QMenu;
 class QAction;
+
+LEAF_BEGIN_NAMESPACE
+
+class QReport;
 class QReportDataTable;
 class QReportDataField;
 class QReportParametere;
@@ -121,5 +125,7 @@ private:
     void setItemType(QString type);
     void setItemType(QString type, QTreeWidgetItem *item);
 };
+
+LEAF_END_NAMESPACE
 
 #endif // QREPORTTREEMANAGER_H

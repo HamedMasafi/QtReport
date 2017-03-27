@@ -60,13 +60,17 @@
 #include "qreportparameteredialog.h"
 #include "qreportsectionsproperties.h"
 #include "qreporttreemanager.h"
+#include "qreportdocumentdesigner.h"
+#include "qreporttreemanager.h"
+
+LEAF_BEGIN_NAMESPACE
 
 QReportDesignerFactory::QReportDesignerFactory(QMainWindow *window) :
     mainWindow(window)
 {
     _report = new QReport();
 
-    _designer = new  QReportDocumentDesigner(mainWindow, _report);
+    _designer = new QReportDocumentDesigner(mainWindow, _report);
     _designer->setObjectName(QString::fromUtf8("doc"));
 
     initWidgets();
@@ -1459,3 +1463,5 @@ void QReportDesignerFactory::clipboard_dataChanged()
     actionPaste->setEnabled(
           QApplication::clipboard()->text().startsWith("<!DOCTYPE ReportDocument>"));
 }
+
+LEAF_END_NAMESPACE

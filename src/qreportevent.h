@@ -1,11 +1,12 @@
 #ifndef REVENT_H
 #define REVENT_H
 
-
-class QSizeF;
-class QPointF;
+#include <QSizeF>
+#include <QPointF>
 #include <QEvent>
+#include "qtreportglobal.h"
 
+LEAF_BEGIN_NAMESPACE
 
 class QReportResizeEvent : public QEvent
 {
@@ -53,5 +54,7 @@ protected:
     friend class QApplication;
     friend class QCoreApplication;
 };
+
+LEAF_END_NAMESPACE
 
 #endif // REVENT_H

@@ -26,6 +26,7 @@
 
 #include "qreportdocumentview.h"
 
+LEAF_BEGIN_NAMESPACE
 
 QReportDocumentView::QReportDocumentView ( QWidget *parent ) : QGraphicsView ( parent )
 {
@@ -74,3 +75,5 @@ void QReportDocumentView::scrollContentsBy ( int dx, int dy )
    //update();
    viewport()->repaint();
 }
+
+LEAF_END_NAMESPACE

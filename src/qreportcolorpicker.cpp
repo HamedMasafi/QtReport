@@ -29,6 +29,8 @@
 
 #include "qreportcolorpicker.h"
 
+LEAF_BEGIN_NAMESPACE
+
 QColorPicker::QColorPicker(QWidget *parent, bool toolbarMode) :
     QPushButton( parent ), _toolbarMode(toolbarMode)
 {
@@ -175,3 +177,5 @@ void QColorPickerTool::on_popup_selected( QColor color )
    _selectedColor = color;
    repaint();
 }
+
+LEAF_END_NAMESPACE

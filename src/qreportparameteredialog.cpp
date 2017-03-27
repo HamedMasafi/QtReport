@@ -31,6 +31,8 @@
 #include "qreportparametere.h"
 #include "qreport.h"
 
+LEAF_BEGIN_NAMESPACE
+
 class QReportParametereDialogPrivate{
     QReport *report;
     QReportParametere *paremetere;
@@ -119,3 +121,5 @@ void QReportParametereDialog::on_buttonBox_accepted()
         accept();
     }
 }
+
+LEAF_END_NAMESPACE

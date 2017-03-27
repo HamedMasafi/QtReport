@@ -25,6 +25,8 @@
 
 #include "qreportscene.h"
 
+LEAF_BEGIN_NAMESPACE
+
 QReportScene::QReportScene() : QGraphicsScene()
 {
    this->clear();
@@ -92,3 +94,5 @@ void QReportScene::dropEvent(QGraphicsSceneDragDropEvent *event)
 {
     emit drop(event);
 }
+
+LEAF_END_NAMESPACE

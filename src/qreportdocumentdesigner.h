@@ -28,17 +28,18 @@
 
 #include "qtreportglobal.h"
 
-QT_BEGIN_HEADER
-
-QT_BEGIN_NAMESPACE
-
 class QDomElement;
 class QGraphicsRectItem;
 class QGraphicsScene;
 class QGraphicsSceneMouseEvent;
 class QGraphicsSceneDragDropEvent;
 class QGridLayout;
+class QUndoStack;
+class QResizeEvent;
 template <typename T> class QList;
+
+LEAF_BEGIN_NAMESPACE
+
 class QReport;
 class QReportDocumentDesignerPrivate;
 class QReportDocumentView;
@@ -50,8 +51,6 @@ class QReportBand;
 class QReportScene;
 class QReportResizeEvent;
 class QReportMoveEvent;
-class QResizeEvent;
-class QUndoStack;
 class QReportDataConnection;
 class QReportParametere;
 class QReportDataTable;
@@ -224,8 +223,6 @@ signals:
 
 };
 
-QT_END_NAMESPACE
-
-QT_END_HEADER
+LEAF_END_NAMESPACE
 
 #endif

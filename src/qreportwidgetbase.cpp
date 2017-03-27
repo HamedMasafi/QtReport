@@ -27,7 +27,6 @@
 #include <QDebug>
 #include <QDomElement>
 
-
 #include "qreportevent.h"
 #include "qreportwidgetbase.h"
 #include "qreportband.h"
@@ -37,9 +36,10 @@
 #include "qreporthorizontalline.h"
 #include "qreportverticalline.h"
 #include "qreportrectanglebase.h"
+#include "qreportevent.h"
 
 
-QT_BEGIN_NAMESPACE
+LEAF_BEGIN_NAMESPACE
 
 class QReportWidgetBasePrivate
 {
@@ -709,4 +709,4 @@ void QReportWidgetBase::setTopAtSecondBand(qreal value)
     d->topAtSecondBand = value;
 }
 
-QT_END_NAMESPACE
+LEAF_END_NAMESPACE

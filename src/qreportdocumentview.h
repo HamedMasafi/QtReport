@@ -25,14 +25,13 @@
 #define RDOCUMENT_H
 
 
+#include <QGraphicsView>
+#include "qtreportglobal.h"
+
 class QGraphicsSceneMouseEvent;
 
-#include <QGraphicsView>
+LEAF_BEGIN_NAMESPACE
 
-/*!
- * \class RDocument
- *
- */
 class QReportDocumentView : public QGraphicsView
 {
        Q_OBJECT
@@ -65,5 +64,7 @@ class QReportDocumentView : public QGraphicsView
       void scrollContentsBy ( int dx, int dy );
 
 };
+
+LEAF_END_NAMESPACE
 
 #endif

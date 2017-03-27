@@ -29,7 +29,7 @@ int main ( int argc, char *argv[] )
 {
    QApplication app ( argc, argv );
 
-   QReportDesignerWindow wnd;
+   Leaf::QReportDesignerWindow wnd;
 
    wnd.show();
 

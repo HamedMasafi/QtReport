@@ -28,6 +28,8 @@
 
 class QString;
 
+LEAF_BEGIN_NAMESPACE
+
 class QReportDataConnection : public QReportXMLSeriazble
 {
     Q_OBJECT
@@ -62,5 +64,7 @@ private:
     QString _driver, _databaseName, _serverName, _username, _password;
 
 };
+
+LEAF_END_NAMESPACE
 
 #endif // QREPORTDATASOURCE_H

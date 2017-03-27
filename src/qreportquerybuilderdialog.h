@@ -24,9 +24,12 @@
 #ifndef QREPORTQUERYBUILDERDIALOG_H
 #define QREPORTQUERYBUILDERDIALOG_H
 
+#include "qtreportglobal.h"
 #include "ui_qreportquerybuilderdialog.h"
 
 #include <QSqlDatabase>
+
+LEAF_BEGIN_NAMESPACE
 
 class QReport;
 class QReportQueryBuilderDialog : public QDialog, private Ui::QReportQueryBuilderDialog
@@ -50,5 +53,7 @@ protected:
 private slots:
     void on_tablesTree_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
 };
+
+LEAF_END_NAMESPACE
 
 #endif // QREPORTQUERYBUILDERDIALOG_H

@@ -26,9 +26,8 @@
 
 #include "qreportdisplaybase.h"
 
-/*!
-   @author Hamed Masafi <Hamed.Masafi@GMail.COM>
-*/
+LEAF_BEGIN_NAMESPACE
+
 class QReportImage : public QReportDisplayBase
 {
         Q_OBJECT
@@ -55,5 +54,7 @@ class QReportImage : public QReportDisplayBase
         void saveDom(QDomElement *dom);
         void loadDom(QDomElement *dom);
 };
+
+LEAF_END_NAMESPACE
 
 #endif

@@ -24,7 +24,10 @@
 #ifndef QREPORTSECTIONSPROPERTIES_H
 #define QREPORTSECTIONSPROPERTIES_H
 
+#include "qtreportglobal.h"
 #include "ui_qreportsectionsproperties.h"
+
+LEAF_BEGIN_NAMESPACE
 
 class QReportDocumentDesigner;
 class QReport;
@@ -44,5 +47,7 @@ protected:
     QReportDocumentDesigner *_designer;
     QReport *_report;
 };
+
+LEAF_END_NAMESPACE
 
 #endif // QREPORTSECTIONSPROPERTIES_H

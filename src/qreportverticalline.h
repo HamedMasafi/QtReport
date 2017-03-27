@@ -21,10 +21,12 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef QREPORVERTICALLINE_H
+#ifndef QREPORTVERTICALLINE_H
 #define QREPORTVERTICALLINE_H
 
 #include "qreportlinebase.h"
+
+LEAF_BEGIN_NAMESPACE
 
 /*!
    @author Hamed Masafi <Hamed.Masafi@GMail.COM>
@@ -45,4 +47,6 @@ private:
       QReportBand *_secondBand;
 };
 
-#endif
+LEAF_END_NAMESPACE
+
+#endif // QREPORTVERTICALLINE_H

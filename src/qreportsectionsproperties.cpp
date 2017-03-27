@@ -26,6 +26,8 @@
 #include "qreport.h"
 #include "qreportband.h"
 
+LEAF_BEGIN_NAMESPACE
+
 QReportSectionsProperties::QReportSectionsProperties(QWidget *parent,
                                                      QReportDocumentDesigner *designer,
                                                      QReport *report) :
@@ -52,3 +54,4 @@ void QReportSectionsProperties::changeEvent(QEvent *e)
     }
 }
 
+LEAF_END_NAMESPACE

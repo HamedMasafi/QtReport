@@ -26,6 +26,8 @@
 #include <QDomElement>
 #include <QDebug>
 
+LEAF_BEGIN_NAMESPACE
+
 QReportBand::QReportBand(QGraphicsItem *parent):
     QReportPanel(parent),
     _index(0)
@@ -302,3 +304,4 @@ int QReportBand::index() const
     return _index;
 }
 
+LEAF_END_NAMESPACE

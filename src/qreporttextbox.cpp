@@ -29,6 +29,8 @@
 #include "qreportpropertypagerectangle.h"
 #include "qreportpropertypagefont.h"
 
+LEAF_BEGIN_NAMESPACE
+
 QReportTextBox::QReportTextBox(QGraphicsItem *parent) :
     QReportDisplayBase(parent)
 {
@@ -73,3 +75,4 @@ void QReportTextBox::paint(QPainter *painter,
                       textOption);
 }
 
+LEAF_END_NAMESPACE

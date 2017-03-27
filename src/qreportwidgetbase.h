@@ -33,21 +33,20 @@
 #include <QPainter>
 #include <QBrush>
 #include <QDebug>
-
-QT_BEGIN_HEADER
-
-QT_BEGIN_NAMESPACE
+#include <QList>
+#include <QPair>
 
 class QGraphicsSceneDragDropEvent;
 class QMouseEvent;
+class QDomElement;
+class QPointF;
+
+LEAF_BEGIN_NAMESPACE
+
 class QReportResizeEvent;
 class QReportMoveEvent;
 class QReportBand;
 class QReportPanel;
-class QDomElement;
-class QPointF;
-template <class T1, class T2> struct QPair;
-template <typename T1> class QList;
 class QReportWidgetBasePrivate;
 class QReportWidgetAttributes : public QList<QPair<QString, QString> >
 {
@@ -147,9 +146,6 @@ public:
     void setMarginPos(qreal x, qreal y);
     void setMarginPos(QPointF pt);
 
-
-
-
     void setPropertyValue(QString name, QVariant value);
     bool hasProperty(QString name);
     QVariant propertyValue(QString name);
@@ -203,8 +199,6 @@ signals:
 
 //Q_DECLARE_METATYPE(QReportWidgetBase)
 
-QT_END_NAMESPACE
-
-QT_END_HEADER
+LEAF_END_NAMESPACE
 
 #endif

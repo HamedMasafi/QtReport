@@ -1,7 +1,10 @@
 #ifndef QREPORTPARAMETEREDIALOG_H
 #define QREPORTPARAMETEREDIALOG_H
 
+#include "qtreportglobal.h"
 #include "ui_qreportparameteredialog.h"
+
+LEAF_BEGIN_NAMESPACE
 
 class QReport;
 class QReportParametere;
@@ -23,5 +26,7 @@ protected:
 private slots:
     void on_buttonBox_accepted();
 };
+
+LEAF_END_NAMESPACE
 
 #endif // QREPORTPARAMETEREDIALOG_H

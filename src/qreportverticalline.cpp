@@ -23,6 +23,7 @@
 
 #include "qreportverticalline.h"
 
+LEAF_BEGIN_NAMESPACE
 
 QReportVerticalLine::QReportVerticalLine(QGraphicsItem *parent): QReportLineBase(parent)
 {
@@ -55,3 +56,5 @@ void QReportVerticalLine::paint ( QPainter *painter, const QStyleOptionGraphicsI
                      4 );
 
 }
+
+LEAF_END_NAMESPACE

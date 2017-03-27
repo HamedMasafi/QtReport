@@ -27,6 +27,11 @@
 #include "qreportdesignerwindow.h"
 #include "qreportdesignerfactory.h"
 
+static void init_resources() {
+    Q_INIT_RESOURCE( resources );
+}
+
+LEAF_BEGIN_NAMESPACE
 
 /*
 void QReportDesignerWindow::changeEvent(QEvent *e)
@@ -45,7 +50,7 @@ void QReportDesignerWindow::changeEvent(QEvent *e)
 QReportDesignerWindow::QReportDesignerWindow ( QWidget *parent )
     : QMainWindow ( parent )
 {
-    Q_INIT_RESOURCE( resources );
+    init_resources();
 
     factory = new QReportDesignerFactory( this );
     QSettings set( "QtReport2" );
@@ -61,3 +66,5 @@ QReportDesignerWindow::~QReportDesignerWindow ()
     QSettings set( "QtReport2" );
     set.setValue( "MainWindowState", this->saveState() );
 }
+
+LEAF_END_NAMESPACE

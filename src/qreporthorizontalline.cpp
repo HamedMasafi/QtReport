@@ -23,6 +23,8 @@
 
 #include "qreporthorizontalline.h"
 
+LEAF_BEGIN_NAMESPACE
+
 QReportHorizontalLine::QReportHorizontalLine(QGraphicsItem *parent): QReportLineBase(parent)
 {
    this->setResizeDirection( ::Top | ::Bottom );
@@ -56,4 +58,4 @@ void QReportHorizontalLine::paint ( QPainter *painter, const QStyleOptionGraphic
   //TODO -> RLineBase::paint( painter, option, widget );
 }
 
-
+LEAF_END_NAMESPACE

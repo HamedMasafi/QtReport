@@ -28,6 +28,8 @@
 #include <QObject>
 #include <QMainWindow>
 
+#include "qtreportglobal.h"
+
 class QAction;
 class QToolBar;
 class QMenu;
@@ -36,16 +38,20 @@ class QStatusBar;
 class QTreeWidget;
 class QDockWidget;
 class QVBoxLayout;
-class QReportDocumentDesigner;
-class QReport;
 class QTreeWidgetItem;
 class QComboBox;
 class QFontComboBox;
 class QColorPicker;
 class QColorPickerTool;
-class QReportTreeManager;
 class QUndoView;
 class QActionGroup;
+
+LEAF_BEGIN_NAMESPACE
+
+class QReportDocumentDesigner;
+class QReport;
+class QReportTreeManager;
+
 class QReportDesignerFactory : public QObject
 {
     Q_OBJECT
@@ -249,5 +255,7 @@ signals:
    void save(QString fileName);
    void load(QString fileName);
 };
+
+LEAF_END_NAMESPACE
 
 #endif // QREPORTDESIGNERFACTORY_H

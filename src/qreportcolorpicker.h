@@ -37,12 +37,15 @@
 #include <QHash>
 #include <QApplication>
 
+#include "qtreportglobal.h"
 
 #define COLORSIZE 20
 #define COLS 11
 #define SPACE 4
 #define MARGINY 47
 #define MARGINX 4
+
+LEAF_BEGIN_NAMESPACE
 
 class ColorKeyInfo
 {
@@ -286,6 +289,6 @@ private:
    QColor _selectedColor;
 };
 
-
+LEAF_END_NAMESPACE
 
 #endif // RCOLORPICKER_H

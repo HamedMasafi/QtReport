@@ -30,6 +30,7 @@
 #include <QDomElement>
 #include <QDebug>
 
+LEAF_BEGIN_NAMESPACE
 
 QReportRectangle::QReportRectangle(QGraphicsItem *parent):
     QReportWidgetBase(parent)
@@ -126,3 +127,5 @@ void QReportRectangle::loadDom(QDomElement *dom)
         setFillType((Qt::BrushStyle)n);
     }//if
 }
+
+LEAF_END_NAMESPACE

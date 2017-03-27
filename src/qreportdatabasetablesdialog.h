@@ -25,13 +25,16 @@
 #ifndef RDATABASETABLESDIALOG_H
 #define RDATABASETABLESDIALOG_H
 
+#include "qtreportglobal.h"
 #include "ui_qreportdatabasetablesdialog.h"
 
 #include <QSqlDatabase>
 
-class QReport;
 class QTreeWidgetItem;
 
+LEAF_BEGIN_NAMESPACE
+
+class QReport;
 
 class QReportDatabaseTablesDialog : public QDialog, private Ui::QReportDatabaseTablesDialog
 {
@@ -57,5 +60,7 @@ private slots:
     void on_listWidgetTables_currentItemChanged(QListWidgetItem *current, QListWidgetItem*);
     void on_listWidgetParameters_itemDoubleClicked(QListWidgetItem *item);
 };
+
+LEAF_END_NAMESPACE
 
 #endif // RDATABASETABLESDIALOG_H

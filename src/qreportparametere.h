@@ -32,6 +32,8 @@ class QString;
 #include "qreportxmlseriazble.h"
 #include "qtreportglobal.h"
 
+LEAF_BEGIN_NAMESPACE
+
 class QReportParametere : public QReportXMLSeriazble
 {
     Q_OBJECT
@@ -50,5 +52,7 @@ class QReportParametere : public QReportXMLSeriazble
                           QVariant value = QVariant(),
                           QVariant::Type type = QVariant::String);
 };
+
+LEAF_END_NAMESPACE
 
 #endif // QREPORTPARAMETERE_H

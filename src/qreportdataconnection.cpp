@@ -25,6 +25,8 @@
 
 #include "qreportdataconnection.h"
 
+LEAF_BEGIN_NAMESPACE
+
 QReportDataConnection::QReportDataConnection() : QReportXMLSeriazble()
 {
 }
@@ -95,3 +97,5 @@ bool QReportDataConnection::operator ==(QReportDataConnection &other)
 {
     return objectName() == other.objectName();
 }
+
+LEAF_END_NAMESPACE

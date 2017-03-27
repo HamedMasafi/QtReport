@@ -45,6 +45,8 @@
 #define TYPE_PARAMETERE "type_parametere"
 #define TYPE_FIELD "type_field"
 
+LEAF_BEGIN_NAMESPACE
+
 QReportTreeManager::QReportTreeManager(QWidget *parent, QReportDocumentDesigner *designer, QReport *report, bool readOnly) :
     QTreeWidget(parent),
     _designer(designer),
@@ -494,3 +496,5 @@ void QReportTreeManager::mousePressEvent(QMouseEvent *event)
 
     QTreeWidget::mousePressEvent(event);
 }
+
+LEAF_END_NAMESPACE

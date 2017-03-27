@@ -26,9 +26,8 @@
 
 #include "qreportwidgetbase.h"
 
-/*!
-   @author Hamed Masafi <Hamed.Masafi@gmAIL.COM>
-*/
+LEAF_BEGIN_NAMESPACE
+
 class QReportRectangle : public QReportWidgetBase
 {
    Q_OBJECT
@@ -70,5 +69,7 @@ class QReportRectangle : public QReportWidgetBase
       void loadDom( QDomElement *dom );
 
 };
+
+LEAF_END_NAMESPACE
 
 #endif

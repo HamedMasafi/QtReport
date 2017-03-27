@@ -31,6 +31,8 @@
 #include <QBuffer>
 #include <QDebug>
 
+LEAF_BEGIN_NAMESPACE
+
 QReportImage::QReportImage(QGraphicsItem *parent):
     QReportDisplayBase(parent)
 {
@@ -100,3 +102,5 @@ void QReportImage::loadDom(QDomElement *dom)
     b.append(dom->attribute("imageData"));
     m_image.loadFromData(QByteArray::fromBase64(b));
 }
+
+LEAF_END_NAMESPACE

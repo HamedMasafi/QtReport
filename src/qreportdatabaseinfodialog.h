@@ -25,7 +25,11 @@
 #ifndef QDATABASEINFODIALOG_H
 #define QDATABASEINFODIALOG_H
 
+#include "qtreportglobal.h"
 #include "ui_qreportdatabaseinfodialog.h"
+
+LEAF_BEGIN_NAMESPACE
+
 class QReport;
 class QReportDataConnection;
 class QReportDatabaseInfoDialogPrivate;
@@ -68,5 +72,7 @@ private slots:
     void on_buttonBox_accepted();
     void on_pushButtonTest_clicked();
 };
+
+LEAF_END_NAMESPACE
 
 #endif // QDATABASEINFODIALOG_H

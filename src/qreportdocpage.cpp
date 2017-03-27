@@ -24,6 +24,8 @@
 
 #include "qreportdocpage.h"
 
+LEAF_BEGIN_NAMESPACE
+
 QReportPage::QReportPage(QGraphicsItem *parent): QReportWidgetBase(parent)
 {
     this->setZValue(0);
@@ -111,3 +113,5 @@ void QReportPage::mousePressEvent(QGraphicsSceneMouseEvent *event)
     event->ignore();
     emit selectedChanged();
 }
+
+LEAF_END_NAMESPACE

@@ -38,6 +38,8 @@
 #define NODE_TYPE_TABLE          2
 #define NODE_TYPE_VIEW           3
 
+LEAF_BEGIN_NAMESPACE
+
 QReportQueryBuilderDialog::QReportQueryBuilderDialog(QReport *report, QString connectionName, QWidget *parent) :
     QDialog(parent),
     _report(report)
@@ -131,3 +133,5 @@ QString QReportQueryBuilderDialog::query() const
 {
     return customQuery->toPlainText();
 }
+
+LEAF_END_NAMESPACE

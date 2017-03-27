@@ -27,72 +27,72 @@
 #include "qtreportglobal.h"
 #include "qreportpanel.h"
 
-QT_BEGIN_NAMESPACE
+LEAF_BEGIN_NAMESPACE
 
 class QReportBand : public QReportPanel
 {
-        Q_OBJECT
+    Q_OBJECT
 
-        Q_PROPERTY(qreal headerHeight READ headerHeight WRITE setHeaderHeight USER true)
-        Q_PROPERTY(BandType bandType READ bandType WRITE setBandType USER true)
-        Q_PROPERTY(qreal bandHeight READ bandHeight WRITE setBandHeight USER true)
-        Q_PROPERTY(int index READ index WRITE setIndex USER true)
+    Q_PROPERTY(qreal headerHeight READ headerHeight WRITE setHeaderHeight USER true)
+    Q_PROPERTY(BandType bandType READ bandType WRITE setBandType USER true)
+    Q_PROPERTY(qreal bandHeight READ bandHeight WRITE setBandHeight USER true)
+    Q_PROPERTY(int index READ index WRITE setIndex USER true)
 
-        Q_CLASSINFO("prop_band", "true")
+    Q_CLASSINFO("prop_band", "true")
 
-    public:
-        QReportBand(QGraphicsItem *parent = 0);
-        QReportBand(BandType type, QGraphicsItem *parent = 0);
+public:
+    QReportBand(QGraphicsItem *parent = 0);
+    QReportBand(BandType type, QGraphicsItem *parent = 0);
 
-        ~QReportBand();
+    ~QReportBand();
 
-        /*!
+    /*!
           *Return top of current band.
        */
-        //      qreal top() const;
-        void setTop(qreal top);
-        //      Q_PROPERTY(qreal top READ top WRITE setTop)
+    //      qreal top() const;
+    void setTop(qreal top);
+    //      Q_PROPERTY(qreal top READ top WRITE setTop)
 
 
-        qreal headerHeight() const;
-        void setHeaderHeight(qreal headerHeight);
+    qreal headerHeight() const;
+    void setHeaderHeight(qreal headerHeight);
 
 
-        BandType  bandType() const;
-        void setBandType(BandType type);
+    BandType  bandType() const;
+    void setBandType(BandType type);
 
-        qreal bandHeight() const;
-        void setBandHeight(qreal value);
+    qreal bandHeight() const;
+    void setBandHeight(qreal value);
 
-        void paint(QPainter *painter,
-                   const QStyleOptionGraphicsItem *option,
-                   QWidget *Widget);
+    void paint(QPainter *painter,
+               const QStyleOptionGraphicsItem *option,
+               QWidget *Widget);
 
-        void addWidget(QReportWidgetBase*, QPointF);
+    void addWidget(QReportWidgetBase*, QPointF);
 
-        QString header() const;
-        QString typeString() const;
+    QString header() const;
+    QString typeString() const;
 
-        void setHeight(int height);
-        void setSize(int width, int height);
+    void setHeight(int height);
+    void setSize(int width, int height);
 
-        void loadDom(QDomElement *dom);
-        void saveDom(QDomElement *dom);
+    void loadDom(QDomElement *dom);
+    void saveDom(QDomElement *dom);
 
-        void setIndex(int index);
-        int index() const;
+    void setIndex(int index);
+    int index() const;
 
-    private :
-        qreal    m_top;
-        int      m_index;
-        bool     m_printAtBottom;
-        qreal    _headerHeight;
-        BandType      _bandType;
-        QPointF        _childPos;
-        int        _index;
+private :
+    qreal    m_top;
+    int      m_index;
+    bool     m_printAtBottom;
+    qreal    _headerHeight;
+    BandType      _bandType;
+    QPointF        _childPos;
+    int        _index;
 
 };
 
-QT_END_NAMESPACE
+LEAF_END_NAMESPACE
 
 #endif

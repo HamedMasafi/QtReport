@@ -30,9 +30,7 @@ class QGraphicsSceneMouseEvent;
 
 #include "qreportwidgetbase.h"
 
-/*!
-  *Define a page in document design area
- */
+LEAF_BEGIN_NAMESPACE
 
 class Q_DECL_HIDDEN QReportPage : public QReportWidgetBase
 {
@@ -63,5 +61,7 @@ class Q_DECL_HIDDEN QReportPage : public QReportWidgetBase
       qreal _marginTop;
       qreal _marginRight;
 };
+
+LEAF_END_NAMESPACE
 
 #endif

@@ -57,7 +57,7 @@
 #include "qreportruler.h"
 #include "qreportdocpage.h"
 #include "qreportwidgetbase.h"
-#include "qreportwidgetresizer.h"
+#include "qreportwidgetresizer_p.h"
 #include "qreportband.h"
 #include "qreportscene.h"
 #include "qreportpropertydialog.h"
@@ -77,6 +77,9 @@
 #include "qreportpropertyband.h"
 #include "qreportpropertysort.h"
 #include "qreportpropertyfilter.h"
+#include "qreportscene.h"
+
+LEAF_BEGIN_NAMESPACE
 
 bool lessThan(const QReportBand *x1, const QReportBand *x2)
 {
@@ -2250,3 +2253,4 @@ void QReportDocumentDesigner::showWidgetProperties(QReportWidgetBase *widget)
 }
 
 
+LEAF_END_NAMESPACE

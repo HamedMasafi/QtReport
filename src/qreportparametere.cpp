@@ -27,6 +27,8 @@
 
 #include "qreportparametere.h"
 
+LEAF_BEGIN_NAMESPACE
+
 QReportParametere::QReportParametere(QString name, QVariant value, QVariant::Type type):
     QReportXMLSeriazble(),
     _value(value)
@@ -34,3 +36,5 @@ QReportParametere::QReportParametere(QString name, QVariant value, QVariant::Typ
     setObjectName(name);
     setType((int)type);
 }
+
+LEAF_END_NAMESPACE

@@ -22,7 +22,7 @@
  ***************************************************************************/
 
 
-#include "qreportwidgetresizer.h"
+#include "qreportwidgetresizer_p.h"
 
 
 #define CIRCLER 6
@@ -39,6 +39,72 @@
 #include "qreportwidgetbase.h"
 #include "qreportevent.h"
 #include "qreportband.h"
+
+LEAF_BEGIN_NAMESPACE
+
+
+QReportResizeHandle::QReportResizeHandle(qreal x, qreal y, qreal radius, QGraphicsItem *parent) :
+    QGraphicsEllipseItem ( x, y, radius, radius, parent ),
+    _radius ( radius )
+{
+    setPen(QPen(Qt::black, 0));
+    //this->setFlags( QGraphicsItem::ItemIsMovable );
+}
+
+void QReportResizeHandle::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
+{
+    if ( mousePressed )
+    {
+        QPointF pt (
+                    this->pos().x() - _lastPoint.x(),
+                    this->pos().y() - _lastPoint.y() );
+
+        emit moving ( this->mapToScene( event->pos() ) );
+    }//if
+}
+
+void QReportResizeHandle::mousePressEvent(QGraphicsSceneMouseEvent *event)
+{
+    Q_UNUSED( event );
+
+    _lastPoint = centerPoint();
+    mousePressed = true;
+}
+
+void QReportResizeHandle::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+{
+    Q_UNUSED( event );
+    emit moved();
+    mousePressed = false;
+
+}
+
+QPointF QReportResizeHandle::centerPoint() const
+{
+    return QPointF ( pos().x() + _radius / 2,
+                     pos().y() + _radius / 2 );
+}
+
+QPointF QReportResizeHandle::lastPoint() const
+{
+    return _lastPoint;
+}
+
+ResizeDirection QReportResizeHandle::resizeDirection() const
+{
+    return m_resizeDirection;
+}
+
+void QReportResizeHandle::setResizeDirection(ResizeDirection value)
+{
+    m_resizeDirection = value;
+}
+
+void QReportResizeHandle::setScale(qreal scale)
+{
+    _radius = scale;
+    this->setRect( 0, 0, scale, scale );
+}
 
 /*!
   \class RWidgetResizer
@@ -376,3 +442,5 @@ QList<QReportWidgetBase *> QReportWidgetResizer::selectedWidgets() const
     return _selectedWidgets;
 }
 
+
+LEAF_END_NAMESPACE

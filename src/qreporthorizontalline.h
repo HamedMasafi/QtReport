@@ -26,9 +26,8 @@
 
 #include "qreportlinebase.h"
 
-/*!
-   @author Hamed Masafi <Hamed.Masafi@GMail.COM>
-*/
+LEAF_BEGIN_NAMESPACE
+
 class QReportHorizontalLine : public QReportLineBase
 {
    Q_OBJECT
@@ -41,5 +40,7 @@ class QReportHorizontalLine : public QReportLineBase
       void paint ( QPainter *painter, const QStyleOptionGraphicsItem *option,
                    QWidget *Widget );
 };
+
+LEAF_END_NAMESPACE
 
 #endif

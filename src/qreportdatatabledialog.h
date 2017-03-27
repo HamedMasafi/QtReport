@@ -24,7 +24,10 @@
 #ifndef QREPORTDATATABLEDIALOG_H
 #define QREPORTDATATABLEDIALOG_H
 
+#include "qtreportglobal.h"
 #include "ui_qreportdatatabledialog.h"
+
+LEAF_BEGIN_NAMESPACE
 
 class QReport;
 class QReportDataTable;
@@ -57,5 +60,7 @@ private slots:
     void on_treeWidgetFields_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
     void setFilterText();
 };
+
+LEAF_END_NAMESPACE
 
 #endif // QREPORTDATATABLEDIALOG_H

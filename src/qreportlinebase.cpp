@@ -27,6 +27,8 @@
 #include "qreportpropertypagelinetype.h"
 #include "qreportlinebase.h"
 
+LEAF_BEGIN_NAMESPACE
+
 QReportLineBase::QReportLineBase(QGraphicsItem *parent): QReportWidgetBase(parent)
 {
    setLineWidth( 1 );
@@ -49,5 +51,4 @@ void QReportLineBase::loadDom(QDomElement *dom)
     }//if
 }
 
-
-
+LEAF_END_NAMESPACE

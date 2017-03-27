@@ -40,6 +40,8 @@
 #define NODE_TYPE_TABLE          2
 #define NODE_TYPE_VIEW           3
 
+LEAF_BEGIN_NAMESPACE
+
 QReportDatabaseTablesDialog::QReportDatabaseTablesDialog(QReport *report, QString connectionName, QWidget *parent) :
     QDialog(parent),
     _report(report)
@@ -166,3 +168,5 @@ void QReportDatabaseTablesDialog::on_listWidgetParameters_itemDoubleClicked(QLis
     textEditCustomQuery->insertPlainText(
                QString("{%1}").arg(item->text()));
 }
+
+LEAF_END_NAMESPACE

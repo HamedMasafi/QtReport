@@ -21,7 +21,6 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-
 #include <QtSql/QSqlQuery>
 #include <QtSql/QSqlRecord>
 #include <QtSql/QSqlField>
@@ -38,6 +37,7 @@
 #include "qreportdatatabledialog.h"
 #include "qreportquerybuilderdialog.h"
 
+LEAF_BEGIN_NAMESPACE
 
 QReportDataTableDialog::QReportDataTableDialog(QReport *report, QString connectionName, QWidget *parent) :
     QDialog(parent),
@@ -270,3 +270,5 @@ void QReportDataTableDialog::setFilterText()
     }
     treeWidgetFields->currentItem()->setText(2, t);
 }
+
+LEAF_END_NAMESPACE

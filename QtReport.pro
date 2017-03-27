@@ -1,5 +1,5 @@
-SUBDIRS += QtReport \
- QtReportDesigner
+SUBDIRS += src \
+ tools/QtReportDesigner
 
 TEMPLATE = subdirs 
 CONFIG += warn_on \

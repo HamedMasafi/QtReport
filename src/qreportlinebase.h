@@ -26,9 +26,8 @@
 
 #include "qreportwidgetbase.h"
 
-/*!
-	@author Hamed Masafi <Hamed.Masafi@GMail.COM>
-*/
+LEAF_BEGIN_NAMESPACE
+
 class QReportLineBase : public QReportWidgetBase
 {
    Q_OBJECT
@@ -54,5 +53,7 @@ public:
    void loadDom(QDomElement *dom);
 
 };
+
+LEAF_END_NAMESPACE
 
 #endif

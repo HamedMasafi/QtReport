@@ -29,6 +29,7 @@
 #include "qreport.h"
 #include "qreportdataconnection.h"
 
+LEAF_BEGIN_NAMESPACE
 
 class QReportDatabaseInfoDialogPrivate
 {
@@ -240,3 +241,5 @@ void QReportDatabaseInfoDialog::setDataConnection(const QReportDataConnection *d
 //    lineEditUsername->setText(username);
 //    lineEditPassword->setText(password);
 //}
+
+LEAF_END_NAMESPACE

@@ -24,9 +24,10 @@
 #ifndef QREPORTSCENE_H
 #define QREPORTSCENE_H
 
-
+#include "qtreportglobal.h"
 #include <QGraphicsScene>
 
+LEAF_BEGIN_NAMESPACE
 
 class QReportScene : public QGraphicsScene
 {
@@ -60,5 +61,7 @@ class QReportScene : public QGraphicsScene
         void mousePress(QGraphicsSceneMouseEvent *mouseEvent);
         void drop(QGraphicsSceneDragDropEvent *event);
 };
+
+LEAF_END_NAMESPACE
 
 #endif

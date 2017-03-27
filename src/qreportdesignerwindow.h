@@ -26,8 +26,11 @@
 #define RREPORTDESIGNERWINDOW_H
 
 //#include <ui_qreportdesignerwindow.h>
-
+#include "qtreportglobal.h"
 #include <QMainWindow>
+
+LEAF_BEGIN_NAMESPACE
+
 class QReportDesignerFactory ;
 
 
@@ -42,5 +45,7 @@ public:
 private:
    QReportDesignerFactory *factory;
 };
+
+LEAF_END_NAMESPACE
 
 #endif // RREPORTDESIGNERWINDOW_H

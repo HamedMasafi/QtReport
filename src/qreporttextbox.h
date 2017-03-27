@@ -26,6 +26,7 @@
 
 #include "qreportdisplaybase.h"
 
+LEAF_BEGIN_NAMESPACE
 
 class QReportTextBox : public QReportDisplayBase
 {
@@ -62,7 +63,8 @@ private:
       Q_DISABLE_COPY(QReportTextBox)
 };
 
+LEAF_END_NAMESPACE
 
-Q_DECLARE_METATYPE(QReportTextBox*)
+Q_DECLARE_METATYPE(LEAF_WRAP_NAMESPACE(QReportTextBox*))
 
 #endif
