@@ -1,4 +1,7 @@
 /***************************************************************************
+ *   QtReport                                                              *
+ *   Qt Report Builder Soultion                                            *
+ *                                                                         *
  *   Copyright (C) 2010 by Hamed Masafi                                    *
  *   Hamed.Masafi@GMail.COM                                                *
  *                                                                         *
@@ -18,18 +21,47 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include <QApplication>
-#include <QTranslator>
+#ifndef QREPORTSCENE_H
+#define QREPORTSCENE_H
 
-#include "designer/designerwindow.h"
+#include "qtreportglobal.h"
+#include <QGraphicsScene>
 
-int main ( int argc, char *argv[] )
+LEAF_BEGIN_NAMESPACE
+
+class LReportScene : public QGraphicsScene
 {
-   QApplication app ( argc, argv );
+        Q_OBJECT
 
-   LEAF_WRAP_NAMESPACE(LReportDesignerWindow) wnd;
+    public:
 
-   wnd.show();
+        LReportScene();
 
-   return app.exec();
-}
+        LReportScene(const QRectF& sceneRect, QObject *parent);
+
+        LReportScene(qreal x, qreal y, qreal width, qreal height, QObject *parent = 0);
+
+        QRect documentArea() const;
+
+        ~LReportScene();
+
+    protected:
+        void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
+        void mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent);
+        void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
+
+        void dragEnterEvent(QGraphicsSceneDragDropEvent *event);
+        void dragLeaveEvent(QGraphicsSceneDragDropEvent *event);
+        void dragMoveEvent(QGraphicsSceneDragDropEvent *event);
+        void dropEvent(QGraphicsSceneDragDropEvent *event);
+
+    signals:
+        void mouseRelease(QGraphicsSceneMouseEvent *mouseEvent);
+        void mouseMove(QGraphicsSceneMouseEvent *mouseEvent);
+        void mousePress(QGraphicsSceneMouseEvent *mouseEvent);
+        void drop(QGraphicsSceneDragDropEvent *event);
+};
+
+LEAF_END_NAMESPACE
+
+#endif

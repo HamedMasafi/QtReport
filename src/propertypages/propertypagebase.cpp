@@ -1,4 +1,7 @@
 /***************************************************************************
+ *   QtReport                                                              *
+ *   Qt Report Builder Soultion                                            *
+ *                                                                         *
  *   Copyright (C) 2010 by Hamed Masafi                                    *
  *   Hamed.Masafi@GMail.COM                                                *
  *                                                                         *
@@ -18,18 +21,45 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include <QApplication>
-#include <QTranslator>
+#include <QLabel>
 
-#include "designer/designerwindow.h"
+#include "widgets/widgetbase.h"
+#include "designer/documentdesigner.h"
+#include "propertypages/propertypagebase.h"
+#include "widgets/widgetbase.h"
 
-int main ( int argc, char *argv[] )
+LEAF_BEGIN_NAMESPACE
+
+LReportPropertyPageBase::LReportPropertyPageBase(QWidget *parent) :
+    QWidget(parent)
 {
-   QApplication app ( argc, argv );
-
-   LEAF_WRAP_NAMESPACE(LReportDesignerWindow) wnd;
-
-   wnd.show();
-
-   return app.exec();
 }
+
+
+bool LReportPropertyPageBase::isChanged() const
+{
+   return _isChanged;
+}
+
+int LReportPropertyPageBase::index() const
+{
+   return _index;
+}
+
+QString LReportPropertyPageBase::title() const
+{
+   return _title;
+}
+
+LReportDocumentDesigner *LReportPropertyPageBase::designer() const
+{
+    return _designer;
+}
+
+void LReportPropertyPageBase::setDesigner(LReportDocumentDesigner *designer)
+{
+    _designer = designer;
+}
+
+LEAF_END_NAMESPACE
+

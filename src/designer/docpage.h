@@ -1,4 +1,7 @@
 /***************************************************************************
+ *   QtReport                                                              *
+ *   Qt Report Builder Soultion                                            *
+ *                                                                         * 
  *   Copyright (C) 2010 by Hamed Masafi                                    *
  *   Hamed.Masafi@GMail.COM                                                *
  *                                                                         *
@@ -18,18 +21,47 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include <QApplication>
-#include <QTranslator>
 
-#include "designer/designerwindow.h"
+#ifndef RDOCPAGE_H
+#define RDOCPAGE_H
 
-int main ( int argc, char *argv[] )
+
+class QGraphicsSceneMouseEvent;
+
+#include "widgets/widgetbase.h"
+
+LEAF_BEGIN_NAMESPACE
+
+class Q_DECL_HIDDEN LReportPage : public LReportWidgetBase
 {
-   QApplication app ( argc, argv );
+   public:
+      LReportPage( QGraphicsItem *parent=0 );
 
-   LEAF_WRAP_NAMESPACE(LReportDesignerWindow) wnd;
+      ~LReportPage();
 
-   wnd.show();
+      void paint ( QPainter  *painter, const QStyleOptionGraphicsItem  *option, QWidget  *Widget = 0 )  ;
 
-   return app.exec();
-}
+      void setMargins ( qreal left, qreal top, qreal Right, qreal Bottom );
+      void setGridSize( qreal gridSize);
+
+      Q_PROPERTY ( int gridSize READ gridSize WRITE setGridSize )
+
+      QRect documentArea() const;
+
+      GridType gridType() const{ return _gridType; }
+      void setGridType( GridType type ){ _gridType = type; }
+
+      void mousePressEvent( QGraphicsSceneMouseEvent  *event );
+
+   private:
+      GridType _gridType;
+      int _gridSize;
+      qreal _marginLeft;
+      qreal _marginBottom;
+      qreal _marginTop;
+      qreal _marginRight;
+};
+
+LEAF_END_NAMESPACE
+
+#endif

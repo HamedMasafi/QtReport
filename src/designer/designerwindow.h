@@ -1,4 +1,7 @@
 /***************************************************************************
+ *   QtReport                                                              *
+ *   Qt Report Builder Soultion                                            *
+ *                                                                         * 
  *   Copyright (C) 2010 by Hamed Masafi                                    *
  *   Hamed.Masafi@GMail.COM                                                *
  *                                                                         *
@@ -18,18 +21,31 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include <QApplication>
-#include <QTranslator>
 
-#include "designer/designerwindow.h"
+#ifndef RREPORTDESIGNERWINDOW_H
+#define RREPORTDESIGNERWINDOW_H
 
-int main ( int argc, char *argv[] )
+//#include <ui_qreportdesignerwindow.h>
+#include "qtreportglobal.h"
+#include <QMainWindow>
+
+LEAF_BEGIN_NAMESPACE
+
+class LReportDesignerFactory ;
+
+
+class LReportDesignerWindow : public QMainWindow//, private Ui::LReportDesignerWindow
 {
-   QApplication app ( argc, argv );
+    Q_OBJECT
 
-   LEAF_WRAP_NAMESPACE(LReportDesignerWindow) wnd;
+public:
+    LReportDesignerWindow(QWidget *parent = 0);
+    ~LReportDesignerWindow();
 
-   wnd.show();
+private:
+   LReportDesignerFactory *factory;
+};
 
-   return app.exec();
-}
+LEAF_END_NAMESPACE
+
+#endif // RREPORTDESIGNERWINDOW_H

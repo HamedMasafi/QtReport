@@ -1,4 +1,7 @@
 /***************************************************************************
+ *   QtReport                                                              *
+ *   Qt Report Builder Soultion                                            *
+ *                                                                         *
  *   Copyright (C) 2010 by Hamed Masafi                                    *
  *   Hamed.Masafi@GMail.COM                                                *
  *                                                                         *
@@ -18,18 +21,20 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include <QApplication>
-#include <QTranslator>
+#ifndef QREPORTSECTIONDATAPROPERTIES_H
+#define QREPORTSECTIONDATAPROPERTIES_H
 
-#include "designer/designerwindow.h"
+#include "ui_sectiondataproperties.h"
 
-int main ( int argc, char *argv[] )
+class LReportSectionDataProperties : public QWidget, private Ui::LReportSectionDataProperties
 {
-   QApplication app ( argc, argv );
+    Q_OBJECT
 
-   LEAF_WRAP_NAMESPACE(LReportDesignerWindow) wnd;
+public:
+    explicit LReportSectionDataProperties(QWidget *parent = 0);
 
-   wnd.show();
+protected:
+    void changeEvent(QEvent *e);
+};
 
-   return app.exec();
-}
+#endif // QREPORTSECTIONDATAPROPERTIES_H

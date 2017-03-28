@@ -1,4 +1,7 @@
 /***************************************************************************
+ *   QtReport                                                              *
+ *   Qt Report Builder Soultion                                            *
+ *                                                                         *
  *   Copyright (C) 2010 by Hamed Masafi                                    *
  *   Hamed.Masafi@GMail.COM                                                *
  *                                                                         *
@@ -18,18 +21,46 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include <QApplication>
-#include <QTranslator>
+#ifndef QREPORTDATATABLEDIALOG_H
+#define QREPORTDATATABLEDIALOG_H
 
-#include "designer/designerwindow.h"
+#include "qtreportglobal.h"
+#include "ui_datatabledialog.h"
 
-int main ( int argc, char *argv[] )
+LEAF_BEGIN_NAMESPACE
+
+class LReport;
+class LReportDataTable;
+class Q_DECL_HIDDEN LReportDataTableDialog : public QDialog, private Ui::LReportDataTableDialog
 {
-   QApplication app ( argc, argv );
+    Q_OBJECT
+    LReportDataTable *_table;
+    LReport *_report;
+    QString _connectionName;
+    bool _editMode;
 
-   LEAF_WRAP_NAMESPACE(LReportDesignerWindow) wnd;
+    void fetchScheema();
+    bool checkData();
 
-   wnd.show();
+public:
+    explicit LReportDataTableDialog(LReport *report, QString connectionName, QWidget *parent = 0);
+    explicit LReportDataTableDialog(LReport *report, LReportDataTable *table, QWidget *parent = 0);
 
-   return app.exec();
-}
+    LReportDataTable *createDataTable();
+
+    void fillIntOperatorCombo();
+    void fillStringOperatorCombo();
+
+protected:
+    void changeEvent(QEvent *e);
+
+private slots:
+    void on_queryBuilderButton_clicked();
+    void on_buttonBox_accepted();
+    void on_treeWidgetFields_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
+    void setFilterText();
+};
+
+LEAF_END_NAMESPACE
+
+#endif // QREPORTDATATABLEDIALOG_H

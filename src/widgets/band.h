@@ -21,95 +21,78 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef QRTEPORT_GLOBAL
-#define QRTEPORT_GLOBAL
+#ifndef QSECTIONBAND_H
+#define QSECTIONBAND_H
 
-#include <QFlags>
+#include "qtreportglobal.h"
+#include "panel.h"
 
-#define LEAF_NAMESPACE Leaf
+LEAF_BEGIN_NAMESPACE
 
-#ifdef LEAF_COMPILE_STATIC
-#   define LEAF_EXPORT
-#else
-#   define LEAF_EXPORT Q_DECL_EXPORT
-#endif
-
-#ifdef LEAF_NAMESPACE
-#   define LEAF_BEGIN_NAMESPACE     namespace LEAF_NAMESPACE{
-#   define LEAF_END_NAMESPACE       }
-#   define LEAF_WRAP_NAMESPACE(x)   LEAF_NAMESPACE::x
-#else
-#   define LEAF_BEGIN_NAMESPACE
-#   define LEAF_END_NAMESPACE
-#   define LEAF_WRAP_NAMESPACE(x)   x
-#endif
-
-
-#define REGISTER_PROPERTY_PAGE(name) Q_CLASSINFO("prop_" #name, "true")
-
-//LEAF_BEGIN_NAMESPACE
-
-enum WidgetTypeFlag
+class LReportBand : public LReportPanel
 {
-    Band,
-    Widget,
-    Page
+    Q_OBJECT
+
+    Q_PROPERTY(qreal headerHeight READ headerHeight WRITE setHeaderHeight USER true)
+    Q_PROPERTY(BandType bandType READ bandType WRITE setBandType USER true)
+    Q_PROPERTY(qreal bandHeight READ bandHeight WRITE setBandHeight USER true)
+    Q_PROPERTY(int index READ index WRITE setIndex USER true)
+
+    REGISTER_PROPERTY_PAGE(band)
+
+public:
+    LReportBand(QGraphicsItem *parent = 0);
+    LReportBand(BandType type, QGraphicsItem *parent = 0);
+
+    ~LReportBand();
+
+    /*!
+          *Return top of current band.
+       */
+    //      qreal top() const;
+    void setTop(qreal top);
+    //      Q_PROPERTY(qreal top READ top WRITE setTop)
+
+
+    qreal headerHeight() const;
+    void setHeaderHeight(qreal headerHeight);
+
+
+    BandType  bandType() const;
+    void setBandType(BandType type);
+
+    qreal bandHeight() const;
+    void setBandHeight(qreal value);
+
+    void paint(QPainter *painter,
+               const QStyleOptionGraphicsItem *option,
+               QWidget *Widget);
+
+    void addWidget(LReportWidgetBase*, QPointF);
+
+    QString header() const;
+    QString typeString() const;
+
+    void setHeight(int height);
+    void setSize(int width, int height);
+
+    void loadDom(QDomElement *dom);
+    void saveDom(QDomElement *dom);
+
+    void setIndex(int index);
+    int index() const;
+
+private :
+    qreal    m_top;
+    int      m_index;
+    bool     m_printAtBottom;
+    qreal    _headerHeight;
+    BandType      _bandType;
+    QPointF        _childPos;
+    int        _index;
+
 };
-Q_DECLARE_FLAGS(WidgetType, WidgetTypeFlag)
-Q_DECLARE_OPERATORS_FOR_FLAGS(WidgetType)
 
-enum ResizeDirectionFlag
-{
-    Top = 1,
-    Left = 2,
-    Right = 4,
-    Bottom = 8
-};
-Q_DECLARE_FLAGS(ResizeDirection, ResizeDirectionFlag)
-Q_DECLARE_OPERATORS_FOR_FLAGS(ResizeDirection)
-
-enum UnitFlag
-{
-    Centimeters,
-    Milimeters,
-    Inch,
-    Pixel
-};
-Q_DECLARE_FLAGS(Unit, UnitFlag)
-Q_DECLARE_OPERATORS_FOR_FLAGS(Unit)
-
-enum BandTypeFlag
-{
-    ReportHeader,
-    PageHeader,
-    GroupHeader,
-    Data,
-    EmptyData,
-    GroupFooter,
-    PageFooter,
-    ReportFooter
-};
-Q_DECLARE_FLAGS(BandType, BandTypeFlag)
-Q_DECLARE_OPERATORS_FOR_FLAGS(BandType)
-
-enum GridTypeFlag
-{
-    NoGrid,
-    DotGrid,
-    LinesGrid
-};
-Q_DECLARE_FLAGS(GridType, GridTypeFlag)
-Q_DECLARE_OPERATORS_FOR_FLAGS(GridType)
-
-enum MouseToolFlag
-{
-    Pointer,
-    Hand
-};
-Q_DECLARE_FLAGS(MouseTool, MouseToolFlag)
-Q_DECLARE_OPERATORS_FOR_FLAGS(MouseTool)
-
-
-//LEAF_END_NAMESPACE
+LEAF_END_NAMESPACE
 
 #endif

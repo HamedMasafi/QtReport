@@ -1,155 +1,160 @@
 TEMPLATE = lib
-
-
-QT += sql \
-      xml
-
 TARGET = QtReport
+CONFIG += staticlib
+
+QT += sql xml
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
 TRANSLATIONS = ../translations/qtreport_en.ts \
                ../translations/qtreport_fa.ts
 
-CONFIG += staticlib
+INCLUDEPATH += \
+    $$PWD/designer \
+    $$PWD/core \
+    $$PWD/propertypages
 
-HEADERS +=  widgets/widgetbase.h \
-            QtReport \
-            widgets/widget.h \
-            propertypages/propertypagebase.h \
-            propertypages/propertydialog.h \
-            report.h \
-            propertypages/propertypagetext.h \
-            propertypages/propertypagelinetype.h \
-            propertypages/propertypagepage.h \
-            propertypages/propertypagerectangle.h \
-            propertypages/propertypagefont.h \
-            propertypages/propertypagerichtext.h \
-            databaseinfodialog.h \
-            databasetablesdialog.h \
-            datatable.h \
-            designerwindow.h \
-            designeraboutdialog.h \
-            parameteredialog.h \
-            designerfactory.h \
-            propertypages/propertypageimage.h \
-            propertypages/propertypagepos.h \
-            undocommands.h \
-            propertypages/propertypagebarcode.h \
-            propertypages/propertypagewidget.h \
-            propertypages/propertypageformat.h \
-            widgets/textbox.h \
-            widgets/image.h \
-            event.h \
-            widgets/horizontalline.h \
-            widgets/linebase.h \
-            documentview.h \
-            documentdesigner.h \
-            docpage.h \
-            colorpicker.h \
-            displaybase.h \
-            ruler.h \
-            qtreportglobal.h \
-            widgets/verticalline.h \
-            widgets/rectanglebase.h \
-            widgets/panel.h \
-            scene.h \
-            propertypages/sectiondataproperties.h \
-            propertypages/sectionsproperties.h \
-            treemanager.h \
-            xmlseriazble.h \
-            parametere.h \
-            querybuilderdialog.h \
-            typehelper.h \
-            propertypages/propertypagealign.h \
-    widgets/band.h \
-    dataconnection.h \
-    datatabledialog.h \
-    propertypages/propertyband.h \
-    propertypages/propertysort.h \
-    propertypages/propertyfilter.h \
-    widgetresizer_p.h \
-    newconnectionwizard.h
-
-SOURCES +=  widgets/widgetbase.cpp \
-            widgetresizer.cpp \
-            widgets/widget.cpp \
-            propertypages/propertypagebase.cpp \
-            propertypages/propertydialog.cpp \
-            report.cpp \
-            propertypages/propertypagetext.cpp \
-            propertypages/propertypagelinetype.cpp \
-            propertypages/propertypagepage.cpp \
-            propertypages/propertypagerectangle.cpp \
-            propertypages/propertypagefont.cpp \
-            propertypages/propertypagerichtext.cpp \
-            databaseinfodialog.cpp \
-            databasetablesdialog.cpp \
-            datatable.cpp \
-            designerwindow.cpp \
-            designeraboutdialog.cpp \
-            parameteredialog.cpp \
-            designerfactory.cpp \
-            propertypages/propertypageimage.cpp \
-            propertypages/propertypagepos.cpp \
-            undocommands.cpp \
-            propertypages/propertypagebarcode.cpp \
-            propertypages/propertypagewidget.cpp \
-            propertypages/propertypageformat.cpp \
-            widgets/textbox.cpp \
-            widgets/image.cpp \
-            widgets/linebase.cpp \
-            widgets/horizontalline.cpp \
-            documentview.cpp \
-            documentdesigner.cpp \
-            docpage.cpp \
-            colorpicker.cpp \
-            displaybase.cpp \
-            ruler.cpp \
-            widgets/verticalline.cpp \
-            widgets/rectanglebase.cpp \
-            widgets/panel.cpp \
-            scene.cpp \
-            propertypages/sectiondataproperties.cpp \
-            propertypages/sectionsproperties.cpp \
-            treemanager.cpp \
-            xmlseriazble.cpp \
-            parametere.cpp \
-            querybuilderdialog.cpp \
-            typehelper.cpp \
-            propertypages/propertypagealign.cpp \
-    widgets/band.cpp \
-    dataconnection.cpp \
-    datatabledialog.cpp \
+SOURCES +=  \
+    designer/databaseinfodialog.cpp \
+    designer/databasetablesdialog.cpp \
+    core/datatable.cpp \
+    designer/colorpicker.cpp \
+    designer/designeraboutdialog.cpp \
+    designer/designerfactory.cpp \
+    designer/designerwindow.cpp \
+    designer/documentdesigner.cpp \
+    widgets/displaybase.cpp \
+    designer/docpage.cpp \
+    designer/documentview.cpp \
+    core/parametere.cpp \
+    designer/parameteredialog.cpp \
+    propertypages/propertydialog.cpp \
+    propertypages/propertypagealign.cpp \
+    propertypages/propertypagebarcode.cpp \
+    propertypages/propertypagebase.cpp \
+    propertypages/propertypagefont.cpp \
+    propertypages/propertypageformat.cpp \
+    propertypages/propertypageimage.cpp \
+    propertypages/propertypagelinetype.cpp \
+    propertypages/propertypagepage.cpp \
+    propertypages/propertypagepos.cpp \
+    propertypages/propertypagerectangle.cpp \
+    propertypages/propertypagerichtext.cpp \
+    propertypages/propertypagetext.cpp \
+    propertypages/propertypagewidget.cpp \
+    propertypages/sectiondataproperties.cpp \
+    propertypages/sectionsproperties.cpp \
+    designer/querybuilderdialog.cpp \
+    core/report.cpp \
+    designer/ruler.cpp \
+    designer/scene.cpp \
+    designer/treemanager.cpp \
+    typehelper.cpp \
+    designer/undocommands.cpp \
+    designer/widgetresizer.cpp \
+    widgets/horizontalline.cpp \
+    widgets/image.cpp \
+    widgets/linebase.cpp \
+    widgets/panel.cpp \
+    widgets/rectanglebase.cpp \
+    widgets/textbox.cpp \
+    widgets/verticalline.cpp \
+    widgets/widget.cpp \
+    widgets/widgetbase.cpp \
+    designer/xmlseriazble.cpp \
+    core/dataconnection.cpp \
+    designer/datatabledialog.cpp \
+    designer/newconnectionwizard.cpp \
     propertypages/propertyband.cpp \
-    propertypages/propertysort.cpp \
     propertypages/propertyfilter.cpp \
-    newconnectionwizard.cpp
+    propertypages/propertysort.cpp \
+    widgets/band.cpp \
+    core/lreportprintsettings.cpp
+
+HEADERS +=  \
+    designer/colorpicker.h \
+    designer/databaseinfodialog.h \
+    designer/databasetablesdialog.h \
+    core/dataconnection.h \
+    core/datatable.h \
+    designer/datatabledialog.h \
+    designer/designeraboutdialog.h \
+    designer/designerfactory.h \
+    designer/designerwindow.h \
+    designer/documentdesigner.h \
+    widgets/displaybase.h \
+    designer/docpage.h \
+    designer/documentview.h \
+    core/event.h \
+    designer/newconnectionwizard.h \
+    core/parametere.h \
+    designer/parameteredialog.h \
+    propertypages/propertyband.h \
+    propertypages/propertydialog.h \
+    propertypages/propertyfilter.h \
+    propertypages/propertypagealign.h \
+    propertypages/propertypagebarcode.h \
+    propertypages/propertypagebase.h \
+    propertypages/propertypagefont.h \
+    propertypages/propertypageformat.h \
+    propertypages/propertypageimage.h \
+    propertypages/propertypagelinetype.h \
+    propertypages/propertypagepage.h \
+    propertypages/propertypagepos.h \
+    propertypages/propertypagerectangle.h \
+    propertypages/propertypagerichtext.h \
+    propertypages/propertypagetext.h \
+    propertypages/propertypagewidget.h \
+    propertypages/propertysort.h \
+    propertypages/sectiondataproperties.h \
+    propertypages/sectionsproperties.h \
+    QtReport \
+    qtreportglobal.h \
+    designer/querybuilderdialog.h \
+    core/report.h \
+    designer/ruler.h \
+    designer/scene.h \
+    designer/treemanager.h \
+    typehelper.h \
+    designer/undocommands.h \
+    designer/widgetresizer_p.h \
+    widgets/band.h \
+    widgets/horizontalline.h \
+    widgets/image.h \
+    widgets/linebase.h \
+    widgets/panel.h \
+    widgets/rectanglebase.h \
+    widgets/textbox.h \
+    widgets/verticalline.h \
+    widgets/widget.h \
+    widgets/widgetbase.h \
+    designer/xmlseriazble.h \
+    core/lreportprintsettings.h
 
 FORMS += \
-    propertypages/propertypagetext.ui \
-    propertypages/propertypagepage.ui \
-    propertypages/propertypagerectangle.ui \
-    propertypages/propertypagefont.ui \
-    propertypages/propertypagerichtext.ui \
-    databaseinfodialog.ui \
-    databasetablesdialog.ui \
-    designerwindow.ui \
-    designeraboutdialog.ui \
-    parameteredialog.ui \
-    propertypages/propertypageimage.ui \
-    propertypages/propertypagepos.ui \
+    designer/databaseinfodialog.ui \
+    designer/databasetablesdialog.ui \
+    designer/datatabledialog.ui \
+    designer/designeraboutdialog.ui \
+    designer/designerwindow.ui \
+    designer/newconnectionwizard.ui \
+    designer/parameteredialog.ui \
+    propertypages/propertyband.ui \
+    propertypages/propertyfilter.ui \
+    propertypages/propertypagealign.ui \
     propertypages/propertypagebarcode.ui \
-    propertypages/propertypagewidget.ui \
+    propertypages/propertypagefont.ui \
     propertypages/propertypageformat.ui \
+    propertypages/propertypageimage.ui \
+    propertypages/propertypagepage.ui \
+    propertypages/propertypagepos.ui \
+    propertypages/propertypagerectangle.ui \
+    propertypages/propertypagerichtext.ui \
+    propertypages/propertypagewidget.ui \
+    propertypages/propertysort.ui \
     propertypages/sectiondataproperties.ui \
     propertypages/sectionsproperties.ui \
-    querybuilderdialog.ui \
-    propertypages/propertypagealign.ui \
-    datatabledialog.ui \
-    propertypages/propertyband.ui \
-    propertypages/propertysort.ui \
-    propertypages/propertyfilter.ui \
-    newconnectionwizard.ui
+    designer/querybuilderdialog.ui \
+    propertypages/propertypagetext.ui
 
 OTHER_FILES += \
     main.dox

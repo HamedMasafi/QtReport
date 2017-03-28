@@ -1,4 +1,7 @@
 /***************************************************************************
+ *   QtReport                                                              *
+ *   Qt Report Builder Soultion                                            *
+ *                                                                         * 
  *   Copyright (C) 2010 by Hamed Masafi                                    *
  *   Hamed.Masafi@GMail.COM                                                *
  *                                                                         *
@@ -18,18 +21,29 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include <QApplication>
-#include <QTranslator>
 
-#include "designer/designerwindow.h"
+#ifndef RPROPERTYPAGERICHTEXT_H
+#define RPROPERTYPAGERICHTEXT_H
 
-int main ( int argc, char *argv[] )
+#include "propertypages/propertypagebase.h"
+#include "ui_propertypagerichtext.h"
+
+LEAF_BEGIN_NAMESPACE
+
+class LReportPropertyPageRichText : public LReportPropertyPageBase, private Ui::LReportPropertyPageRichText
 {
-   QApplication app ( argc, argv );
+    Q_OBJECT
 
-   LEAF_WRAP_NAMESPACE(LReportDesignerWindow) wnd;
+public:
+    LReportPropertyPageRichText(QWidget *parent = 0);
 
-   wnd.show();
+    void save(LReportWidgetBase *);
+    void load(LReportWidgetBase *);
 
-   return app.exec();
-}
+protected:
+    void changeEvent(QEvent *e);
+};
+
+LEAF_END_NAMESPACE
+
+#endif // RPROPERTYPAGERICHTEXT_H

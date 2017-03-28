@@ -1,4 +1,7 @@
 /***************************************************************************
+ *   QtReport                                                              *
+ *   Qt Report Builder Soultion                                            *
+ *                                                                         *
  *   Copyright (C) 2010 by Hamed Masafi                                    *
  *   Hamed.Masafi@GMail.COM                                                *
  *                                                                         *
@@ -18,18 +21,58 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include <QApplication>
-#include <QTranslator>
+#include <QGraphicsSceneMouseEvent>
+#include <QScrollBar>
 
-#include "designer/designerwindow.h"
+#include "qdocument.h"
+#include "qdocumentdesigner.h"
 
-int main ( int argc, char *argv[] )
+RDocument::RDocument ( QWidget *parent ) : QGraphicsView ( parent )
 {
-   QApplication app ( argc, argv );
+   connect ( horizontalScrollBar(), SIGNAL ( valueChanged ( int ) ),
+             this,                  SIGNAL ( horizontalValueChanged ( int ) ) ) ;
 
-   LEAF_WRAP_NAMESPACE(LReportDesignerWindow) wnd;
+   connect ( verticalScrollBar(), SIGNAL ( valueChanged ( int ) ),
+             this,                SIGNAL ( verticalValueChanged ( int ) ) ) ;
 
-   wnd.show();
+//    RDocumentDesigner *doc;
+//    doc = new  RDocumentDesigner ( this );
 
-   return app.exec();
+}
+
+
+RDocument::RDocument ( QGraphicsScene *scene, QWidget *parent ) : QGraphicsView ( scene, parent )
+{
+}
+
+
+RDocument::~RDocument()
+{
+}
+
+void RDocument::setPageSize ( int width, int heigth )
+{
+}
+
+void RDocument::mouseMoveEvent ( QGraphicsSceneMouseEvent  *mouseEvent )
+{
+   emit mouseMove ( mouseEvent );
+}
+
+void RDocument::mousePressEvent ( QGraphicsSceneMouseEvent  *mouseEvent )
+{
+   emit mousePress ( mouseEvent );
+}
+
+void RDocument::mouseReleaseEvent ( QGraphicsSceneMouseEvent  *mouseEvent )
+{
+   emit mouseRelease ( mouseEvent );
+}
+
+
+void RDocument::scrollContentsBy ( int dx, int dy )
+{
+   emit scroll( dx, dy );
+   QGraphicsView::scrollContentsBy(dx, dy);
+   update();
 }

@@ -1,4 +1,7 @@
 /***************************************************************************
+ *   QtReport                                                              *
+ *   Qt Report Builder Soultion                                            *
+ *                                                                         *
  *   Copyright (C) 2010 by Hamed Masafi                                    *
  *   Hamed.Masafi@GMail.COM                                                *
  *                                                                         *
@@ -18,18 +21,28 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include <QApplication>
-#include <QTranslator>
+#ifndef QREPORTPROPERTYPAGEALIGN_H
+#define QREPORTPROPERTYPAGEALIGN_H
 
-#include "designer/designerwindow.h"
+#include "ui_propertypagealign.h"
+#include "propertypages/propertypagebase.h"
 
-int main ( int argc, char *argv[] )
+LEAF_BEGIN_NAMESPACE
+
+class LReportPropertyPageAlign : public LReportPropertyPageBase, private Ui::LReportPropertyPageAlign
 {
-   QApplication app ( argc, argv );
+    Q_OBJECT
 
-   LEAF_WRAP_NAMESPACE(LReportDesignerWindow) wnd;
+public:
+    explicit LReportPropertyPageAlign(QWidget *parent = 0);
 
-   wnd.show();
+    void load();
+    void save();
 
-   return app.exec();
-}
+protected:
+    void changeEvent(QEvent *e);
+};
+
+LEAF_END_NAMESPACE
+
+#endif // QREPORTPROPERTYPAGEALIGN_H

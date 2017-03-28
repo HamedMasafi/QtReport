@@ -1,4 +1,7 @@
 /***************************************************************************
+ *   QtReport                                                              *
+ *   Qt Report Builder Soultion                                            *
+ *                                                                         * 
  *   Copyright (C) 2010 by Hamed Masafi                                    *
  *   Hamed.Masafi@GMail.COM                                                *
  *                                                                         *
@@ -18,18 +21,22 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include <QApplication>
-#include <QTranslator>
 
-#include "designer/designerwindow.h"
+#include "designeraboutdialog.h"
 
-int main ( int argc, char *argv[] )
+LReportDesignerAboutDialog::LReportDesignerAboutDialog(QWidget *parent) :
+    QDialog(parent){
+    setupUi(this);
+}
+
+void LReportDesignerAboutDialog::changeEvent(QEvent *e)
 {
-   QApplication app ( argc, argv );
-
-   LEAF_WRAP_NAMESPACE(LReportDesignerWindow) wnd;
-
-   wnd.show();
-
-   return app.exec();
+    QDialog::changeEvent(e);
+    switch (e->type()) {
+    case QEvent::LanguageChange:
+        retranslateUi(this);
+        break;
+    default:
+        break;
+    }
 }

@@ -21,95 +21,58 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef QRTEPORT_GLOBAL
-#define QRTEPORT_GLOBAL
+#ifndef RRECTANGLEBASE_H
+#define RRECTANGLEBASE_H
 
-#include <QFlags>
+#include "widgetbase.h"
 
-#define LEAF_NAMESPACE Leaf
+LEAF_BEGIN_NAMESPACE
 
-#ifdef LEAF_COMPILE_STATIC
-#   define LEAF_EXPORT
-#else
-#   define LEAF_EXPORT Q_DECL_EXPORT
-#endif
-
-#ifdef LEAF_NAMESPACE
-#   define LEAF_BEGIN_NAMESPACE     namespace LEAF_NAMESPACE{
-#   define LEAF_END_NAMESPACE       }
-#   define LEAF_WRAP_NAMESPACE(x)   LEAF_NAMESPACE::x
-#else
-#   define LEAF_BEGIN_NAMESPACE
-#   define LEAF_END_NAMESPACE
-#   define LEAF_WRAP_NAMESPACE(x)   x
-#endif
-
-
-#define REGISTER_PROPERTY_PAGE(name) Q_CLASSINFO("prop_" #name, "true")
-
-//LEAF_BEGIN_NAMESPACE
-
-enum WidgetTypeFlag
+class LReportRectangle : public LReportWidgetBase
 {
-    Band,
-    Widget,
-    Page
+    Q_OBJECT
+
+    REGISTER_PROPERTY_PAGE(rect)
+
+    Q_PROPERTY( int lineWidth READ lineWidth WRITE setLineWidth DESIGNABLE true USER true )
+    Q_PROPERTY( QColor lineColor READ lineColor WRITE setLineColor DESIGNABLE true USER true )
+    Q_PROPERTY( Qt::PenStyle  lineType READ lineType WRITE setLineType DESIGNABLE true USER true )
+    Q_PROPERTY( Qt::BrushStyle fillType READ fillType WRITE setFillType  DESIGNABLE true USER true)
+    Q_PROPERTY( QColor fillColor READ fillColor WRITE setFillColor DESIGNABLE true USER true )
+
+
+    int m_lineWidth;
+    QColor m_lineColor;
+    Qt::PenStyle m_lineType;
+    Qt::BrushStyle m_fillType;
+    QColor m_fillColor;
+
+public:
+    LReportRectangle ( QGraphicsItem *parent = 0 );
+    ~LReportRectangle();
+
+    void paint ( QPainter *painter,
+                 const QStyleOptionGraphicsItem *option,
+                 QWidget *Widget );
+
+    QRectF insideRect() const;
+
+    void loadDom( QDomElement *dom );
+
+    int lineWidth() const;
+    QColor lineColor() const;
+    Qt::PenStyle lineType() const;
+    Qt::BrushStyle fillType() const;
+    QColor fillColor() const;
+
+public slots:
+    void setLineWidth(int lineWidth);
+    void setLineColor(QColor lineColor);
+    void setLineType(Qt::PenStyle lineType);
+    void setFillType(Qt::BrushStyle fillType);
+    void setFillColor(QColor fillColor);
 };
-Q_DECLARE_FLAGS(WidgetType, WidgetTypeFlag)
-Q_DECLARE_OPERATORS_FOR_FLAGS(WidgetType)
 
-enum ResizeDirectionFlag
-{
-    Top = 1,
-    Left = 2,
-    Right = 4,
-    Bottom = 8
-};
-Q_DECLARE_FLAGS(ResizeDirection, ResizeDirectionFlag)
-Q_DECLARE_OPERATORS_FOR_FLAGS(ResizeDirection)
-
-enum UnitFlag
-{
-    Centimeters,
-    Milimeters,
-    Inch,
-    Pixel
-};
-Q_DECLARE_FLAGS(Unit, UnitFlag)
-Q_DECLARE_OPERATORS_FOR_FLAGS(Unit)
-
-enum BandTypeFlag
-{
-    ReportHeader,
-    PageHeader,
-    GroupHeader,
-    Data,
-    EmptyData,
-    GroupFooter,
-    PageFooter,
-    ReportFooter
-};
-Q_DECLARE_FLAGS(BandType, BandTypeFlag)
-Q_DECLARE_OPERATORS_FOR_FLAGS(BandType)
-
-enum GridTypeFlag
-{
-    NoGrid,
-    DotGrid,
-    LinesGrid
-};
-Q_DECLARE_FLAGS(GridType, GridTypeFlag)
-Q_DECLARE_OPERATORS_FOR_FLAGS(GridType)
-
-enum MouseToolFlag
-{
-    Pointer,
-    Hand
-};
-Q_DECLARE_FLAGS(MouseTool, MouseToolFlag)
-Q_DECLARE_OPERATORS_FOR_FLAGS(MouseTool)
-
-
-//LEAF_END_NAMESPACE
+LEAF_END_NAMESPACE
 
 #endif

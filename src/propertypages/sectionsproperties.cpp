@@ -1,4 +1,7 @@
 /***************************************************************************
+ *   QtReport                                                              *
+ *   Qt Report Builder Soultion                                            *
+ *                                                                         *
  *   Copyright (C) 2010 by Hamed Masafi                                    *
  *   Hamed.Masafi@GMail.COM                                                *
  *                                                                         *
@@ -18,18 +21,37 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include <QApplication>
-#include <QTranslator>
+#include "sectionsproperties.h"
+#include "designer/documentdesigner.h"
+#include "core/report.h"
+#include "widgets/band.h"
 
-#include "designer/designerwindow.h"
+LEAF_BEGIN_NAMESPACE
 
-int main ( int argc, char *argv[] )
+LReportSectionsProperties::LReportSectionsProperties(QWidget *parent,
+                                                     LReportDocumentDesigner *designer,
+                                                     LReport *report) :
+    QDialog(parent),
+    _designer(designer),
+    _report(report)
 {
-   QApplication app ( argc, argv );
+    setupUi(this);
 
-   LEAF_WRAP_NAMESPACE(LReportDesignerWindow) wnd;
+    for(int i = 0; i < _report->bands()->count(); i++)
+        listWidget->addItem(_report->bands()->at(i)->header());
 
-   wnd.show();
-
-   return app.exec();
 }
+
+void LReportSectionsProperties::changeEvent(QEvent *e)
+{
+    QDialog::changeEvent(e);
+    switch (e->type()) {
+    case QEvent::LanguageChange:
+        retranslateUi(this);
+        break;
+    default:
+        break;
+    }
+}
+
+LEAF_END_NAMESPACE

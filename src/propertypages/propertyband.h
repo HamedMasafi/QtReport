@@ -1,4 +1,7 @@
 /***************************************************************************
+ *   QtReport                                                              *
+ *   Qt Report Builder Soultion                                            *
+ *                                                                         *
  *   Copyright (C) 2010 by Hamed Masafi                                    *
  *   Hamed.Masafi@GMail.COM                                                *
  *                                                                         *
@@ -18,18 +21,34 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include <QApplication>
-#include <QTranslator>
+#ifndef QREPORTPROPERTYBAND_H
+#define QREPORTPROPERTYBAND_H
 
-#include "designer/designerwindow.h"
+#include "ui_propertyband.h"
+#include "propertypages/propertypagebase.h"
 
-int main ( int argc, char *argv[] )
+LEAF_BEGIN_NAMESPACE
+
+class LReportBand;
+class LReportPropertyBand : public LReportPropertyPageBase, private Ui::LReportPropertyBand
 {
-   QApplication app ( argc, argv );
+    Q_OBJECT
 
-   LEAF_WRAP_NAMESPACE(LReportDesignerWindow) wnd;
+    LReportBand *_band;
 
-   wnd.show();
+public:
+    explicit LReportPropertyBand(QWidget *parent = 0);
 
-   return app.exec();
-}
+    void load();
+    void save();
+
+    LReportBand *band() const;
+    void setBand(LReportBand *band);
+
+protected:
+    void changeEvent(QEvent *e);
+};
+
+LEAF_END_NAMESPACE
+
+#endif // QREPORTPROPERTYBAND_H

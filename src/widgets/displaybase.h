@@ -1,4 +1,7 @@
 /***************************************************************************
+ *   QtReport                                                              *
+ *   Qt Report Builder Soultion                                            *
+ *                                                                         *
  *   Copyright (C) 2010 by Hamed Masafi                                    *
  *   Hamed.Masafi@GMail.COM                                                *
  *                                                                         *
@@ -18,18 +21,38 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include <QApplication>
-#include <QTranslator>
+#ifndef RDISPLAYBASE_H
+#define RDISPLAYBASE_H
 
-#include "designer/designerwindow.h"
 
-int main ( int argc, char *argv[] )
+#include <QFont>
+
+#include "widgets/rectanglebase.h"
+
+LEAF_BEGIN_NAMESPACE
+
+/*!
+  *This class is base class for all display class that display a thing
+  *in a rectangle region such as textbox, image and rectangle
+ */
+class LReportDisplayBase : public LReportRectangle
 {
-   QApplication app ( argc, argv );
+    Q_OBJECT
 
-   LEAF_WRAP_NAMESPACE(LReportDesignerWindow) wnd;
+    Q_PROPERTY( Qt::Alignment align READ align WRITE setAlign DESIGNABLE true USER true )
 
-   wnd.show();
+    Qt::Alignment m_align;
 
-   return app.exec();
-}
+public:
+    LReportDisplayBase ( QGraphicsItem *parent = 0 );
+
+    ~LReportDisplayBase();
+
+    Qt::Alignment align() const;
+public slots:
+    void setAlign(Qt::Alignment align);
+};
+
+LEAF_END_NAMESPACE
+
+#endif

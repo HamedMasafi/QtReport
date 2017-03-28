@@ -21,95 +21,50 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef QRTEPORT_GLOBAL
-#define QRTEPORT_GLOBAL
+#ifndef QREPORTDATASOURCE_H
+#define QREPORTDATASOURCE_H
 
-#include <QFlags>
+#include "xmlseriazble.h"
 
-#define LEAF_NAMESPACE Leaf
+class QString;
 
-#ifdef LEAF_COMPILE_STATIC
-#   define LEAF_EXPORT
-#else
-#   define LEAF_EXPORT Q_DECL_EXPORT
-#endif
+LEAF_BEGIN_NAMESPACE
 
-#ifdef LEAF_NAMESPACE
-#   define LEAF_BEGIN_NAMESPACE     namespace LEAF_NAMESPACE{
-#   define LEAF_END_NAMESPACE       }
-#   define LEAF_WRAP_NAMESPACE(x)   LEAF_NAMESPACE::x
-#else
-#   define LEAF_BEGIN_NAMESPACE
-#   define LEAF_END_NAMESPACE
-#   define LEAF_WRAP_NAMESPACE(x)   x
-#endif
-
-
-#define REGISTER_PROPERTY_PAGE(name) Q_CLASSINFO("prop_" #name, "true")
-
-//LEAF_BEGIN_NAMESPACE
-
-enum WidgetTypeFlag
+class LReportDataConnection : public LReportXMLSeriazble
 {
-    Band,
-    Widget,
-    Page
+    Q_OBJECT
+
+    Q_PROPERTY(QString driver READ driver WRITE setDriver USER true)
+    Q_PROPERTY(QString databaseName READ databaseName WRITE setDatabaseName USER true)
+    Q_PROPERTY(QString serverName READ serverName WRITE setServerName USER true)
+    Q_PROPERTY(QString username READ username WRITE setUsername USER true)
+    Q_PROPERTY(QString password READ password WRITE setPassword USER true)
+
+public:
+    LReportDataConnection();
+
+    QString driver() const;
+    QString databaseName() const;
+    QString serverName() const;
+    QString username() const;
+    QString password() const;
+
+    void setDriver(QString driver);
+    void setDatabaseName(QString databaseName);
+    void setServerName(QString serverName);
+    void setUsername(QString username);
+    void setPassword(QString password);
+
+    void setDatabaseInfo( QString driver, QString database, QString serverName, QString username, QString password );
+
+    bool operator ==(LReportDataConnection &other);
+
+private:
+    QString _name;
+    QString _driver, _databaseName, _serverName, _username, _password;
+
 };
-Q_DECLARE_FLAGS(WidgetType, WidgetTypeFlag)
-Q_DECLARE_OPERATORS_FOR_FLAGS(WidgetType)
 
-enum ResizeDirectionFlag
-{
-    Top = 1,
-    Left = 2,
-    Right = 4,
-    Bottom = 8
-};
-Q_DECLARE_FLAGS(ResizeDirection, ResizeDirectionFlag)
-Q_DECLARE_OPERATORS_FOR_FLAGS(ResizeDirection)
+LEAF_END_NAMESPACE
 
-enum UnitFlag
-{
-    Centimeters,
-    Milimeters,
-    Inch,
-    Pixel
-};
-Q_DECLARE_FLAGS(Unit, UnitFlag)
-Q_DECLARE_OPERATORS_FOR_FLAGS(Unit)
-
-enum BandTypeFlag
-{
-    ReportHeader,
-    PageHeader,
-    GroupHeader,
-    Data,
-    EmptyData,
-    GroupFooter,
-    PageFooter,
-    ReportFooter
-};
-Q_DECLARE_FLAGS(BandType, BandTypeFlag)
-Q_DECLARE_OPERATORS_FOR_FLAGS(BandType)
-
-enum GridTypeFlag
-{
-    NoGrid,
-    DotGrid,
-    LinesGrid
-};
-Q_DECLARE_FLAGS(GridType, GridTypeFlag)
-Q_DECLARE_OPERATORS_FOR_FLAGS(GridType)
-
-enum MouseToolFlag
-{
-    Pointer,
-    Hand
-};
-Q_DECLARE_FLAGS(MouseTool, MouseToolFlag)
-Q_DECLARE_OPERATORS_FOR_FLAGS(MouseTool)
-
-
-//LEAF_END_NAMESPACE
-
-#endif
+#endif // QREPORTDATASOURCE_H

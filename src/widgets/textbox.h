@@ -1,4 +1,7 @@
 /***************************************************************************
+ *   QtReport                                                              *
+ *   Qt Report Builder Soultion                                            *
+ *                                                                         *
  *   Copyright (C) 2010 by Hamed Masafi                                    *
  *   Hamed.Masafi@GMail.COM                                                *
  *                                                                         *
@@ -18,18 +21,56 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include <QApplication>
-#include <QTranslator>
+#ifndef QREPORTTEXTBOX_H
+#define QREPORTTEXTBOX_H
 
-#include "designer/designerwindow.h"
+#include "displaybase.h"
 
-int main ( int argc, char *argv[] )
+LEAF_BEGIN_NAMESPACE
+
+class LReportTextBox : public LReportDisplayBase
 {
-   QApplication app ( argc, argv );
+    Q_OBJECT
 
-   LEAF_WRAP_NAMESPACE(LReportDesignerWindow) wnd;
+    REGISTER_PROPERTY_PAGE(text)
+    REGISTER_PROPERTY_PAGE(font)
+    REGISTER_PROPERTY_PAGE(align)
+    REGISTER_PROPERTY_PAGE(format)
 
-   wnd.show();
+    Q_CLASSINFO("LReportTextBox", "true")
 
-   return app.exec();
-}
+    Q_PROPERTY( QColor foreColor READ foreColor WRITE setForeColor DESIGNABLE true USER true )
+    Q_PROPERTY( QFont font READ font WRITE setFont DESIGNABLE true USER true )
+    Q_PROPERTY( QString text READ text WRITE setText DESIGNABLE true USER true )
+
+public:
+    LReportTextBox ( QGraphicsItem *parent = 0 );
+
+    virtual ~LReportTextBox();
+
+
+    void paint ( QPainter *painter,
+                 const QStyleOptionGraphicsItem *option,
+                 QWidget *Widget );
+
+
+    QColor foreColor() const;
+    QFont font() const;
+    QString text() const;
+
+public slots:
+    void setForeColor(QColor foreColor);
+    void setFont(QFont font);
+    void setText(QString text);
+
+private:
+    QColor m_foreColor;
+    QFont m_font;
+    QString m_text;
+};
+
+LEAF_END_NAMESPACE
+
+Q_DECLARE_METATYPE(LEAF_WRAP_NAMESPACE(LReportTextBox*))
+
+#endif

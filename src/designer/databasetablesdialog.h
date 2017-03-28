@@ -1,4 +1,7 @@
 /***************************************************************************
+ *   QtReport                                                              *
+ *   Qt Report Builder Soultion                                            *
+ *                                                                         * 
  *   Copyright (C) 2010 by Hamed Masafi                                    *
  *   Hamed.Masafi@GMail.COM                                                *
  *                                                                         *
@@ -18,18 +21,46 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include <QApplication>
-#include <QTranslator>
 
-#include "designer/designerwindow.h"
+#ifndef RDATABASETABLESDIALOG_H
+#define RDATABASETABLESDIALOG_H
 
-int main ( int argc, char *argv[] )
+#include "qtreportglobal.h"
+#include "ui_databasetablesdialog.h"
+
+#include <QSqlDatabase>
+
+class QTreeWidgetItem;
+
+LEAF_BEGIN_NAMESPACE
+
+class LReport;
+
+class LReportDatabaseTablesDialog : public QDialog, private Ui::LReportDatabaseTablesDialog
 {
-   QApplication app ( argc, argv );
+    Q_OBJECT
 
-   LEAF_WRAP_NAMESPACE(LReportDesignerWindow) wnd;
+public:
+    LReportDatabaseTablesDialog(LReport *report, QString connectionName, QWidget *parent = 0);
 
-   wnd.show();
+protected:
+    void changeEvent(QEvent *e);
 
-   return app.exec();
-}
+private:
+    LReport *_report;
+    QTreeWidgetItem *nodeTableDB;
+    QTreeWidgetItem *nodeViewDB;
+    QTreeWidgetItem *nodeTableReport;
+    QTreeWidgetItem *nodeViewReport;
+    QSqlDatabase db;
+
+private slots:
+    void on_toolButtonAdd_clicked();
+    void on_buttonBox_accepted();
+    void on_listWidgetTables_currentItemChanged(QListWidgetItem *current, QListWidgetItem*);
+    void on_listWidgetParameters_itemDoubleClicked(QListWidgetItem *item);
+};
+
+LEAF_END_NAMESPACE
+
+#endif // RDATABASETABLESDIALOG_H

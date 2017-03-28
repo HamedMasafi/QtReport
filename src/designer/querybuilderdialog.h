@@ -1,4 +1,7 @@
 /***************************************************************************
+ *   QtReport                                                              *
+ *   Qt Report Builder Soultion                                            *
+ *                                                                         *
  *   Copyright (C) 2010 by Hamed Masafi                                    *
  *   Hamed.Masafi@GMail.COM                                                *
  *                                                                         *
@@ -18,18 +21,39 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include <QApplication>
-#include <QTranslator>
+#ifndef QREPORTQUERYBUILDERDIALOG_H
+#define QREPORTQUERYBUILDERDIALOG_H
 
-#include "designer/designerwindow.h"
+#include "qtreportglobal.h"
+#include "ui_querybuilderdialog.h"
 
-int main ( int argc, char *argv[] )
+#include <QSqlDatabase>
+
+LEAF_BEGIN_NAMESPACE
+
+class LReport;
+class LReportQueryBuilderDialog : public QDialog, private Ui::LReportQueryBuilderDialog
 {
-   QApplication app ( argc, argv );
+    Q_OBJECT
+    QString _tableName;
 
-   LEAF_WRAP_NAMESPACE(LReportDesignerWindow) wnd;
+public:
+    explicit LReportQueryBuilderDialog(LReport *report, QString connectionName, QWidget *parent = 0);
 
-   wnd.show();
+    QString tableName() const;
+    QString query() const;
 
-   return app.exec();
-}
+protected:
+    void changeEvent(QEvent *e);
+
+    LReport *_report;
+    QTreeWidgetItem *nodeTableDB;
+    QTreeWidgetItem *nodeViewDB;
+    QSqlDatabase db;
+private slots:
+    void on_tablesTree_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous);
+};
+
+LEAF_END_NAMESPACE
+
+#endif // QREPORTQUERYBUILDERDIALOG_H

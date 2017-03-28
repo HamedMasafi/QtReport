@@ -1,4 +1,7 @@
 /***************************************************************************
+ *   QtReport                                                              *
+ *   Qt Report Builder Soultion                                            *
+ *                                                                         * 
  *   Copyright (C) 2010 by Hamed Masafi                                    *
  *   Hamed.Masafi@GMail.COM                                                *
  *                                                                         *
@@ -18,18 +21,40 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include <QApplication>
-#include <QTranslator>
+#include "verticalline.h"
 
-#include "designer/designerwindow.h"
+LEAF_BEGIN_NAMESPACE
 
-int main ( int argc, char *argv[] )
+LReportVerticalLine::LReportVerticalLine(QGraphicsItem *parent): LReportLineBase(parent)
 {
-   QApplication app ( argc, argv );
-
-   LEAF_WRAP_NAMESPACE(LReportDesignerWindow) wnd;
-
-   wnd.show();
-
-   return app.exec();
+   this->setResizeDirection( Left | Right );
+   this->setHeight( 7 );
+   this->setWidth( 90 );
+   this->setMarginPos( 0, 4 );
+   setFixedSize(0, 7);
 }
+
+
+LReportVerticalLine::~LReportVerticalLine()
+{
+}
+
+void LReportVerticalLine::paint ( QPainter *painter, const QStyleOptionGraphicsItem *option,
+                       QWidget *widget )
+{
+  Q_UNUSED( option );
+  Q_UNUSED( widget );
+  
+  QPen pen;
+  pen.setStyle( lineType() );
+  pen.setColor( lineColor() );
+  pen.setWidth( lineWidth() );
+  painter->setPen( pen );
+  painter->drawLine( 0,
+                     4,
+                     this->boundingRect().width(), 
+                     4 );
+
+}
+
+LEAF_END_NAMESPACE

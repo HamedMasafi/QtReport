@@ -1,4 +1,7 @@
 /***************************************************************************
+ *   QtReport                                                              *
+ *   Qt Report Builder Soultion                                            *
+ *                                                                         *
  *   Copyright (C) 2010 by Hamed Masafi                                    *
  *   Hamed.Masafi@GMail.COM                                                *
  *                                                                         *
@@ -18,18 +21,53 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include <QApplication>
-#include <QTranslator>
+#include "typehelper.h"
 
-#include "designer/designerwindow.h"
-
-int main ( int argc, char *argv[] )
+LReportTypeHelper::LReportTypeHelper()
 {
-   QApplication app ( argc, argv );
-
-   LEAF_WRAP_NAMESPACE(LReportDesignerWindow) wnd;
-
-   wnd.show();
-
-   return app.exec();
 }
+
+QString LReportTypeHelper::typeToString(QVariant::Type type)
+{
+    switch(type){
+    case QVariant::Int:
+        return "Int";
+        break;
+
+    case QVariant::Double:
+        return "Double";
+        break;
+
+    case QVariant::Bool:
+        return "Bool";
+        break;
+
+    case QVariant::Char:
+        return "Char";
+        break;
+
+    case QVariant::Pixmap:
+        return "Pixmap";
+        break;
+
+    default:
+        return "String";
+        break;
+
+    }//switch
+
+}
+
+QVariant::Type LReportTypeHelper::stringToType(QString type)
+{
+    type = type.toLower();
+
+    if(type == "int")      return QVariant::Int;
+    if(type == "double")   return QVariant::Double;
+    if(type == "bool")     return QVariant::Bool;
+    if(type == "char")     return QVariant::Char;
+    if(type == "pixmap")   return QVariant::Pixmap;
+
+    return QVariant::String;
+}
+

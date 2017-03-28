@@ -1,4 +1,7 @@
 /***************************************************************************
+ *   QtReport                                                              *
+ *   Qt Report Builder Soultion                                            *
+ *                                                                         *
  *   Copyright (C) 2010 by Hamed Masafi                                    *
  *   Hamed.Masafi@GMail.COM                                                *
  *                                                                         *
@@ -18,18 +21,47 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include <QApplication>
-#include <QTranslator>
+#ifndef QREPORTPARAMETERE_H
+#define QREPORTPARAMETERE_H
 
-#include "designer/designerwindow.h"
+#include <QVariant>
 
-int main ( int argc, char *argv[] )
+#include "xmlseriazble.h"
+
+LEAF_BEGIN_NAMESPACE
+
+class LReportParametere : public LReportXMLSeriazble
 {
-   QApplication app ( argc, argv );
+    Q_OBJECT
 
-   LEAF_WRAP_NAMESPACE(LReportDesignerWindow) wnd;
+    Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
+    Q_PROPERTY(int type READ type WRITE setType USER true)
+    Q_PROPERTY(QVariant value READ value WRITE setValue USER true)
+    Q_PROPERTY(QVariant defaultValue READ defaultValue WRITE setDefaultValue USER true)
 
-   wnd.show();
+    QString m_name;
+    QVariant m_value;
+    QVariant m_defaultValue;
+    int m_type;
 
-   return app.exec();
-}
+public:
+    LReportParametere(QString name = "",
+                      QVariant value = QVariant(),
+                      QVariant::Type type = QVariant::String);
+    QString name() const;
+    int type() const;
+    QVariant value() const;
+    QVariant defaultValue() const;
+
+public slots:
+    void setName(QString name);
+    void setType(int type);
+    void setValue(QVariant value);
+    void setDefaultValue(QVariant defaultValue);
+signals:
+    void nameChanged(QString name);
+};
+
+LEAF_END_NAMESPACE
+
+#endif // QREPORTPARAMETERE_H

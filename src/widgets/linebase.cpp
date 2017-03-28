@@ -1,4 +1,7 @@
 /***************************************************************************
+ *   QtReport                                                              *
+ *   Qt Report Builder Soultion                                            *
+ *                                                                         * 
  *   Copyright (C) 2010 by Hamed Masafi                                    *
  *   Hamed.Masafi@GMail.COM                                                *
  *                                                                         *
@@ -18,18 +21,65 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include <QApplication>
-#include <QTranslator>
+#include <QDomElement>
 
-#include "designer/designerwindow.h"
+#include "propertypages/propertypagepos.h"
+#include "propertypages/propertypagelinetype.h"
+#include "linebase.h"
 
-int main ( int argc, char *argv[] )
+LEAF_BEGIN_NAMESPACE
+
+LReportLineBase::LReportLineBase(QGraphicsItem *parent): LReportWidgetBase(parent)
 {
-   QApplication app ( argc, argv );
-
-   LEAF_WRAP_NAMESPACE(LReportDesignerWindow) wnd;
-
-   wnd.show();
-
-   return app.exec();
+   setLineWidth( 1 );
+   setLineType( Qt::SolidLine );
+   setLineColor( Qt::black );
 }
+
+
+LReportLineBase::~LReportLineBase()
+{
+}
+
+void LReportLineBase::loadDom(QDomElement *dom)
+{
+    LReportWidgetBase::loadDom(dom);
+
+    if (dom->hasAttribute("lineType")) {
+        int n = QString(dom->attribute("lineType")).toInt();
+        setLineType((Qt::PenStyle)n);
+    }//if
+}
+
+int LReportLineBase::lineWidth() const
+{
+    return m_lineWidth;
+}
+
+QColor LReportLineBase::lineColor() const
+{
+    return m_lineColor;
+}
+
+Qt::PenStyle LReportLineBase::lineType() const
+{
+    return m_lineType;
+}
+
+void LReportLineBase::setLineWidth(int lineWidth)
+{
+    m_lineWidth = lineWidth;
+}
+
+void LReportLineBase::setLineColor(QColor lineColor)
+{
+    m_lineColor = lineColor;
+}
+
+void LReportLineBase::setLineType(Qt::PenStyle lineType)
+{
+    m_lineType = lineType;
+}
+
+
+LEAF_END_NAMESPACE

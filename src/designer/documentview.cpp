@@ -21,95 +21,59 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef QRTEPORT_GLOBAL
-#define QRTEPORT_GLOBAL
+#include <QGraphicsSceneMouseEvent>
+#include <QScrollBar>
 
-#include <QFlags>
+#include "documentview.h"
 
-#define LEAF_NAMESPACE Leaf
+LEAF_BEGIN_NAMESPACE
 
-#ifdef LEAF_COMPILE_STATIC
-#   define LEAF_EXPORT
-#else
-#   define LEAF_EXPORT Q_DECL_EXPORT
-#endif
-
-#ifdef LEAF_NAMESPACE
-#   define LEAF_BEGIN_NAMESPACE     namespace LEAF_NAMESPACE{
-#   define LEAF_END_NAMESPACE       }
-#   define LEAF_WRAP_NAMESPACE(x)   LEAF_NAMESPACE::x
-#else
-#   define LEAF_BEGIN_NAMESPACE
-#   define LEAF_END_NAMESPACE
-#   define LEAF_WRAP_NAMESPACE(x)   x
-#endif
-
-
-#define REGISTER_PROPERTY_PAGE(name) Q_CLASSINFO("prop_" #name, "true")
-
-//LEAF_BEGIN_NAMESPACE
-
-enum WidgetTypeFlag
+LReportDocumentView::LReportDocumentView ( QWidget *parent ) : QGraphicsView ( parent )
 {
-    Band,
-    Widget,
-    Page
-};
-Q_DECLARE_FLAGS(WidgetType, WidgetTypeFlag)
-Q_DECLARE_OPERATORS_FOR_FLAGS(WidgetType)
+   connect ( horizontalScrollBar(), SIGNAL ( valueChanged ( int ) ),
+             this,                  SIGNAL ( horizontalValueChanged ( int ) ) ) ;
 
-enum ResizeDirectionFlag
+   connect ( verticalScrollBar(), SIGNAL ( valueChanged ( int ) ),
+             this,                SIGNAL ( verticalValueChanged ( int ) ) ) ;
+
+}
+
+
+LReportDocumentView::LReportDocumentView ( QGraphicsScene *scene, QWidget *parent ) : QGraphicsView ( scene, parent )
 {
-    Top = 1,
-    Left = 2,
-    Right = 4,
-    Bottom = 8
-};
-Q_DECLARE_FLAGS(ResizeDirection, ResizeDirectionFlag)
-Q_DECLARE_OPERATORS_FOR_FLAGS(ResizeDirection)
+}
 
-enum UnitFlag
+
+LReportDocumentView::~LReportDocumentView()
 {
-    Centimeters,
-    Milimeters,
-    Inch,
-    Pixel
-};
-Q_DECLARE_FLAGS(Unit, UnitFlag)
-Q_DECLARE_OPERATORS_FOR_FLAGS(Unit)
+}
 
-enum BandTypeFlag
+void LReportDocumentView::setPageSize ( int , int  )
 {
-    ReportHeader,
-    PageHeader,
-    GroupHeader,
-    Data,
-    EmptyData,
-    GroupFooter,
-    PageFooter,
-    ReportFooter
-};
-Q_DECLARE_FLAGS(BandType, BandTypeFlag)
-Q_DECLARE_OPERATORS_FOR_FLAGS(BandType)
+}
 
-enum GridTypeFlag
+void LReportDocumentView::mouseMoveEvent ( QGraphicsSceneMouseEvent  *mouseEvent )
 {
-    NoGrid,
-    DotGrid,
-    LinesGrid
-};
-Q_DECLARE_FLAGS(GridType, GridTypeFlag)
-Q_DECLARE_OPERATORS_FOR_FLAGS(GridType)
+   emit mouseMove ( mouseEvent );
+}
 
-enum MouseToolFlag
+void LReportDocumentView::mousePressEvent ( QGraphicsSceneMouseEvent  *mouseEvent )
 {
-    Pointer,
-    Hand
-};
-Q_DECLARE_FLAGS(MouseTool, MouseToolFlag)
-Q_DECLARE_OPERATORS_FOR_FLAGS(MouseTool)
+   emit mousePress ( mouseEvent );
+}
+/*
+void LReportDocumentView::mouseReleaseEvent ( QGraphicsSceneMouseEvent  *mouseEvent )
+{
+   emit mouseRelease ( mouseEvent );
+}*/
 
 
-//LEAF_END_NAMESPACE
+void LReportDocumentView::scrollContentsBy ( int dx, int dy )
+{
+   emit scroll( dx, dy );
+   QGraphicsView::scrollContentsBy(dx, dy);
+   //update();
+   viewport()->repaint();
+}
 
-#endif
+LEAF_END_NAMESPACE

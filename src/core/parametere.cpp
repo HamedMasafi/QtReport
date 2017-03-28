@@ -1,4 +1,7 @@
 /***************************************************************************
+ *   QtReport                                                              *
+ *   Qt Report Builder Soultion                                            *
+ *                                                                         *
  *   Copyright (C) 2010 by Hamed Masafi                                    *
  *   Hamed.Masafi@GMail.COM                                                *
  *                                                                         *
@@ -18,18 +21,66 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include <QApplication>
-#include <QTranslator>
 
-#include "designer/designerwindow.h"
+#include <QtCore/QVariant>
+#include <QtCore/QString>
 
-int main ( int argc, char *argv[] )
+#include "parametere.h"
+
+LEAF_BEGIN_NAMESPACE
+
+LReportParametere::LReportParametere(QString name, QVariant value, QVariant::Type type):
+    LReportXMLSeriazble(),
+    m_name(name),
+    m_value(value),
+    m_type(type)
 {
-   QApplication app ( argc, argv );
-
-   LEAF_WRAP_NAMESPACE(LReportDesignerWindow) wnd;
-
-   wnd.show();
-
-   return app.exec();
+    setObjectName(name);
+    setType((int)type);
 }
+
+QString LReportParametere::name() const
+{
+    return m_name;
+}
+
+int LReportParametere::type() const
+{
+    return m_type;
+}
+
+QVariant LReportParametere::value() const
+{
+    return m_value;
+}
+
+QVariant LReportParametere::defaultValue() const
+{
+    return m_defaultValue;
+}
+
+void LReportParametere::setName(QString name)
+{
+    if (m_name == name)
+        return;
+
+    m_name = name;
+    emit nameChanged(name);
+}
+
+void LReportParametere::setType(int type)
+{
+    m_type = type;
+}
+
+void LReportParametere::setValue(QVariant value)
+{
+    m_value = value;
+}
+
+void LReportParametere::setDefaultValue(QVariant defaultValue)
+{
+    m_defaultValue = defaultValue;
+}
+
+LEAF_END_NAMESPACE

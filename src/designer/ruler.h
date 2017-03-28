@@ -21,95 +21,72 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef QRTEPORT_GLOBAL
-#define QRTEPORT_GLOBAL
+#ifndef RRULER_H
+#define RRULER_H
 
-#include <QFlags>
+#include "qtreportglobal.h"
 
-#define LEAF_NAMESPACE Leaf
+#include <QWidget>
 
-#ifdef LEAF_COMPILE_STATIC
-#   define LEAF_EXPORT
-#else
-#   define LEAF_EXPORT Q_DECL_EXPORT
-#endif
+class QFontMetrics;
+class QMouseEvent;
 
-#ifdef LEAF_NAMESPACE
-#   define LEAF_BEGIN_NAMESPACE     namespace LEAF_NAMESPACE{
-#   define LEAF_END_NAMESPACE       }
-#   define LEAF_WRAP_NAMESPACE(x)   LEAF_NAMESPACE::x
-#else
-#   define LEAF_BEGIN_NAMESPACE
-#   define LEAF_END_NAMESPACE
-#   define LEAF_WRAP_NAMESPACE(x)   x
-#endif
+LEAF_BEGIN_NAMESPACE
 
-
-#define REGISTER_PROPERTY_PAGE(name) Q_CLASSINFO("prop_" #name, "true")
-
-//LEAF_BEGIN_NAMESPACE
-
-enum WidgetTypeFlag
+class LReportRuler : public QWidget
 {
-    Band,
-    Widget,
-    Page
+	public:
+
+
+      LReportRuler ( QWidget *parent, Qt::Orientation direction );
+      ~LReportRuler();
+		void paintEvent ( QPaintEvent  *event );
+		void mouseMoveEvent ( QMouseEvent  *event );
+
+		/*!
+		  *Define ruler direction
+		 */
+      Qt::Orientation direction() const{ return _direction;}
+      //Q_PROPERTY ( Qt::Orientation direction READ direction WRITE setDirection );
+
+      int pixelPerUnit() const { return _pixelPerUnit; }
+      int startPos() const { return _startPos; }
+      int ruleWidth() const { return _ruleWidth; }
+      int startMargin() const { return _startMargin; }
+      int endMargin() const { return _endMargin; }
+
+      void setDirection( Qt::Orientation direction );
+      void setPixelPerUnit(int v);
+      void setStartPos(int v);
+      void setRuleWidth(int v);
+      void setStartMargin(int v);
+      void setEndMargin(int v);
+
+	private:
+      Qt::Orientation _direction;
+		int _pixelPerUnit;
+		int _startPos;
+		int _ruleWidth;
+		int _startMargin;
+      int _endMargin;
+		QFontMetrics _fontMetrics;
+
+      /* *
+		  *Define resze mode. When user move mouse to body start/end (margin)
+		  *the pointer form resize mode and user able to resize margin size.
+		  *This resize can be in two form:
+
+		enum ResizeMode
+		{
+			/// Nothing for resize
+         NoResize,
+			/// User resize start margin
+         ResizeStartMargin,
+			/// User resize end margin
+         ResizeEndMargin,
+      } _resizeMode;*/
 };
-Q_DECLARE_FLAGS(WidgetType, WidgetTypeFlag)
-Q_DECLARE_OPERATORS_FOR_FLAGS(WidgetType)
 
-enum ResizeDirectionFlag
-{
-    Top = 1,
-    Left = 2,
-    Right = 4,
-    Bottom = 8
-};
-Q_DECLARE_FLAGS(ResizeDirection, ResizeDirectionFlag)
-Q_DECLARE_OPERATORS_FOR_FLAGS(ResizeDirection)
-
-enum UnitFlag
-{
-    Centimeters,
-    Milimeters,
-    Inch,
-    Pixel
-};
-Q_DECLARE_FLAGS(Unit, UnitFlag)
-Q_DECLARE_OPERATORS_FOR_FLAGS(Unit)
-
-enum BandTypeFlag
-{
-    ReportHeader,
-    PageHeader,
-    GroupHeader,
-    Data,
-    EmptyData,
-    GroupFooter,
-    PageFooter,
-    ReportFooter
-};
-Q_DECLARE_FLAGS(BandType, BandTypeFlag)
-Q_DECLARE_OPERATORS_FOR_FLAGS(BandType)
-
-enum GridTypeFlag
-{
-    NoGrid,
-    DotGrid,
-    LinesGrid
-};
-Q_DECLARE_FLAGS(GridType, GridTypeFlag)
-Q_DECLARE_OPERATORS_FOR_FLAGS(GridType)
-
-enum MouseToolFlag
-{
-    Pointer,
-    Hand
-};
-Q_DECLARE_FLAGS(MouseTool, MouseToolFlag)
-Q_DECLARE_OPERATORS_FOR_FLAGS(MouseTool)
-
-
-//LEAF_END_NAMESPACE
+LEAF_END_NAMESPACE
 
 #endif

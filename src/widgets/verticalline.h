@@ -1,4 +1,7 @@
 /***************************************************************************
+ *   QtReport                                                              *
+ *   Qt Report Builder Soultion                                            *
+ *                                                                         *
  *   Copyright (C) 2010 by Hamed Masafi                                    *
  *   Hamed.Masafi@GMail.COM                                                *
  *                                                                         *
@@ -18,18 +21,32 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include <QApplication>
-#include <QTranslator>
+#ifndef QREPORTVERTICALLINE_H
+#define QREPORTVERTICALLINE_H
 
-#include "designer/designerwindow.h"
+#include "linebase.h"
 
-int main ( int argc, char *argv[] )
+LEAF_BEGIN_NAMESPACE
+
+/*!
+   @author Hamed Masafi <Hamed.Masafi@GMail.COM>
+*/
+class LReportVerticalLine : public LReportLineBase
 {
-   QApplication app ( argc, argv );
+   Q_OBJECT
 
-   LEAF_WRAP_NAMESPACE(LReportDesignerWindow) wnd;
+   public:
+      LReportVerticalLine ( QGraphicsItem *parent =0 );
 
-   wnd.show();
+      ~LReportVerticalLine();
 
-   return app.exec();
-}
+      void paint ( QPainter *painter, const QStyleOptionGraphicsItem *option,
+                   QWidget *Widget );
+
+private:
+      LReportBand *_secondBand;
+};
+
+LEAF_END_NAMESPACE
+
+#endif // QREPORTVERTICALLINE_H

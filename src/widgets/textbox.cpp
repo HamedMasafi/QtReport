@@ -21,95 +21,88 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef QRTEPORT_GLOBAL
-#define QRTEPORT_GLOBAL
+#include <QStyleOption>
 
-#include <QFlags>
+#include "textbox.h"
+#include "propertypages/propertypagetext.h"
+#include "propertypages/propertypagepos.h"
+#include "propertypages/propertypagerectangle.h"
+#include "propertypages/propertypagefont.h"
 
-#define LEAF_NAMESPACE Leaf
+LEAF_BEGIN_NAMESPACE
 
-#ifdef LEAF_COMPILE_STATIC
-#   define LEAF_EXPORT
-#else
-#   define LEAF_EXPORT Q_DECL_EXPORT
-#endif
-
-#ifdef LEAF_NAMESPACE
-#   define LEAF_BEGIN_NAMESPACE     namespace LEAF_NAMESPACE{
-#   define LEAF_END_NAMESPACE       }
-#   define LEAF_WRAP_NAMESPACE(x)   LEAF_NAMESPACE::x
-#else
-#   define LEAF_BEGIN_NAMESPACE
-#   define LEAF_END_NAMESPACE
-#   define LEAF_WRAP_NAMESPACE(x)   x
-#endif
-
-
-#define REGISTER_PROPERTY_PAGE(name) Q_CLASSINFO("prop_" #name, "true")
-
-//LEAF_BEGIN_NAMESPACE
-
-enum WidgetTypeFlag
+LReportTextBox::LReportTextBox(QGraphicsItem *parent) :
+    LReportDisplayBase(parent)
 {
-    Band,
-    Widget,
-    Page
-};
-Q_DECLARE_FLAGS(WidgetType, WidgetTypeFlag)
-Q_DECLARE_OPERATORS_FOR_FLAGS(WidgetType)
+    this->setSize(90, 40);
+    this->setMinimumSize(10, 4);
 
-enum ResizeDirectionFlag
+    setLineWidth(1);
+    setLineType(Qt::NoPen);
+    setLineColor(Qt::black);
+
+    setFillColor(Qt::white);
+    setFillType(Qt::SolidPattern);
+
+    setForeColor(Qt::black);
+    setFont(QFont());
+    setText(QString::null);
+}
+
+
+LReportTextBox::~LReportTextBox()
 {
-    Top = 1,
-    Left = 2,
-    Right = 4,
-    Bottom = 8
-};
-Q_DECLARE_FLAGS(ResizeDirection, ResizeDirectionFlag)
-Q_DECLARE_OPERATORS_FOR_FLAGS(ResizeDirection)
+}
 
-enum UnitFlag
+
+void LReportTextBox::paint(QPainter *painter,
+                           const QStyleOptionGraphicsItem *option,
+                           QWidget *widget)
 {
-    Centimeters,
-    Milimeters,
-    Inch,
-    Pixel
-};
-Q_DECLARE_FLAGS(Unit, UnitFlag)
-Q_DECLARE_OPERATORS_FOR_FLAGS(Unit)
+    LReportRectangle::paint(painter, option, widget);
 
-enum BandTypeFlag
+    Q_UNUSED(option);
+    Q_UNUSED(widget);
+
+    QTextOption textOption;
+    textOption.setWrapMode(QTextOption::WrapAtWordBoundaryOrAnywhere);
+    textOption.setAlignment(align());
+
+    painter->setFont(font());
+    painter->setPen(foreColor());
+    painter->drawText(this->rect(),
+                      text(),
+                      textOption);
+}
+
+QColor LReportTextBox::foreColor() const
 {
-    ReportHeader,
-    PageHeader,
-    GroupHeader,
-    Data,
-    EmptyData,
-    GroupFooter,
-    PageFooter,
-    ReportFooter
-};
-Q_DECLARE_FLAGS(BandType, BandTypeFlag)
-Q_DECLARE_OPERATORS_FOR_FLAGS(BandType)
+    return m_foreColor;
+}
 
-enum GridTypeFlag
+QFont LReportTextBox::font() const
 {
-    NoGrid,
-    DotGrid,
-    LinesGrid
-};
-Q_DECLARE_FLAGS(GridType, GridTypeFlag)
-Q_DECLARE_OPERATORS_FOR_FLAGS(GridType)
+    return m_font;
+}
 
-enum MouseToolFlag
+QString LReportTextBox::text() const
 {
-    Pointer,
-    Hand
-};
-Q_DECLARE_FLAGS(MouseTool, MouseToolFlag)
-Q_DECLARE_OPERATORS_FOR_FLAGS(MouseTool)
+    return m_text;
+}
 
+void LReportTextBox::setForeColor(QColor foreColor)
+{
+    m_foreColor = foreColor;
+}
 
-//LEAF_END_NAMESPACE
+void LReportTextBox::setFont(QFont font)
+{
+    m_font = font;
+}
 
-#endif
+void LReportTextBox::setText(QString text)
+{
+    m_text = text;
+}
+
+LEAF_END_NAMESPACE

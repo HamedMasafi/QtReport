@@ -1,4 +1,7 @@
 /***************************************************************************
+ *   QtReport                                                              *
+ *   Qt Report Builder Soultion                                            *
+ *                                                                         *
  *   Copyright (C) 2010 by Hamed Masafi                                    *
  *   Hamed.Masafi@GMail.COM                                                *
  *                                                                         *
@@ -18,18 +21,31 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include <QApplication>
-#include <QTranslator>
+#include <QFont>
 
-#include "designer/designerwindow.h"
+#include "displaybase.h"
 
-int main ( int argc, char *argv[] )
+LEAF_BEGIN_NAMESPACE
+
+LReportDisplayBase::LReportDisplayBase ( QGraphicsItem *parent ) : 
+      LReportRectangle ( parent )
 {
-   QApplication app ( argc, argv );
-
-   LEAF_WRAP_NAMESPACE(LReportDesignerWindow) wnd;
-
-   wnd.show();
-
-   return app.exec();
+    this->setAlign( Qt::AlignLeft | Qt::AlignTop );
 }
+
+
+LReportDisplayBase::~LReportDisplayBase()
+{
+}
+
+Qt::Alignment LReportDisplayBase::align() const
+{
+    return m_align;
+}
+
+void LReportDisplayBase::setAlign(Qt::Alignment align)
+{
+    m_align = align;
+}
+
+LEAF_END_NAMESPACE

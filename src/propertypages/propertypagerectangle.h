@@ -1,4 +1,7 @@
 /***************************************************************************
+ *   QtReport                                                              *
+ *   Qt Report Builder Soultion                                            *
+ *                                                                         * 
  *   Copyright (C) 2010 by Hamed Masafi                                    *
  *   Hamed.Masafi@GMail.COM                                                *
  *                                                                         *
@@ -18,18 +21,36 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include <QApplication>
-#include <QTranslator>
 
-#include "designer/designerwindow.h"
+#ifndef RPROPERTYPAGERECTANGLE_H
+#define RPROPERTYPAGERECTANGLE_H
 
-int main ( int argc, char *argv[] )
+#include "propertypages/propertypagebase.h"
+
+#include "ui_propertypagerectangle.h"
+
+LEAF_BEGIN_NAMESPACE
+
+class QColorPicker;
+
+class LReportPropertyPageRectangle : public LReportPropertyPageBase, private Ui::LReportPropertyPageRectangle
 {
-   QApplication app ( argc, argv );
+    Q_OBJECT
 
-   LEAF_WRAP_NAMESPACE(LReportDesignerWindow) wnd;
+public:
+    LReportPropertyPageRectangle(QWidget *parent = 0);
 
-   wnd.show();
+    void load();
+    void save();
 
-   return app.exec();
-}
+private:
+    QColorPicker *pickerLineColor;
+    QColorPicker *pickerFillColor;
+
+protected:
+    void changeEvent(QEvent *e);
+};
+
+LEAF_END_NAMESPACE
+
+#endif // RPROPERTYPAGERECTANGLE_H

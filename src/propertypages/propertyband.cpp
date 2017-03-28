@@ -1,4 +1,7 @@
 /***************************************************************************
+ *   QtReport                                                              *
+ *   Qt Report Builder Soultion                                            *
+ *                                                                         *
  *   Copyright (C) 2010 by Hamed Masafi                                    *
  *   Hamed.Masafi@GMail.COM                                                *
  *                                                                         *
@@ -18,18 +21,62 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include <QApplication>
-#include <QTranslator>
+#include "propertyband.h"
+#include "sectiondataproperties.h"
 
-#include "designer/designerwindow.h"
+#include "widgets/band.h"
+#include "core/report.h"
 
-int main ( int argc, char *argv[] )
+LEAF_BEGIN_NAMESPACE
+
+LReportBand *LReportPropertyBand::band() const
 {
-   QApplication app ( argc, argv );
-
-   LEAF_WRAP_NAMESPACE(LReportDesignerWindow) wnd;
-
-   wnd.show();
-
-   return app.exec();
+    return _band;
 }
+
+void LReportPropertyBand::setBand(LReportBand *band)
+{
+    _band = band;
+    QWidget *w = 0;
+
+    switch(band->bandType()){
+    case ::Data:
+        w = new LReportSectionDataProperties();
+        qDebug() << "------------------------------";
+        break;
+    }
+
+    if(w)
+        widgetPropertyPage->layout()->addWidget(w);
+}
+LReportPropertyBand::LReportPropertyBand(QWidget *parent) :
+    LReportPropertyPageBase(parent)
+{
+    _title = tr("Band properties");
+    setupUi(this);
+}
+
+void LReportPropertyBand::load()
+{
+    foreach (LReportDataTable *table, _designer->report()->dataTables())
+        comboBox->addItem(table->objectName());
+}
+
+void LReportPropertyBand::save()
+{
+
+}
+
+void LReportPropertyBand::changeEvent(QEvent *e)
+{
+    QWidget::changeEvent(e);
+    switch (e->type()) {
+    case QEvent::LanguageChange:
+        retranslateUi(this);
+        break;
+    default:
+        break;
+    }
+}
+
+LEAF_END_NAMESPACE

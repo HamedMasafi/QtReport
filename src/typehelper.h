@@ -1,4 +1,7 @@
 /***************************************************************************
+ *   QtReport                                                              *
+ *   Qt Report Builder Soultion                                            *
+ *                                                                         *
  *   Copyright (C) 2010 by Hamed Masafi                                    *
  *   Hamed.Masafi@GMail.COM                                                *
  *                                                                         *
@@ -18,18 +21,17 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include <QApplication>
-#include <QTranslator>
+#ifndef QREPORTTYPEHELPER_H
+#define QREPORTTYPEHELPER_H
 
-#include "designer/designerwindow.h"
-
-int main ( int argc, char *argv[] )
+#include <QVariant>
+class LReportTypeHelper
 {
-   QApplication app ( argc, argv );
+public:
+    LReportTypeHelper();
 
-   LEAF_WRAP_NAMESPACE(LReportDesignerWindow) wnd;
+    static QString typeToString(QVariant::Type type);
+    static QVariant::Type stringToType(QString type);
+};
 
-   wnd.show();
-
-   return app.exec();
-}
+#endif // QREPORTTYPEHELPER_H

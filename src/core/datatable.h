@@ -21,95 +21,80 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef QRTEPORT_GLOBAL
-#define QRTEPORT_GLOBAL
 
-#include <QFlags>
+#ifndef RREPORTDATATABLE_H
+#define RREPORTDATATABLE_H
 
-#define LEAF_NAMESPACE Leaf
+#include "qtreportglobal.h"
+#include "designer/xmlseriazble.h"
 
-#ifdef LEAF_COMPILE_STATIC
-#   define LEAF_EXPORT
-#else
-#   define LEAF_EXPORT Q_DECL_EXPORT
-#endif
+#include <QtCore/QString>
+#include <QtCore/QVariant>
 
-#ifdef LEAF_NAMESPACE
-#   define LEAF_BEGIN_NAMESPACE     namespace LEAF_NAMESPACE{
-#   define LEAF_END_NAMESPACE       }
-#   define LEAF_WRAP_NAMESPACE(x)   LEAF_NAMESPACE::x
-#else
-#   define LEAF_BEGIN_NAMESPACE
-#   define LEAF_END_NAMESPACE
-#   define LEAF_WRAP_NAMESPACE(x)   x
-#endif
+class QSqlRecord;
 
+LEAF_BEGIN_NAMESPACE
 
-#define REGISTER_PROPERTY_PAGE(name) Q_CLASSINFO("prop_" #name, "true")
-
-//LEAF_BEGIN_NAMESPACE
-
-enum WidgetTypeFlag
+class LReportDataConnection;
+class LReportDataField : public LReportXMLSeriazble
 {
-    Band,
-    Widget,
-    Page
-};
-Q_DECLARE_FLAGS(WidgetType, WidgetTypeFlag)
-Q_DECLARE_OPERATORS_FOR_FLAGS(WidgetType)
+    Q_OBJECT
 
-enum ResizeDirectionFlag
+    Q_PROPERTY(int type READ type WRITE setType USER true)
+    Q_PROPERTY(QString filter READ filter WRITE setFilter USER true)
+
+    int m_type;
+    QString m_filter;
+
+public:
+    LReportDataField(QString name);
+
+    int type() const;
+    QString filter() const;
+
+public slots:
+    void setType(int type);
+    void setFilter(QString filter);
+};
+
+class LReportDataTable : public LReportXMLSeriazble
 {
-    Top = 1,
-    Left = 2,
-    Right = 4,
-    Bottom = 8
+    Q_OBJECT
+
+    Q_PROPERTY(QString connectionName READ connectionName WRITE setConnectionName USER true)
+    Q_PROPERTY(QString selectCommand READ selectCommand WRITE setSelectCommand USER true)
+
+    public:
+        LReportDataTable(QString connectionName);
+
+    void remove(LReportDataField *field);
+    void clear();
+    void append(LReportDataField *field);
+    void append(QString fieldName);
+
+    void appendRecordFields(QSqlRecord *record);
+
+    QList<LReportDataField*> fields() const;
+
+    void saveDom(QDomElement *dom);
+    void loadDom(QDomElement *dom);
+
+    QString connectionName() const;
+
+    QString selectCommand() const;
+
+public slots:
+    void setConnectionName(QString connectionName);
+
+    void setSelectCommand(QString selectCommand);
+
+private:
+    QList<LReportDataField*> _fields;
+
+    QString m_connectionName;
+    QString m_selectCommand;
 };
-Q_DECLARE_FLAGS(ResizeDirection, ResizeDirectionFlag)
-Q_DECLARE_OPERATORS_FOR_FLAGS(ResizeDirection)
 
-enum UnitFlag
-{
-    Centimeters,
-    Milimeters,
-    Inch,
-    Pixel
-};
-Q_DECLARE_FLAGS(Unit, UnitFlag)
-Q_DECLARE_OPERATORS_FOR_FLAGS(Unit)
+LEAF_END_NAMESPACE
 
-enum BandTypeFlag
-{
-    ReportHeader,
-    PageHeader,
-    GroupHeader,
-    Data,
-    EmptyData,
-    GroupFooter,
-    PageFooter,
-    ReportFooter
-};
-Q_DECLARE_FLAGS(BandType, BandTypeFlag)
-Q_DECLARE_OPERATORS_FOR_FLAGS(BandType)
-
-enum GridTypeFlag
-{
-    NoGrid,
-    DotGrid,
-    LinesGrid
-};
-Q_DECLARE_FLAGS(GridType, GridTypeFlag)
-Q_DECLARE_OPERATORS_FOR_FLAGS(GridType)
-
-enum MouseToolFlag
-{
-    Pointer,
-    Hand
-};
-Q_DECLARE_FLAGS(MouseTool, MouseToolFlag)
-Q_DECLARE_OPERATORS_FOR_FLAGS(MouseTool)
-
-
-//LEAF_END_NAMESPACE
-
-#endif
+#endif // RREPORTDATATABLE_H

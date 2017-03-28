@@ -1,4 +1,7 @@
 /***************************************************************************
+ *   QtReport                                                              *
+ *   Qt Report Builder Soultion                                            *
+ *                                                                         *
  *   Copyright (C) 2010 by Hamed Masafi                                    *
  *   Hamed.Masafi@GMail.COM                                                *
  *                                                                         *
@@ -18,18 +21,50 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include <QApplication>
-#include <QTranslator>
 
-#include "designer/designerwindow.h"
+#include <QSettings>
 
-int main ( int argc, char *argv[] )
-{
-   QApplication app ( argc, argv );
+#include "designerwindow.h"
+#include "designerfactory.h"
 
-   LEAF_WRAP_NAMESPACE(LReportDesignerWindow) wnd;
-
-   wnd.show();
-
-   return app.exec();
+static void init_resources() {
+    Q_INIT_RESOURCE( resources );
 }
+
+LEAF_BEGIN_NAMESPACE
+
+/*
+void LReportDesignerWindow::changeEvent(QEvent *e)
+{
+    QMainWindow::changeEvent(e);
+    switch (e->type()) {
+    case QEvent::LanguageChange:
+        retranslateUi(this);
+        break;
+    default:
+        break;
+    }
+}
+*/
+
+LReportDesignerWindow::LReportDesignerWindow ( QWidget *parent )
+    : QMainWindow ( parent )
+{
+    init_resources();
+
+    factory = new LReportDesignerFactory( this );
+    QSettings set( "QtReport2" );
+
+    this->setWindowIcon(QIcon(":/designer/qtreport_32"));
+    this->restoreState( set.value( "MainWindowState" ).toByteArray() );
+
+    this->setWindowTitle("QtReport 0.1 (beta)- preview 4");
+}
+
+LReportDesignerWindow::~LReportDesignerWindow ()
+{
+    QSettings set( "QtReport2" );
+    set.setValue( "MainWindowState", this->saveState() );
+}
+
+LEAF_END_NAMESPACE

@@ -1,4 +1,7 @@
 /***************************************************************************
+ *   QtReport                                                              *
+ *   Qt Report Builder Soultion                                            *
+ *                                                                         * 
  *   Copyright (C) 2010 by Hamed Masafi                                    *
  *   Hamed.Masafi@GMail.COM                                                *
  *                                                                         *
@@ -18,18 +21,48 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include <QApplication>
-#include <QTranslator>
+#ifndef RLINEBASE_H
+#define RLINEBASE_H
 
-#include "designer/designerwindow.h"
+#include "widgetbase.h"
 
-int main ( int argc, char *argv[] )
+LEAF_BEGIN_NAMESPACE
+
+class LReportLineBase : public LReportWidgetBase
 {
-   QApplication app ( argc, argv );
+   Q_OBJECT
 
-   LEAF_WRAP_NAMESPACE(LReportDesignerWindow) wnd;
+   REGISTER_PROPERTY_PAGE(line)
 
-   wnd.show();
+   Q_PROPERTY( int lineWidth READ lineWidth WRITE setLineWidth DESIGNABLE true USER true )
+   Q_PROPERTY( QColor lineColor READ lineColor WRITE setLineColor DESIGNABLE true USER true )
+   Q_PROPERTY( Qt::PenStyle  lineType READ lineType WRITE setLineType DESIGNABLE true USER true )
 
-   return app.exec();
-}
+
+
+    int m_lineWidth;
+
+    QColor m_lineColor;
+
+Qt::PenStyle m_lineType;
+
+public:
+    LReportLineBase(QGraphicsItem *parent);
+
+    ~LReportLineBase();
+
+   void loadDom(QDomElement *dom);
+
+   int lineWidth() const;
+   QColor lineColor() const;
+   Qt::PenStyle lineType() const;
+
+public slots:
+   void setLineWidth(int lineWidth);
+   void setLineColor(QColor lineColor);
+   void setLineType(Qt::PenStyle lineType);
+};
+
+LEAF_END_NAMESPACE
+
+#endif

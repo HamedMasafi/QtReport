@@ -1,4 +1,7 @@
 /***************************************************************************
+ *   QtReport                                                              *
+ *   Qt Report Builder Soultion                                            *
+ *                                                                         *
  *   Copyright (C) 2010 by Hamed Masafi                                    *
  *   Hamed.Masafi@GMail.COM                                                *
  *                                                                         *
@@ -18,18 +21,49 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include <QApplication>
-#include <QTranslator>
+#ifndef RDOCUMENT_H
+#define RDOCUMENT_H
 
-#include "designer/designerwindow.h"
 
-int main ( int argc, char *argv[] )
+class QGraphicsSceneMouseEvent;
+
+#include <QGraphicsView>
+
+/**
+ * \class RDocument
+ *
+ */
+class RDocument : public QGraphicsView
 {
-   QApplication app ( argc, argv );
+       Q_OBJECT
 
-   LEAF_WRAP_NAMESPACE(LReportDesignerWindow) wnd;
+   public:
+      RDocument ( QWidget *parent );
 
-   wnd.show();
+      RDocument ( QGraphicsScene *scene, QWidget *parent );
 
-   return app.exec();
-}
+      ~RDocument();
+
+      /**
+        *Set page size for current view in pixle mode.
+       * \param width width of page
+       * \param heigth heigth of page
+       */
+      void setPageSize ( int width, int heigth );
+
+   
+   signals:
+      void mouseMove ( QGraphicsSceneMouseEvent  *mouseEvent );
+      void mousePress ( QGraphicsSceneMouseEvent  *mouseEvent );
+      void mouseRelease ( QGraphicsSceneMouseEvent  *mouseEvent );
+      void scroll( int dx, int dy );
+
+   protected:
+      void mouseMoveEvent ( QGraphicsSceneMouseEvent  *mouseEvent );
+      void mousePressEvent ( QGraphicsSceneMouseEvent  *mouseEvent );
+      void mouseReleaseEvent ( QGraphicsSceneMouseEvent  *mouseEvent );
+      void scrollContentsBy ( int dx, int dy );
+
+};
+
+#endif

@@ -1,4 +1,7 @@
 /***************************************************************************
+ *   QtReport                                                              *
+ *   Qt Report Builder Soultion                                            *
+ *                                                                         *
  *   Copyright (C) 2010 by Hamed Masafi                                    *
  *   Hamed.Masafi@GMail.COM                                                *
  *                                                                         *
@@ -18,18 +21,53 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include <QApplication>
-#include <QTranslator>
+#ifndef RPROPERTYPAGEBASE_H
+#define RPROPERTYPAGEBASE_H
 
-#include "designer/designerwindow.h"
+#include "widgets/widgetbase.h"
+#include "designer/documentdesigner.h"
+#include <QWidget>
 
-int main ( int argc, char *argv[] )
+class QSpinBox;
+
+LEAF_BEGIN_NAMESPACE
+
+class LReportDocumentDesigner;
+class LReportPropertyPageBase : public QWidget
 {
-   QApplication app ( argc, argv );
+    Q_OBJECT
+public:
+   LReportPropertyPageBase(QWidget *parent = 0);
 
-   LEAF_WRAP_NAMESPACE(LReportDesignerWindow) wnd;
 
-   wnd.show();
+   bool isChanged() const;
+   int index() const;
+   QString title() const;
 
-   return app.exec();
-}
+
+    /*!
+      *
+    */
+   virtual void load() = 0;
+   virtual void save() = 0;
+
+   void loadData(QString propertyName, QSpinBox *spin);
+
+   void saveData(QString propertyName, QSpinBox *spin);
+
+   int     _index;
+   QString _title;
+
+   LReportDocumentDesigner *designer() const;
+   void setDesigner(LReportDocumentDesigner *designer);
+
+protected:
+   bool _isChanged;
+
+   LReportDocumentDesigner *_designer;
+
+};
+
+LEAF_END_NAMESPACE
+
+#endif

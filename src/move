@@ -1,0 +1,27 @@
+#!/bin/bash
+
+file=$1
+dir="${2/\//}"
+
+if [ ! -f "$file.cpp" ]; then
+   echo "File $file source does not exist."
+   exit 1
+fi
+if [ ! -d "$dir" ]; then
+    echo "Path $dir does not exist."
+    exit 1
+fi
+
+function move {
+    if [ -f "$1" ]; then
+        f=$1
+        mv $f $dir
+        sed -i -e "s/$f/${dir}\/$f/g" src.pro
+        echo "$f moved to $dir"
+    fi
+}
+
+move "${file}.cpp"
+move "${file}.h"
+move "${file}.ui"
+move "${file}_p.h"
