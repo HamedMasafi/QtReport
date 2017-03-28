@@ -26,15 +26,6 @@
 
 #include <QFlags>
 
-
-#define R_PROPERTY(type, name, read, write, m_name ) \
-    private: type m_name; \
-    public: inline void write (type v){ m_name = v; } \
-    inline type read() const{ return m_name; }
-//Q_PROPERTY( type name READ read WRITE write )//DESIGNABLE true USER true  )
-
-
-
 #define LEAF_NAMESPACE Leaf
 
 #ifdef LEAF_COMPILE_STATIC
