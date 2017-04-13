@@ -26,7 +26,11 @@
 #define RPROPERTYPAGEFONT_H
 
 #include "propertypages/propertypagebase.h"
+<<<<<<< HEAD
 #include "ui_propertypagefont.h"
+=======
+#include "ui_qreportpropertypagefont.h"
+>>>>>>> d6ccb8904f16d3c0ba28fe1f38048a467b682a93
 
 LEAF_BEGIN_NAMESPACE
 

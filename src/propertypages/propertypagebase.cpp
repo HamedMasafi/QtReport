@@ -24,7 +24,11 @@
 #include <QLabel>
 
 #include "widgets/widgetbase.h"
+<<<<<<< HEAD
 #include "designer/documentdesigner.h"
+=======
+#include "documentdesigner.h"
+>>>>>>> d6ccb8904f16d3c0ba28fe1f38048a467b682a93
 #include "propertypages/propertypagebase.h"
 #include "widgets/widgetbase.h"
 

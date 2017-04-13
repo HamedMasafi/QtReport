@@ -25,7 +25,11 @@
 #ifndef RPROPERTYPAGETEXT_H
 #define RPROPERTYPAGETEXT_H
 
+<<<<<<< HEAD
 #include "ui_propertypagetext.h"
+=======
+#include "ui_qreportpropertypagetext.h"
+>>>>>>> d6ccb8904f16d3c0ba28fe1f38048a467b682a93
 #include "propertypages/propertypagebase.h"
 
 LEAF_BEGIN_NAMESPACE

@@ -38,7 +38,11 @@ class LReportBand : public LReportPanel
     Q_PROPERTY(qreal bandHeight READ bandHeight WRITE setBandHeight USER true)
     Q_PROPERTY(int index READ index WRITE setIndex USER true)
 
+<<<<<<< HEAD
     REGISTER_PROPERTY_PAGE(band)
+=======
+    Q_CLASSINFO("prop_band", "true")
+>>>>>>> d6ccb8904f16d3c0ba28fe1f38048a467b682a93
 
 public:
     LReportBand(QGraphicsItem *parent = 0);

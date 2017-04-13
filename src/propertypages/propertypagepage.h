@@ -25,7 +25,11 @@
 #ifndef RPROPERTYPAGEPAGE_H
 #define RPROPERTYPAGEPAGE_H
 
+<<<<<<< HEAD
 #include "ui_propertypagepage.h"
+=======
+#include "ui_qreportpropertypagepage.h"
+>>>>>>> d6ccb8904f16d3c0ba28fe1f38048a467b682a93
 
 class LReportPropertyPagePage : public QWidget, private Ui::LReportPropertyPageText
 {

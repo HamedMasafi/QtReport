@@ -24,7 +24,11 @@
 #ifndef QREPORTPROPERTYBAND_H
 #define QREPORTPROPERTYBAND_H
 
+<<<<<<< HEAD
 #include "ui_propertyband.h"
+=======
+#include "ui_qreportpropertyband.h"
+>>>>>>> d6ccb8904f16d3c0ba28fe1f38048a467b682a93
 #include "propertypages/propertypagebase.h"
 
 LEAF_BEGIN_NAMESPACE

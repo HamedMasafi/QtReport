@@ -34,7 +34,11 @@
 #include <QPair>
 
 #include "qtreportglobal.h"
+<<<<<<< HEAD
 #include "designer/xmlseriazble.h"
+=======
+#include "xmlseriazble.h"
+>>>>>>> d6ccb8904f16d3c0ba28fe1f38048a467b682a93
 
 class QGraphicsSceneDragDropEvent;
 class QMouseEvent;
@@ -59,7 +63,10 @@ public:
         append(qMakePair<QString, QString>(name, value));
     }
 };
+<<<<<<< HEAD
 
+=======
+>>>>>>> d6ccb8904f16d3c0ba28fe1f38048a467b682a93
 class LReportWidgetBase : public LReportXMLSeriazble, public QGraphicsItem
 {
     Q_OBJECT

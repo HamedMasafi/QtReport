@@ -32,10 +32,17 @@ class LReportTextBox : public LReportDisplayBase
 {
     Q_OBJECT
 
+<<<<<<< HEAD
     REGISTER_PROPERTY_PAGE(text)
     REGISTER_PROPERTY_PAGE(font)
     REGISTER_PROPERTY_PAGE(align)
     REGISTER_PROPERTY_PAGE(format)
+=======
+    Q_CLASSINFO("prop_text", "true")
+    Q_CLASSINFO("prop_font", "true")
+    Q_CLASSINFO("prop_align", "true")
+    Q_CLASSINFO("prop_format", "true")
+>>>>>>> d6ccb8904f16d3c0ba28fe1f38048a467b682a93
 
     Q_CLASSINFO("LReportTextBox", "true")
 

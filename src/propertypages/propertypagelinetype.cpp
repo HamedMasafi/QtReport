@@ -37,7 +37,11 @@
 #include <QGridLayout>
 
 #include "propertypages/propertypagelinetype.h"
+<<<<<<< HEAD
 #include "designer/documentdesigner.h"
+=======
+#include "documentdesigner.h"
+>>>>>>> d6ccb8904f16d3c0ba28fe1f38048a467b682a93
 #include "colorpicker.h"
 #include "widgets/linebase.h"
 

@@ -4,7 +4,11 @@
 class QPixmap;
 
 #include "propertypages/propertypagebase.h"
+<<<<<<< HEAD
 #include "ui_propertypageimage.h"
+=======
+#include "ui_qreportpropertypageimage.h"
+>>>>>>> d6ccb8904f16d3c0ba28fe1f38048a467b682a93
 
 LEAF_BEGIN_NAMESPACE
 

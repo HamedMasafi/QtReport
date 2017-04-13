@@ -21,7 +21,11 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
+<<<<<<< HEAD
 #include "designer/documentdesigner.h"
+=======
+#include "documentdesigner.h"
+>>>>>>> d6ccb8904f16d3c0ba28fe1f38048a467b682a93
 #include "propertypages/propertypagetext.h"
 #include "widgets/textbox.h"
 

@@ -32,7 +32,11 @@ class LReportRectangle : public LReportWidgetBase
 {
     Q_OBJECT
 
+<<<<<<< HEAD
     REGISTER_PROPERTY_PAGE(rect)
+=======
+    Q_CLASSINFO("prop_rect", "true")
+>>>>>>> d6ccb8904f16d3c0ba28fe1f38048a467b682a93
 
     Q_PROPERTY( int lineWidth READ lineWidth WRITE setLineWidth DESIGNABLE true USER true )
     Q_PROPERTY( QColor lineColor READ lineColor WRITE setLineColor DESIGNABLE true USER true )
