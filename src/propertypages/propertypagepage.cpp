@@ -27,7 +27,7 @@
 #include <QPrinter>
 #include <QPageSetupDialog>
 
-LReportPropertyPagePage::LReportPropertyPagePage(QWidget *parent) :
+PropertyPagePage::PropertyPagePage(QWidget *parent) :
     QWidget(parent)
 {
    setupUi(this);
@@ -65,7 +65,7 @@ LReportPropertyPagePage::LReportPropertyPagePage(QWidget *parent) :
    comboBoxPageSizes->addItem(tr("Custom"), QPrinter::Custom);
 }
 
-void LReportPropertyPagePage::changeEvent(QEvent *e)
+void PropertyPagePage::changeEvent(QEvent *e)
 {
     QWidget::changeEvent(e);
     switch (e->type()) {

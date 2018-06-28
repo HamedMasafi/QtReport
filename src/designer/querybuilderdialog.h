@@ -31,14 +31,14 @@
 
 LEAF_BEGIN_NAMESPACE
 
-class LReport;
-class LReportQueryBuilderDialog : public QDialog, private Ui::LReportQueryBuilderDialog
+class Report;
+class QueryBuilderDialog : public QDialog, private Ui::LReportQueryBuilderDialog
 {
     Q_OBJECT
     QString _tableName;
 
 public:
-    explicit LReportQueryBuilderDialog(LReport *report, QString connectionName, QWidget *parent = 0);
+    explicit QueryBuilderDialog(Report *report, QString connectionName, QWidget *parent = 0);
 
     QString tableName() const;
     QString query() const;
@@ -46,7 +46,7 @@ public:
 protected:
     void changeEvent(QEvent *e);
 
-    LReport *_report;
+    Report *_report;
     QTreeWidgetItem *nodeTableDB;
     QTreeWidgetItem *nodeViewDB;
     QSqlDatabase db;

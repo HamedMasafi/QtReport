@@ -25,13 +25,13 @@
 
 LEAF_BEGIN_NAMESPACE
 
-LReportPropertyPageRichText::LReportPropertyPageRichText(QWidget *parent) :
-    LReportPropertyPageBase(parent)
+PropertyPageRichText::PropertyPageRichText(QWidget *parent) :
+    PropertyPageBase(parent)
 {
     setupUi(this);
 }
 
-void LReportPropertyPageRichText::changeEvent(QEvent *e)
+void PropertyPageRichText::changeEvent(QEvent *e)
 {
     QWidget::changeEvent(e);
     switch (e->type()) {
@@ -44,12 +44,12 @@ void LReportPropertyPageRichText::changeEvent(QEvent *e)
 }
 
 
-void LReportPropertyPageRichText::save(LReportWidgetBase *)
+void PropertyPageRichText::save(WidgetBase *)
 {
 
 }
 
-void LReportPropertyPageRichText::load(LReportWidgetBase *)
+void PropertyPageRichText::load(WidgetBase *)
 {
 
 }

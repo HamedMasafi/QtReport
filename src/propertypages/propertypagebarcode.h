@@ -4,19 +4,19 @@
 #include <QWidget>
 
 namespace Ui {
-    class LReportPropertyPageBarcode;
+    class PropertyPageBarcode;
 }
 
-class LReportPropertyPageBarcode : public QWidget
+class PropertyPageBarcode : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit LReportPropertyPageBarcode(QWidget *parent = 0);
-    ~LReportPropertyPageBarcode();
+    explicit PropertyPageBarcode(QWidget *parent = 0);
+    ~PropertyPageBarcode();
 
 private:
-    Ui::LReportPropertyPageBarcode *ui;
+    Ui::PropertyPageBarcode *ui;
 };
 
 #endif // QREPORTPROPERTYPAGEBARCODE_H

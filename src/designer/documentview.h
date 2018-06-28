@@ -32,16 +32,16 @@ class QGraphicsSceneMouseEvent;
 
 LEAF_BEGIN_NAMESPACE
 
-class LReportDocumentView : public QGraphicsView
+class DocumentView : public QGraphicsView
 {
        Q_OBJECT
 
    public:
-      LReportDocumentView ( QWidget *parent );
+      DocumentView ( QWidget *parent );
 
-      LReportDocumentView ( QGraphicsScene *scene, QWidget *parent );
+      DocumentView ( QGraphicsScene *scene, QWidget *parent );
 
-      ~LReportDocumentView();
+      ~DocumentView();
 
       /*!
         *Set page size for current view in pixle mode.

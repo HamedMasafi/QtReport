@@ -38,28 +38,29 @@
 #include "widgets/band.h"
 #include "core/report.h"
 #include "datatable.h"
-#include "lreportprintsettings.h"
+#include "core/reportprintsettings.h"
 #include "parametere.h"
+#include "reportmodel.h"
 
 
-#define ZMINBAND   10
-#define ZMAXBAND   99
-#define ZMINWIDGET   100
-#define ZMAXWIDGET   999
+#define ZMINBAND   10.
+#define ZMAXBAND   99.
+#define ZMINWIDGET   100.
+#define ZMAXWIDGET   999.
 
 LEAF_BEGIN_NAMESPACE
 
-class LReportPrivate
+class ReportPrivate
 {
 public:
-    LReportPrivate(LReport *parent) : q_ptr(parent)
+    ReportPrivate(Report *parent) : q_ptr(parent), model(new ReportModel(parent))
     {
 
     }
 
-    QList<LReportBand*>           bands;
-    QList<LReportWidgetBase*>     widgets;
-    QList<LReportDataConnection*> connections;
+    QList<Band*>           bands;
+    QList<WidgetBase*>     widgets;
+    QList<DataConnection*> connections;
 
     qreal marginLeft;
     qreal marginBottom;
@@ -70,60 +71,64 @@ public:
 
     QString filePath;
 
-    QList<LReportDataTable*> tables;
-    QList<LReportParametere*> parameters;
+    QList<DataTable*> tables;
+    QList<Parametere*> parameters;
+
+    ReportModel *model;
 
 private :
-    LReport  *q_ptr;
-    Q_DECLARE_PUBLIC(LReport)
+    Report  *q_ptr;
+    Q_DECLARE_PUBLIC(Report)
 };
 
 
 /*!
-  \classlass LReport
+  \classlass
   define a new Report class. Report class can be used for rendering or designing reports
 */
-LReport::LReport() : d_ptr(new LReportPrivate(this)), _printSetting(new LReportPrintSettings)
+Report::Report() : d_ptr(new ReportPrivate(this)), _printSetting(new PrintSettings)
 {
 }
 
 
-QList<LReportBand*> *LReport::bands()
+QList<Band*> *Report::bands()
 {
-    Q_D(LReport);
+    Q_D(Report);
     return &d->bands;
 }
-QList<LReportWidgetBase*> *LReport::widgets()
+QList<WidgetBase*> *Report::widgets()
 {
-    Q_D(LReport);
+    Q_D(Report);
     return &d->widgets;
 }
 
-void LReport::removeBand(QString name)
+void Report::removeBand(QString name)
 {
-    Q_D(LReport);
+    Q_D(Report);
     name = name.toLower();
-    foreach (LReportBand *band, d->bands)
-        if(band->objectName().toLower() == name)
+    foreach (Band *band, d->bands)
+        if(band->objectName().toLower() == name) {
             d->bands.removeOne(band);
+            d->model->removeBand(band);
+        }
 }
 
-void LReport::removeWidget(QString name)
+void Report::removeWidget(QString name)
 {
-    Q_D(LReport);
+    Q_D(Report);
     name = name.toLower();
-    foreach (LReportWidgetBase *widget, d->widgets)
+    foreach (WidgetBase *widget, d->widgets)
         if(widget->objectName().toLower() == name)
             d->widgets.removeOne(widget);
 }
 
 /*!
-  ery LReportWidgetBase can be placed on one QSectionBand, This methos change
+  ery WidgetBase can be placed on one QSectionBand, This methos change
   rent section of the widget
   aram widget The RReportWidgetBase
   aram parent The new parent of widget
 */
-void LReport::changeParent(LReportWidgetBase *widget, LReportBand *parent)
+void Report::changeParent(WidgetBase *widget, Band *parent)
 {
     //TODO ...
     if( widget->parentBand() )
@@ -136,12 +141,12 @@ void LReport::changeParent(LReportWidgetBase *widget, LReportBand *parent)
     }//if
 }
 
-QList<LReportDataTable*> LReport::dataTablesByName(QString tableName)
+QList<DataTable*> Report::dataTablesByName(QString tableName)
 {
-    Q_D(LReport);
-    QList<LReportDataTable*> ret;
+    Q_D(Report);
+    QList<DataTable*> ret;
 
-    foreach(LReportDataTable *datasource, d->tables)
+    foreach(DataTable *datasource, d->tables)
         if(datasource->objectName() == tableName)
             ret.append(datasource);
 
@@ -149,16 +154,22 @@ QList<LReportDataTable*> LReport::dataTablesByName(QString tableName)
 }
 
 
-QString LReport::filePath() const
+QString Report::filePath() const
 {
-    Q_D(const LReport);
+    Q_D(const Report);
     return d->filePath;
 }
 
-
-bool LReport::load( QString path )
+ReportModel *Report::model() const
 {
-    Q_D(LReport);
+    Q_D(const Report);
+    return d->model;
+}
+
+
+bool Report::load( QString path )
+{
+    Q_D(Report);
 
     QFile file( path );
 
@@ -191,7 +202,7 @@ bool LReport::load( QString path )
     //load connections
     if(connections.count() != 0)
         for(int i = 0; i < connections.count(); i++){
-            LReportDataConnection *connection = new LReportDataConnection();
+            DataConnection *connection = new DataConnection();
             QDomElement el = connections.at(i).toElement();
             connection->loadDom(&el);
             addConnection(connection);
@@ -201,7 +212,7 @@ bool LReport::load( QString path )
     if(dataSources.count() != 0)
         for(int i = 0; i < dataSources.count(); i++){
             QDomElement el = dataSources.at(i).toElement();
-            LReportDataTable *dataTable = new LReportDataTable(el.attribute("connectionName"));
+            DataTable *dataTable = new DataTable(el.attribute("connectionName"));
             dataTable->loadDom(&el);
             addDataTable(dataTable);
         }
@@ -209,22 +220,22 @@ bool LReport::load( QString path )
     if(parameteres.count() != 0)
         for(int i = 0; i < parameteres.count(); i++){
             QDomElement el = parameteres.at(i).toElement();
-            LReportParametere *param = new LReportParametere();
+            Parametere *param = new Parametere();
             param->loadDom(&el);
             addParametere(param);
         }
 
-    if(bands.count() != 0)
+    if(bands.count() != 0) {
         for(int i = 0; i < bands.count(); i++){
             QDomElement elBand = bands.at(i).toElement();
             int type = elBand.attribute( "bandType", "0" ).toInt();
-            LReportBand *band = new LReportBand( (BandType)type );
+            Band *band = new Band(::BandType(type));
             band->loadDom( &elBand );
 
             QDomElement elWidget = elBand.firstChildElement(XML_NODE_WIDGET);
             for (; !elWidget.isNull(); elWidget = elWidget.nextSiblingElement(XML_NODE_WIDGET)) {
-                LReportWidgetBase *widget;
-                widget = LReportWidgetBase::createWidget( &elWidget );
+                WidgetBase *widget;
+                widget = WidgetBase::createWidget( &elWidget );
 
                 d->widgets.append( widget );
                 changeParent( widget, band );
@@ -233,16 +244,17 @@ bool LReport::load( QString path )
             }
 
             d->bands.append(band);
-        }//for
+        }
+    }//for
 
     file.close();
     d->filePath = path;
     return true;
 }
 
-void LReport::save(QString path)
+void Report::save(QString path)
 {
-    Q_D(LReport);
+    Q_D(Report);
 
     if(path.isEmpty())
         path = d->filePath;
@@ -260,16 +272,16 @@ void LReport::save(QString path)
     }
 }
 
-QByteArray LReport::getXmlContent(int NodeFlags) const
+QByteArray Report::getXmlContent(int NodeFlags) const
 {
-    Q_D(const LReport);
+    Q_D(const Report);
 
     QDomDocument doc(XML_ROOT_TAG);
     QDomElement report = doc.createElement(XML_NODE_REPORT);
 
-    if(NodeFlags & Connection){
+    if(NodeFlags & ConnectionType){
         QDomElement connectionsDom = doc.createElement(XML_NODE_CONNECTIONS);
-        foreach(LReportDataConnection *conn, d->connections){
+        foreach(DataConnection *conn, d->connections){
             QDomElement elConn = doc.createElement(XML_NODE_CONNECTION);
             conn->saveDom(&elConn);
             connectionsDom.appendChild(elConn);
@@ -277,9 +289,9 @@ QByteArray LReport::getXmlContent(int NodeFlags) const
         report.appendChild( connectionsDom );
     }//if
 
-    if(NodeFlags & Parametere){
+    if(NodeFlags & ParametereType){
         QDomElement parametersDom = doc.createElement(XML_NODE_PARAMETERS);
-        foreach(LReportParametere *param, d->parameters){
+        foreach(Parametere *param, d->parameters){
             QDomElement elParam = doc.createElement(XML_NODE_PARAMETER);
             param->saveDom(&elParam);
             parametersDom.appendChild(elParam);
@@ -287,9 +299,9 @@ QByteArray LReport::getXmlContent(int NodeFlags) const
         }//foreach
     }//if
 
-    if(NodeFlags & DataTable){
+    if(NodeFlags & DataTableType){
         QDomElement dataSourcesDom = doc.createElement(XML_NODE_DATATABLES);
-        foreach(LReportDataTable *dataSource, d->tables){
+        foreach(DataTable *dataSource, d->tables){
             QDomElement elDataSource = doc.createElement(XML_NODE_DATATABLE);
             dataSource->saveDom(&elDataSource);
             dataSourcesDom.appendChild(elDataSource);
@@ -298,7 +310,7 @@ QByteArray LReport::getXmlContent(int NodeFlags) const
     }//if
 
 
-    if(NodeFlags & Band){
+    if(NodeFlags & BandType){
         QDomElement bandDom = doc.createElement(XML_NODE_BANDS);
         //save bands
         for( int i = 0; i < d->bands.count(); i++ ) {
@@ -310,7 +322,7 @@ QByteArray LReport::getXmlContent(int NodeFlags) const
 
             bandDom.appendChild( band );
 
-            if(NodeFlags & Widget){
+            if(NodeFlags & WidgetType){
                 //save current band's widgets
                 for( int j = 0; j < d->bands.at(i)->childs()->count(); j++ ) {
                     QDomElement child = doc.createElement(XML_NODE_WIDGET);
@@ -324,10 +336,10 @@ QByteArray LReport::getXmlContent(int NodeFlags) const
 
 
     //TODO: does not work ***
-    if(NodeFlags & Widget){
+    if(NodeFlags & WidgetType){
         QDomElement widgetsDom = doc.createElement(XML_NODE_WIDGETS);
 
-        foreach (LReportWidgetBase *w, d->widgets) {
+        foreach (WidgetBase *w, d->widgets) {
             if(w->parentBand())
                 break;
             QDomElement child = doc.createElement(XML_NODE_WIDGET);
@@ -342,234 +354,240 @@ QByteArray LReport::getXmlContent(int NodeFlags) const
     return doc.toByteArray();
 }
 
-void LReport::widgetToBack( LReportWidgetBase *widget )
+void Report::widgetToBack( WidgetBase *widget )
 {
-    Q_D(LReport);
+    Q_D(Report);
     if( !widget->parentBand() ) return;
 
-    foreach( LReportWidgetBase *child, d->widgets)// *(widget->parentBand()->childs()) )
+    foreach( WidgetBase *child, d->widgets)// *(widget->parentBand()->childs()) )
         if( child->zValue() != ZMAXWIDGET )
             child->setZValue( child->zValue() + 1 );
 
     widget->setZValue( ZMINWIDGET );
 }
 
-void LReport::widgetToFront( LReportWidgetBase *widget )
+void Report::widgetToFront( WidgetBase *widget )
 {
     if( !widget->parentBand() ) return;
 
-    foreach( LReportWidgetBase *child, d_ptr->widgets)// *(widget->parentBand()->childs()) )
+    foreach( WidgetBase *child, d_ptr->widgets)// *(widget->parentBand()->childs()) )
         if( child->zValue() != ZMINWIDGET )
             child->setZValue( child->zValue() - 1 );
 
     widget->setZValue( ZMAXWIDGET );
 }
 
-void LReport::bandToBack( LReportBand *band )
+void Report::bandToBack( Band *band )
 {
-    Q_D(LReport);
-    foreach( LReportBand *section, d->bands )
+    Q_D(Report);
+    foreach( Band *section, d->bands )
         if( section->zValue() != ZMAXBAND )
             section->setZValue( section->zValue() + 1 );
 
     band->setZValue( ZMINBAND );
 }
 
-void LReport::bandToFront( LReportBand *band )
+void Report::bandToFront( Band *band )
 {
-    Q_D(LReport);
-    foreach( LReportBand *section, d->bands )
+    Q_D(Report);
+    foreach( Band *section, d->bands )
         if( section->zValue() != ZMINBAND )
             section->setZValue( section->zValue() - 1 );
 
     band->setZValue( ZMAXBAND );
 }
 
-LReportBand *LReport::section(QString sectionName)
+Band *Report::section(QString sectionName)
 {
-    Q_D(LReport);
+    Q_D(Report);
     sectionName = sectionName.toLower();
 
-    foreach(LReportBand *section, d->bands)
+    foreach(Band *section, d->bands)
         if(section->objectName().toLower() == sectionName)
             return section;
 
-    return 0;
+    return nullptr;
 }
 
-LReportWidgetBase *LReport::findWidgetByName(QString widgetName)
+WidgetBase *Report::findWidgetByName(QString widgetName)
 {
-    Q_D(LReport);
+    Q_D(Report);
     widgetName = widgetName.toLower();
 
-    foreach(LReportWidgetBase *widget, d->widgets)
+    foreach(WidgetBase *widget, d->widgets)
         if(widget->objectName().toLower() == widgetName)
             return widget;
 
-    return 0;
+    return nullptr;
 }
 
-LReportBand *LReport::findBandByName(QString bandName)
+Band *Report::findBandByName(QString bandName)
 {
-    Q_D(LReport);
+    Q_D(Report);
     bandName = bandName.toLower();
 
-    foreach(LReportBand *band, d->bands)
+    foreach(Band *band, d->bands)
         if(band->objectName().toLower() == bandName)
             return band;
 
-    return 0;
+    return nullptr;
 }
 
-LReportDataConnection *LReport::findConnectionByName(QString connectionName)
+DataConnection *Report::findConnectionByName(QString connectionName)
 {
-    Q_D(LReport);
+    Q_D(Report);
     connectionName = connectionName.toLower();
 
-    foreach(LReportDataConnection *conn, d->connections)
+    foreach(DataConnection *conn, d->connections)
         if(conn->objectName().toLower() == connectionName)
             return conn;
 
-    return 0;
+    return nullptr;
 }
 
 
 
-QList<LReportDataTable*> LReport::dataTablesByConnections(QString connectionName)
+QList<DataTable*> Report::dataTablesByConnections(QString connectionName)
 {
-    Q_D(LReport);
-    QList<LReportDataTable*> ret;
+    Q_D(Report);
+    QList<DataTable*> ret;
 
-    foreach(LReportDataTable *datatable, d->tables)
+    foreach(DataTable *datatable, d->tables)
         if(datatable->connectionName() == connectionName)
             ret.append(datatable);
 
     return ret;
 }
 
-QList<LReportDataTable*> LReport::dataTables()
+QList<DataTable*> Report::dataTables()
 {
-    Q_D(const LReport);
+    Q_D(Report);
     return d->tables;
 }
 
-void LReport::addDataTable(LReportDataTable *tableName)
+void Report::addDataTable(DataTable *table)
 {
-    Q_D(LReport);
-    d->tables.append( tableName );
+    Q_D(Report);
+    d->tables.append(table);
+    d->model->addDataTable(table);
 }
 
-LReportDataTable *LReport::dataTable(QString tableName)
+DataTable *Report::dataTable(QString tableName)
 {
-    Q_D(LReport);
+    Q_D(Report);
     tableName = tableName.toLower();
 
-    foreach(LReportDataTable *table, d->tables)
+    foreach(DataTable *table, d->tables)
         if(table->objectName().toLower() == tableName)
             return table;
 
-    return 0;
+    return nullptr;
 }
 
-LReportDataTable *LReport::dataTable(QString tableName, QString connectionName)
+DataTable *Report::dataTable(QString tableName, QString connectionName)
 {
-    Q_D(LReport);
+    Q_D(Report);
     tableName = tableName.toLower();
     connectionName = connectionName.toLower();
 
-    foreach(LReportDataTable *table, d->tables)
+    foreach(DataTable *table, d->tables)
         if(table->objectName().toLower() == tableName && table->connectionName() == connectionName)
             return table;
 
-    return 0;
+    return nullptr;
 }
 
-void LReport::removeDataTable(LReportDataTable *table)
+void Report::removeDataTable(DataTable *table)
 {
-    Q_D(LReport);
+    Q_D(Report);
     d->tables.removeOne(table);
 }
 
-LReportParametere *LReport::parameter(QString name)
+Parametere *Report::parameter(QString name)
 {
-    Q_D(LReport);
-    foreach(LReportParametere *param, d->parameters)
+    Q_D(Report);
+    foreach(Parametere *param, d->parameters)
         if(param->objectName() == name)
             return param;
-    return 0;
+    return nullptr;
 }
 
-QList<LReportParametere*> LReport::parameters()
+QList<Parametere*> Report::parameters()
 {
-    Q_D(const LReport);
+    Q_D(Report);
     return d->parameters;
 }
 
-void LReport::addParametere( QString name, QVariant value )
+void Report::addParametere( QString name, QVariant value )
 {
-    LReportParametere *param = new LReportParametere( name, value );
-    addParametere( param );
+    addParametere(new Parametere(name, value));
 }
 
-void LReport::addParametere( LReportParametere *param )
+void Report::addParametere( Parametere *param )
 {
-    Q_D(LReport);
-    if( !parameter(param->objectName()))
+    Q_D(Report);
+    if( !parameter(param->objectName())) {
         d->parameters.append( param );
+        d->model->addParametere(param);
+    }
 }
 
-void LReport::setParametereValue(QString name, QVariant value)
+void Report::setParametereValue(QString name, QVariant value)
 {
-    Q_D(LReport);
-    foreach(LReportParametere *param, d->parameters)
+    Q_D(Report);
+    foreach(Parametere *param, d->parameters)
         if(param->objectName() == name)
             param->setValue(value);
 }
 
-void LReport::removeParametere(LReportParametere *param)
+void Report::removeParametere(Parametere *param)
 {
-    Q_D(LReport);
+    Q_D(Report);
     d->parameters.removeOne(param);
+    d->model->removeParametere(param);
 }
 
 /**
   * Return all connections in current report
   */
-QList<LReportDataConnection*> LReport::connections() const
+QList<DataConnection*> Report::connections() const
 {
-    Q_D(const LReport);
+    Q_D(const Report);
     return d->connections;
 }
 
 /**
-  * Add new connection to report. A connection is an object of \e LReportDataConnection type
+  * Add new connection to report. A connection is an object of \e DataConnection type
   * that can have one or more datasource for data defention. A connection used for report
   * designing, At runtime data from QtSql module replace by this connections.
   */
-void LReport::addConnection(LReportDataConnection *conn)
+void Report::addConnection(DataConnection *conn)
 {
-    Q_D(LReport);
-    if(!connection(conn->objectName()))
+    Q_D(Report);
+    if(!connection(conn->objectName())) {
+//        d->model->addConnection(conn);
         d->connections.append(conn);
+    }
 }
 
-void LReport::removeConnection(LReportDataConnection *conn)
+void Report::removeConnection(DataConnection *conn)
 {
-    Q_D(LReport);
+    Q_D(Report);
     for(int i = 0; i < d->connections.count(); i++)
         if(d->connections.at(i)->objectName() == conn->objectName()){
+            d->model->removeDataConnection(d->connections.at(i));
             d->connections.removeAt(i);
             break;
         }
 }
 
-void LReport::setDataSource(QString dataTableName, QSqlQuery &query)
+void Report::setDataSource(QString dataTableName, QSqlQuery &query)
 {
     Q_UNUSED(dataTableName);
     Q_UNUSED(query);
 }
 
-void LReport::print()
+void Report::print()
 {
     QPrinter printer(QPrinter::HighResolution); //create your QPrinter (don't need to be high resolution, anyway)
     printer.setPageSize(QPrinter::A4);
@@ -588,12 +606,12 @@ void LReport::print()
     dialog.exec();
 }
 
-LReportPrintSettings *LReport::printSetting() const
+PrintSettings *Report::printSetting() const
 {
     return _printSetting;
 }
 
-void LReport::setPrintSetting(LReportPrintSettings *printSetting)
+void Report::setPrintSetting(PrintSettings *printSetting)
 {
     _printSetting = printSetting;
 }
@@ -602,14 +620,14 @@ void LReport::setPrintSetting(LReportPrintSettings *printSetting)
   Find and return a connection named \e connectionName if there are no connection names
   \e connectionName return 0.
   */
-LReportDataConnection *LReport::connection(QString connectionName)
+DataConnection *Report::connection(QString connectionName)
 {
-    Q_D(LReport);
-    foreach(LReportDataConnection *conn, d->connections)
+    Q_D(Report);
+    foreach(DataConnection *conn, d->connections)
         if(conn->objectName() == connectionName)
             return conn;
 
-    return 0;
+    return nullptr;
 }
 
 LEAF_END_NAMESPACE

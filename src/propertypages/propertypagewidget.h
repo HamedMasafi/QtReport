@@ -2,21 +2,17 @@
 #define QREPORTPROPERTYPAGEWIDGET_H
 
 #include "propertypages/propertypagebase.h"
-<<<<<<< HEAD
 #include "ui_propertypagewidget.h"
-=======
-#include "ui_qreportpropertypagewidget.h"
->>>>>>> d6ccb8904f16d3c0ba28fe1f38048a467b682a93
 
 LEAF_BEGIN_NAMESPACE
 
-class LReportPropertyPageWidget : public LReportPropertyPageBase, private Ui::LReportPropertyPageWidget
+class PropertyPageWidget : public PropertyPageBase, private Ui::LReportPropertyPageWidget
 {
     Q_OBJECT
 
 public:
-    explicit LReportPropertyPageWidget(QWidget *parent = 0);
-    ~LReportPropertyPageWidget();
+    explicit PropertyPageWidget(QWidget *parent = 0);
+    ~PropertyPageWidget();
 
     void save();
     void load();

@@ -28,15 +28,11 @@
 
 LEAF_BEGIN_NAMESPACE
 
-class LReportLineBase : public LReportWidgetBase
+class LineBase : public WidgetBase
 {
    Q_OBJECT
 
-<<<<<<< HEAD
    REGISTER_PROPERTY_PAGE(line)
-=======
-   Q_CLASSINFO("prop_line", "true")
->>>>>>> d6ccb8904f16d3c0ba28fe1f38048a467b682a93
 
    Q_PROPERTY( int lineWidth READ lineWidth WRITE setLineWidth DESIGNABLE true USER true )
    Q_PROPERTY( QColor lineColor READ lineColor WRITE setLineColor DESIGNABLE true USER true )
@@ -51,9 +47,9 @@ class LReportLineBase : public LReportWidgetBase
 Qt::PenStyle m_lineType;
 
 public:
-    LReportLineBase(QGraphicsItem *parent);
+    LineBase(QGraphicsItem *parent);
 
-    ~LReportLineBase();
+    ~LineBase();
 
    void loadDom(QDomElement *dom);
 

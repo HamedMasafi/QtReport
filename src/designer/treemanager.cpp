@@ -39,6 +39,7 @@
 #include "parameteredialog.h"
 #include "datatabledialog.h"
 #include "parametere.h"
+#include "reportmodel.h"
 
 #define TYPE_CONNECTION "type_connection"
 #define TYPE_DataTable "type_DataTable"
@@ -47,7 +48,7 @@
 
 LEAF_BEGIN_NAMESPACE
 
-LReportTreeManager::LReportTreeManager(QWidget *parent, LReportDocumentDesigner *designer, LReport *report, bool readOnly) :
+TreeManager::TreeManager(QWidget *parent, DocumentDesigner *designer, Report *report, bool readOnly) :
     QTreeWidget(parent),
     _designer(designer),
     _report(report),
@@ -71,7 +72,7 @@ LReportTreeManager::LReportTreeManager(QWidget *parent, LReportDocumentDesigner 
     QMetaObject::connectSlotsByName(this);
 }
 
-void LReportTreeManager::contextMenuEvent(QContextMenuEvent *event)
+void TreeManager::contextMenuEvent(QContextMenuEvent *event)
 {
     _contextMenu->clear();
 
@@ -110,7 +111,7 @@ void LReportTreeManager::contextMenuEvent(QContextMenuEvent *event)
 }
 
 
-void LReportTreeManager::initActions()
+void TreeManager::initActions()
 {
     actionNewConnection= new QAction(this);
     actionNewConnection->setObjectName("actionNewConnection");
@@ -156,7 +157,7 @@ void LReportTreeManager::initActions()
     _contextMenu->addAction(actionCollapseAll);
 }
 
-void LReportTreeManager::slot_currentItemChanged(QTreeWidgetItem *, QTreeWidgetItem*)
+void TreeManager::slot_currentItemChanged(QTreeWidgetItem *, QTreeWidgetItem*)
 {
     /*
     _contextMenu->clear();
@@ -178,12 +179,12 @@ void LReportTreeManager::slot_currentItemChanged(QTreeWidgetItem *, QTreeWidgetI
 
 }
 
-void LReportTreeManager::initToplevelItems()
+void TreeManager::initToplevelItems()
 {
 
 }
 
-void LReportTreeManager::changeEvent(QEvent *e)
+void TreeManager::changeEvent(QEvent *e)
 {
     QTreeWidget::changeEvent(e);
 
@@ -191,7 +192,7 @@ void LReportTreeManager::changeEvent(QEvent *e)
         retranslateUi();
 }
 
-void LReportTreeManager::retranslateUi()
+void TreeManager::retranslateUi()
 {
     nodeDataTable->setText(0, tr("Data source"));
     nodeParameters->setText(0, tr("Parameters"));
@@ -214,7 +215,7 @@ void LReportTreeManager::retranslateUi()
     _contextMenu->setTitle(tr("Report directory"));
 }
 
-QMenu *LReportTreeManager::createContextMenu()
+QMenu *TreeManager::createContextMenu()
 {
     if(!_contextMenu)
         _contextMenu = new QMenu(this);
@@ -223,24 +224,24 @@ QMenu *LReportTreeManager::createContextMenu()
 }
 
 
-void LReportTreeManager::on_actionNewConnection_triggered()
+void TreeManager::on_actionNewConnection_triggered()
 {
-    LReportDataConnection *conn = _designer->addDataConnection();
+    DataConnection *conn = _designer->addDataConnection();
     if(conn)
         addConnectionNode(conn);
 
-//    LReportDatabaseInfoDialog info(_report);
+//    DatabaseInfoDialog info(_report);
 
 //    if(info.exec() != QDialog::Accepted) return;
 
-//    LReportDataConnection *conn = info.dataConnection();
+//    DataConnection *conn = info.dataConnection();
 
 //    _report->addConnection(conn);
 }
 
-void LReportTreeManager::on_actionEditConnection_triggered()
+void TreeManager::on_actionEditConnection_triggered()
 {
-    LReportDataConnection *conn = _designer->editDataConnection(currentItem()->data(2, 0).toString());
+    DataConnection *conn = _designer->editDataConnection(currentItem()->data(2, 0).toString());
 
     if(conn){
         setItemText(conn->objectName());
@@ -248,7 +249,7 @@ void LReportTreeManager::on_actionEditConnection_triggered()
     }//if
 }
 
-void LReportTreeManager::on_actionDeleteConnection_triggered()
+void TreeManager::on_actionDeleteConnection_triggered()
 {
     bool b = _designer->removeDataConnection(currentItem()->data(2, 0).toString());
 
@@ -256,23 +257,23 @@ void LReportTreeManager::on_actionDeleteConnection_triggered()
         nodeDataTable->removeChild(currentItem());
 }
 
-void LReportTreeManager::on_actionNewParameter_triggered()
+void TreeManager::on_actionNewParameter_triggered()
 {
-    LReportParametere *p = _designer->addParametere();
+    Parametere *p = _designer->addParametere();
     if(p)
         addParametereNode(p);
 }
 
-void LReportTreeManager::on_actionEditParameter_triggered()
+void TreeManager::on_actionEditParameter_triggered()
 {
-    LReportParametere *p = _designer->editParametere(itemName());
+    Parametere *p = _designer->editParametere(itemName());
     if(p){
         setItemText(p->objectName());
         setItemName(p->objectName());
     }//if
 }
 
-void LReportTreeManager::on_actionDeleteParameter_triggered()
+void TreeManager::on_actionDeleteParameter_triggered()
 {
     bool b = _designer->removeParametere(itemName());
 
@@ -280,17 +281,17 @@ void LReportTreeManager::on_actionDeleteParameter_triggered()
         nodeParameters->removeChild(currentItem());
 }
 
-void LReportTreeManager::on_actionNewDataTable_triggered()
+void TreeManager::on_actionNewDataTable_triggered()
 {
-    LReportDataTable *table = _designer->addDataTable(itemName());
+    DataTable *table = _designer->addDataTable(itemName());
 
     if(table)
         initTreeItems();
 
-//    LReportDataTableDialog dialog(_report, itemName());
+//    DataTableDialog dialog(_report, itemName());
 
 //    if(dialog.exec() == QDialog::Accepted){
-//        LReportDataTable *table = dialog.createDataTable();
+//        DataTable *table = dialog.createDataTable();
 //        _report->addDataTable(table);
 
 //        /*
@@ -315,15 +316,15 @@ void LReportTreeManager::on_actionNewDataTable_triggered()
 //    }//if
 }
 
-void LReportTreeManager::on_actionEditDataTable_triggered()
+void TreeManager::on_actionEditDataTable_triggered()
 {
-    LReportDataTable *table = _designer->editDataTable(itemName());
+    DataTable *table = _designer->editDataTable(itemName());
 
     if(table)
         initTreeItems();
 }
 
-void LReportTreeManager::on_actionDeleteDataTable_triggered()
+void TreeManager::on_actionDeleteDataTable_triggered()
 {
     bool b = _designer->removeDataTable(itemName());
 
@@ -332,7 +333,7 @@ void LReportTreeManager::on_actionDeleteDataTable_triggered()
 }
 
 
-void LReportTreeManager::initTreeItems()
+void TreeManager::initTreeItems()
 {
     bool isDatatableOpen = nodeDataTable && nodeDataTable->isExpanded();
     bool isParameteresOpen = nodeParameters && nodeParameters->isExpanded();
@@ -361,10 +362,10 @@ void LReportTreeManager::initTreeItems()
     for(int i = 0; i < _report->connections().count(); i++){
         QTreeWidgetItem *newConnectionItem = addConnectionNode(_report->connections().at(i));
 
-        QList<LReportDataTable*> DataTables = _report->dataTablesByConnections(_report->connections().at(i)->objectName());
+        QList<DataTable*> DataTables = _report->dataTablesByConnections(_report->connections().at(i)->objectName());
 
         //add DataTables if current connection
-        foreach (LReportDataTable *dataTable, DataTables) {
+        foreach (DataTable *dataTable, DataTables) {
             QTreeWidgetItem *newTableItem = addTableNode(newConnectionItem, dataTable);
 
             for(int k = 0; k < dataTable->fields().count(); k++)
@@ -379,7 +380,7 @@ void LReportTreeManager::initTreeItems()
     retranslateUi();
 }
 
-QTreeWidgetItem *LReportTreeManager::addConnectionNode(LReportDataConnection *connection)
+QTreeWidgetItem *TreeManager::addConnectionNode(DataConnection *connection)
 {
     QTreeWidgetItem *newConnItem = new QTreeWidgetItem;
     newConnItem->setData(1, 0, TYPE_CONNECTION);
@@ -390,7 +391,7 @@ QTreeWidgetItem *LReportTreeManager::addConnectionNode(LReportDataConnection *co
     return newConnItem;
 }
 
-QTreeWidgetItem *LReportTreeManager::addTableNode(QTreeWidgetItem *connectionItem, LReportDataTable *table)
+QTreeWidgetItem *TreeManager::addTableNode(QTreeWidgetItem *connectionItem, DataTable *table)
 {
     QTreeWidgetItem *newTableItem = new QTreeWidgetItem;
 
@@ -404,7 +405,7 @@ QTreeWidgetItem *LReportTreeManager::addTableNode(QTreeWidgetItem *connectionIte
     return newTableItem;
 }
 
-QTreeWidgetItem *LReportTreeManager::addFieldNode(QTreeWidgetItem *DataTableItem, LReportDataField *field)
+QTreeWidgetItem *TreeManager::addFieldNode(QTreeWidgetItem *DataTableItem, DataField *field)
 {
     QTreeWidgetItem *newFieldItem = new QTreeWidgetItem;
     newFieldItem->setData(1, 0, TYPE_FIELD);
@@ -416,7 +417,7 @@ QTreeWidgetItem *LReportTreeManager::addFieldNode(QTreeWidgetItem *DataTableItem
     return newFieldItem;
 }
 
-QTreeWidgetItem *LReportTreeManager::addParametereNode(LReportParametere *parametere)
+QTreeWidgetItem *TreeManager::addParametereNode(Parametere *parametere)
 {
     QTreeWidgetItem *newParamItem = new QTreeWidgetItem;
     newParamItem->setData(1, 0, TYPE_PARAMETERE);
@@ -427,52 +428,52 @@ QTreeWidgetItem *LReportTreeManager::addParametereNode(LReportParametere *parame
     return newParamItem;
 }
 
-QString LReportTreeManager::itemText()
+QString TreeManager::itemText()
 {
     return currentItem()->text(0);
 }
 
-void LReportTreeManager::setItemText(QString caption)
+void TreeManager::setItemText(QString caption)
 {
     setItemText(caption, currentItem());
 }
 
-void LReportTreeManager::setItemText(QString caption, QTreeWidgetItem *item)
+void TreeManager::setItemText(QString caption, QTreeWidgetItem *item)
 {
     item->setText(0, caption);
 }
 
-QString LReportTreeManager::itemName()
+QString TreeManager::itemName()
 {
     return currentItem()->data(2, 0).toString();
 }
 
-void LReportTreeManager::setItemName(QString name)
+void TreeManager::setItemName(QString name)
 {
     setItemName(name, currentItem());
 }
 
-void LReportTreeManager::setItemName(QString name, QTreeWidgetItem *item)
+void TreeManager::setItemName(QString name, QTreeWidgetItem *item)
 {
     item->setData(2, 0, name);
 }
 
-QString LReportTreeManager::itemType()
+QString TreeManager::itemType()
 {
     return currentItem()->data(1, 0).toString();
 }
 
-void LReportTreeManager::setItemType(QString type)
+void TreeManager::setItemType(QString type)
 {
     setItemType(type, currentItem());
 }
 
-void LReportTreeManager::setItemType(QString type, QTreeWidgetItem *item)
+void TreeManager::setItemType(QString type, QTreeWidgetItem *item)
 {
     item->setData(1, 0, type);
 }
 
-void LReportTreeManager::mousePressEvent(QMouseEvent *event)
+void TreeManager::mousePressEvent(QMouseEvent *event)
 {
     // Get current selection
     QTreeWidgetItem *selectedItem = currentItem();

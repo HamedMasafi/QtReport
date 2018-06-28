@@ -25,14 +25,14 @@
 
 LEAF_BEGIN_NAMESPACE
 
-LReportPropertyPageAlign::LReportPropertyPageAlign(QWidget *parent) :
-    LReportPropertyPageBase(parent)
+PropertyPageAlign::PropertyPageAlign(QWidget *parent) :
+    PropertyPageBase(parent)
 {
     setupUi(this);
     _title = tr( "Alignment" );
 }
 
-void LReportPropertyPageAlign::changeEvent(QEvent *e)
+void PropertyPageAlign::changeEvent(QEvent *e)
 {
     QWidget::changeEvent(e);
     switch (e->type()) {
@@ -44,7 +44,7 @@ void LReportPropertyPageAlign::changeEvent(QEvent *e)
     }
 }
 
-void LReportPropertyPageAlign::load()
+void PropertyPageAlign::load()
 {
    bool ok;
    int align = _designer->widgetProperty("align").toInt(&ok);
@@ -63,7 +63,7 @@ void LReportPropertyPageAlign::load()
    }
 }
 
-void LReportPropertyPageAlign::save()
+void PropertyPageAlign::save()
 {
    Qt::Alignment align;
 

@@ -25,7 +25,7 @@
 
 LEAF_BEGIN_NAMESPACE
 
-LReportHorizontalLine::LReportHorizontalLine(QGraphicsItem *parent): LReportLineBase(parent)
+HorizontalLine::HorizontalLine(QGraphicsItem *parent): LineBase(parent)
 {
    this->setResizeDirection( Top | Bottom );
    this->setWidth( 7 );
@@ -35,11 +35,11 @@ LReportHorizontalLine::LReportHorizontalLine(QGraphicsItem *parent): LReportLine
 }
 
 
-LReportHorizontalLine::~LReportHorizontalLine()
+HorizontalLine::~HorizontalLine()
 {
 }
 
-void LReportHorizontalLine::paint ( QPainter *painter, const QStyleOptionGraphicsItem *option,
+void HorizontalLine::paint ( QPainter *painter, const QStyleOptionGraphicsItem *option,
                        QWidget *widget )
 {
   Q_UNUSED( option );

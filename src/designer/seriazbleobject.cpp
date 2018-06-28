@@ -21,23 +21,23 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#include "xmlseriazble.h"
+#include "seriazbleobject.h"
 
 #include <QtXml/QDomElement>
 #include <QtCore/QMetaProperty>
 
 LEAF_BEGIN_NAMESPACE
 
-LReportXMLSeriazble::LReportXMLSeriazble(QObject *parent) :
+SeriazbleObject::SeriazbleObject(QObject *parent) :
     QObject(parent)
 {
 }
 
 /**
- * @brief LReportXMLSeriazble::saveDom
+ * @brief XMLSeriazble::saveDom
  * @param dom
  */
-void LReportXMLSeriazble::saveDom(QDomElement *dom)
+void SeriazbleObject::saveDom(QDomElement *dom)
 {
     dom->setAttribute("type", metaObject()->className());
 
@@ -51,7 +51,7 @@ void LReportXMLSeriazble::saveDom(QDomElement *dom)
     }//for
 }
 
-void LReportXMLSeriazble::loadDom(QDomElement *dom)
+void SeriazbleObject::loadDom(QDomElement *dom)
 {
 
     for (int i = 0; i < metaObject()->propertyCount(); i++) {
@@ -67,7 +67,7 @@ void LReportXMLSeriazble::loadDom(QDomElement *dom)
     setObjectName(dom->attribute("objectName"));
 }
 
-void LReportXMLSeriazble::copyTo(LReportXMLSeriazble *other)
+void SeriazbleObject::copyTo(SeriazbleObject *other)
 {
     for (int i = 0; i < metaObject()->propertyCount(); i++) {
         QMetaProperty prop = metaObject()->property(i);

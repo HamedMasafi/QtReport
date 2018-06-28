@@ -1,20 +1,28 @@
 #include <QApplication>
 
+#include "report.h"
+#include "reportmodel.h"
 #include "undocommands.h"
 #include "designer/documentdesigner.h"
+#include "dataconnection.h"
+#include "datatable.h"
+#include "widgets/band.h"
+#include "parametere.h"
+#include "widgets/widgetbase.h"
+#include "variable.h"
 
 LEAF_BEGIN_NAMESPACE
 
-class LReportUndoCommandPrivate
+class UndoCommandPrivate
 {
-    LReportUndoCommand *q_ptr;
-    Q_DECLARE_PUBLIC(LReportUndoCommand)
+    UndoCommand *q_ptr;
+    Q_DECLARE_PUBLIC(UndoCommand)
 
 public:
-    LReportUndoCommandPrivate(LReportUndoCommand *parent) :
+    UndoCommandPrivate(UndoCommand *parent) :
         q_ptr(parent),
-        designer(0),
-        report(0),
+        designer(nullptr),
+        report(nullptr),
         isReady(false)
     {
 
@@ -23,96 +31,116 @@ public:
     QString oldXML, newXML;
     QString oldName, newName;
     bool changeName;
-    LReportDocumentDesigner *designer;
-    LReport *report;
+    DocumentDesigner *designer;
+    Report *report;
     bool isReady;
 };
 
-LReportUndoCommand::LReportUndoCommand() :
-    d_ptr(new LReportUndoCommandPrivate(this)),
-    QUndoCommand()
+UndoCommand::UndoCommand() :
+    QUndoCommand(),
+    d_ptr(new UndoCommandPrivate(this))
 {
 
 }
 
-LReportUndoCommand::LReportUndoCommand(LReportDocumentDesigner *designer, LReport *report) :
-    d_ptr(new LReportUndoCommandPrivate(this))
+UndoCommand::UndoCommand(DocumentDesigner *designer, Report *report) :
+    d_ptr(new UndoCommandPrivate(this))
 {
-    Q_D(LReportUndoCommand);
+    Q_D(UndoCommand);
     d->report = report;
     d->designer = designer;
 }
 
-void LReportUndoCommand::setReady()
+void UndoCommand::setReady()
 {
-    Q_D(LReportUndoCommand);
+    Q_D(UndoCommand);
     d->isReady = true;
 }
 
-void LReportUndoCommand::undo()
+void UndoCommand::undo()
 {
-    Q_D(const LReportUndoCommand);
+    Q_D(const UndoCommand);
 
     if(!d->isReady) return;
 
     d->designer->applyXml(d->newXML, d->oldXML);
 }
 
-void LReportUndoCommand::redo()
+void UndoCommand::redo()
 {
-    Q_D(const LReportUndoCommand);
+    Q_D(const UndoCommand);
 
     if(!d->isReady) return;
 
     d->designer->applyXml(d->oldXML, d->newXML);
 }
 
-LReportDocumentDesigner *LReportUndoCommand::designer() const
+DocumentDesigner *UndoCommand::designer() const
 {
-    Q_D(const LReportUndoCommand);
+    Q_D(const UndoCommand);
     return d->designer;
 }
 
-LReport *LReportUndoCommand::report() const
+Report *UndoCommand::report() const
 {
-    Q_D(const LReportUndoCommand);
+    Q_D(const UndoCommand);
     return d->report;
 }
 
-void LReportUndoCommand::setDesigner(LReportDocumentDesigner *designer)
+void UndoCommand::setDesigner(DocumentDesigner *designer)
 {
-    Q_D(LReportUndoCommand);
+    Q_D(UndoCommand);
     d->designer = designer;
 }
 
-void LReportUndoCommand::setReport(LReport *report)
+void UndoCommand::setReport(Report *report)
 {
-    Q_D(LReportUndoCommand);
+    Q_D(UndoCommand);
     d->report = report;
 }
 
-void LReportUndoCommand::setOldState(QString oldState)
+void UndoCommand::setOldState(QString oldState)
 {
-    Q_D(LReportUndoCommand);
+    Q_D(UndoCommand);
     d->oldXML = oldState;
 }
 
-void LReportUndoCommand::setNewState(QString newState)
+void UndoCommand::setNewState(QString newState)
 {
-    Q_D(LReportUndoCommand);
+    Q_D(UndoCommand);
     d->newXML = newState;
 }
 
-void LReportUndoCommand::setOldName(QString oldName)
+void UndoCommand::setOldName(QString oldName)
 {
-    Q_D(LReportUndoCommand);
+    Q_D(UndoCommand);
     d->oldName = oldName;
 }
 
-void LReportUndoCommand::setNewName(QString newName)
+void UndoCommand::setNewName(QString newName)
 {
-    Q_D(LReportUndoCommand);
+    Q_D(UndoCommand);
     d->newName = newName;
 }
+
+#define UNDO_COMMAND_IMPL(TYPE) \
+TYPE##UndoCommand::TYPE##UndoCommand(TYPE *object, DocumentDesigner *designer, Report *report) \
+    : UndoCommand(designer, report), obj(object) \
+{ } \
+void TYPE##UndoCommand::undo() \
+{ \
+    report()->model()->remove##TYPE(obj); \
+} \
+void TYPE##UndoCommand::redo() \
+{ \
+    report()->model()->add##TYPE(obj); \
+}
+UNDO_COMMAND_IMPL(DataConnection)
+UNDO_COMMAND_IMPL(DataTable)
+UNDO_COMMAND_IMPL(Band)
+UNDO_COMMAND_IMPL(Parametere)
+UNDO_COMMAND_IMPL(WidgetBase)
+UNDO_COMMAND_IMPL(Variable)
+
 
 LEAF_END_NAMESPACE

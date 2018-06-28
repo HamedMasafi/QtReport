@@ -25,21 +25,17 @@
 #ifndef RPROPERTYPAGETEXT_H
 #define RPROPERTYPAGETEXT_H
 
-<<<<<<< HEAD
 #include "ui_propertypagetext.h"
-=======
-#include "ui_qreportpropertypagetext.h"
->>>>>>> d6ccb8904f16d3c0ba28fe1f38048a467b682a93
 #include "propertypages/propertypagebase.h"
 
 LEAF_BEGIN_NAMESPACE
 
-class LReportPropertyPageText : public LReportPropertyPageBase, private Ui::LReportPropertyPageText
+class PropertyPageText : public PropertyPageBase, private Ui::LReportPropertyPageText
 {
     Q_OBJECT
 
 public:
-    LReportPropertyPageText(QWidget *parent = 0);
+    PropertyPageText(QWidget *parent = 0);
 
 
     void load();

@@ -29,7 +29,7 @@
 
 LEAF_BEGIN_NAMESPACE
 
-class LReportBand : public LReportPanel
+class Band : public Panel
 {
     Q_OBJECT
 
@@ -38,17 +38,13 @@ class LReportBand : public LReportPanel
     Q_PROPERTY(qreal bandHeight READ bandHeight WRITE setBandHeight USER true)
     Q_PROPERTY(int index READ index WRITE setIndex USER true)
 
-<<<<<<< HEAD
     REGISTER_PROPERTY_PAGE(band)
-=======
-    Q_CLASSINFO("prop_band", "true")
->>>>>>> d6ccb8904f16d3c0ba28fe1f38048a467b682a93
 
 public:
-    LReportBand(QGraphicsItem *parent = 0);
-    LReportBand(BandType type, QGraphicsItem *parent = 0);
+    Band(QGraphicsItem *parent = 0);
+    Band(BandType type, QGraphicsItem *parent = 0);
 
-    ~LReportBand();
+    ~Band();
 
     /*!
           *Return top of current band.
@@ -72,7 +68,7 @@ public:
                const QStyleOptionGraphicsItem *option,
                QWidget *Widget);
 
-    void addWidget(LReportWidgetBase*, QPointF);
+    void addWidget(WidgetBase*, QPointF);
 
     QString header() const;
     QString typeString() const;

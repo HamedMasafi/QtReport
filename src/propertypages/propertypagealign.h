@@ -24,21 +24,17 @@
 #ifndef QREPORTPROPERTYPAGEALIGN_H
 #define QREPORTPROPERTYPAGEALIGN_H
 
-<<<<<<< HEAD
 #include "ui_propertypagealign.h"
-=======
-#include "ui_qreportpropertypagealign.h"
->>>>>>> d6ccb8904f16d3c0ba28fe1f38048a467b682a93
 #include "propertypages/propertypagebase.h"
 
 LEAF_BEGIN_NAMESPACE
 
-class LReportPropertyPageAlign : public LReportPropertyPageBase, private Ui::LReportPropertyPageAlign
+class PropertyPageAlign : public PropertyPageBase, private Ui::LReportPropertyPageAlign
 {
     Q_OBJECT
 
 public:
-    explicit LReportPropertyPageAlign(QWidget *parent = 0);
+    explicit PropertyPageAlign(QWidget *parent = 0);
 
     void load();
     void save();

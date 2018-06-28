@@ -23,23 +23,19 @@
 
 #include "propertypages/propertypagefont.h"
 #include "widgets/textbox.h"
-<<<<<<< HEAD
 #include "designer/documentdesigner.h"
-=======
-#include "documentdesigner.h"
->>>>>>> d6ccb8904f16d3c0ba28fe1f38048a467b682a93
 
 LEAF_BEGIN_NAMESPACE
 
-LReportPropertyPageFont::LReportPropertyPageFont(QWidget *parent) :
-    LReportPropertyPageBase(parent)
+PropertyPageFont::PropertyPageFont(QWidget *parent) :
+    PropertyPageBase(parent)
 {
     setupUi(this);
 
     _title = tr("Font");
 }
 
-void LReportPropertyPageFont::changeEvent(QEvent *e)
+void PropertyPageFont::changeEvent(QEvent *e)
 {
     QWidget::changeEvent(e);
     switch (e->type()) {
@@ -51,7 +47,7 @@ void LReportPropertyPageFont::changeEvent(QEvent *e)
     }
 }
 
-void LReportPropertyPageFont::load()
+void PropertyPageFont::load()
 {
    QFont font = _designer->widgetProperty("font").value<QFont>();
 
@@ -67,7 +63,7 @@ void LReportPropertyPageFont::load()
    comboBoxSize->setCurrentIndex( comboBoxSize->findText(s) );
 }
 
-void LReportPropertyPageFont::save()
+void PropertyPageFont::save()
 {
    int size;
    bool ok;

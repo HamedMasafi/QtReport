@@ -1,14 +1,10 @@
 #include "propertypages/propertypagewidget.h"
-<<<<<<< HEAD
 #include "designer/documentdesigner.h"
-=======
-#include "documentdesigner.h"
->>>>>>> d6ccb8904f16d3c0ba28fe1f38048a467b682a93
 
 LEAF_BEGIN_NAMESPACE
 
-LReportPropertyPageWidget::LReportPropertyPageWidget(QWidget *parent) :
-    LReportPropertyPageBase(parent)
+PropertyPageWidget::PropertyPageWidget(QWidget *parent) :
+    PropertyPageBase(parent)
 {
     setupUi(this);
 
@@ -16,7 +12,7 @@ LReportPropertyPageWidget::LReportPropertyPageWidget(QWidget *parent) :
 }
 
 
-void LReportPropertyPageWidget::changeEvent(QEvent *e)
+void PropertyPageWidget::changeEvent(QEvent *e)
 {
     QWidget::changeEvent(e);
 
@@ -24,12 +20,12 @@ void LReportPropertyPageWidget::changeEvent(QEvent *e)
         retranslateUi(this);
 }
 
-LReportPropertyPageWidget::~LReportPropertyPageWidget()
+PropertyPageWidget::~PropertyPageWidget()
 {
 
 }
 
-void LReportPropertyPageWidget::save()
+void PropertyPageWidget::save()
 {
    _designer->activeWidget()->setObjectName(lineEditWidgetName->text());
 
@@ -39,7 +35,7 @@ void LReportPropertyPageWidget::save()
    _designer->activeWidget()->setProperty("height", spinBoxHeight->value());
 }
 
-void LReportPropertyPageWidget::load()
+void PropertyPageWidget::load()
 {
    spinBoxTop->setValue(   _designer->widgetProperty("top").toInt());
    spinBoxLeft->setValue(  _designer->widgetProperty("left").toInt());

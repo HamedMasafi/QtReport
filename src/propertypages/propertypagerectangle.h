@@ -27,22 +27,18 @@
 
 #include "propertypages/propertypagebase.h"
 
-<<<<<<< HEAD
 #include "ui_propertypagerectangle.h"
-=======
-#include "ui_qreportpropertypagerectangle.h"
->>>>>>> d6ccb8904f16d3c0ba28fe1f38048a467b682a93
 
 LEAF_BEGIN_NAMESPACE
 
 class QColorPicker;
 
-class LReportPropertyPageRectangle : public LReportPropertyPageBase, private Ui::LReportPropertyPageRectangle
+class PropertyPageRectangle : public PropertyPageBase, private Ui::LReportPropertyPageRectangle
 {
     Q_OBJECT
 
 public:
-    LReportPropertyPageRectangle(QWidget *parent = 0);
+    PropertyPageRectangle(QWidget *parent = 0);
 
     void load();
     void save();

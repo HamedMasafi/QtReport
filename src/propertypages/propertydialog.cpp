@@ -15,7 +15,7 @@
 
 LEAF_BEGIN_NAMESPACE
 
-LReportPropertyDialog::LReportPropertyDialog(QWidget *parent): QDialog( parent )
+PropertyDialog::PropertyDialog(QWidget *parent): QDialog( parent )
 {
    resize(355, 284);
    verticalLayout = new QVBoxLayout( this );
@@ -40,7 +40,7 @@ LReportPropertyDialog::LReportPropertyDialog(QWidget *parent): QDialog( parent )
    QMetaObject::connectSlotsByName( this );
 }
 
-LReportPropertyDialog::LReportPropertyDialog( LReportWidgetBase *reportWidget, QWidget *parent ) :
+PropertyDialog::PropertyDialog( WidgetBase *reportWidget, QWidget *parent ) :
     QDialog( parent ),
     _widget( reportWidget )
 {
@@ -70,14 +70,14 @@ LReportPropertyDialog::LReportPropertyDialog( LReportWidgetBase *reportWidget, Q
    QMetaObject::connectSlotsByName( this );
 } // setupUi
 
-void LReportPropertyDialog::retranslateUi(QDialog *)
+void PropertyDialog::retranslateUi(QDialog *)
 {
    setWindowTitle( tr("Property page") );
    buttonBox->button(QDialogButtonBox::Cancel)->setText( tr("Cancel") );
    buttonBox->button(QDialogButtonBox::Ok)->setText( tr("OK") );
 }
 
-int LReportPropertyDialog::exec()
+int PropertyDialog::exec()
 {
    if( tabWidget->count() == 0)
    {
@@ -90,7 +90,7 @@ int LReportPropertyDialog::exec()
    return QDialog::exec();
 }
 
-void LReportPropertyDialog::initTabs()
+void PropertyDialog::initTabs()
 {
    //TODO init properties in new way
    /*properties = _widget->getPropertiesPages();
@@ -107,7 +107,7 @@ void LReportPropertyDialog::initTabs()
    }*/
 }
 
-void LReportPropertyDialog::addTab(LReportPropertyPageBase *page)
+void PropertyDialog::addTab(PropertyPageBase *page)
 {
    tabWidget->addTab( page, page->title() );
 
@@ -115,7 +115,7 @@ void LReportPropertyDialog::addTab(LReportPropertyPageBase *page)
 }
 
 
-void LReportPropertyDialog::on_buttonBox_accepted()
+void PropertyDialog::on_buttonBox_accepted()
 {
    for( int i = 0; i < properties.count(); i++ )
       properties.at( i )->save();
@@ -123,7 +123,7 @@ void LReportPropertyDialog::on_buttonBox_accepted()
    this->accept();
 }
 
-void LReportPropertyDialog::on_buttonBox_clicked(QAbstractButton *button)
+void PropertyDialog::on_buttonBox_clicked(QAbstractButton *button)
 {
     qDebug()<<buttonBox->buttonRole(button);
    if(buttonBox->buttonRole(button) == QDialogButtonBox::ApplyRole)

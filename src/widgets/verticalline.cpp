@@ -25,7 +25,7 @@
 
 LEAF_BEGIN_NAMESPACE
 
-LReportVerticalLine::LReportVerticalLine(QGraphicsItem *parent): LReportLineBase(parent)
+VerticalLine::VerticalLine(QGraphicsItem *parent): LineBase(parent)
 {
    this->setResizeDirection( Left | Right );
    this->setHeight( 7 );
@@ -35,11 +35,11 @@ LReportVerticalLine::LReportVerticalLine(QGraphicsItem *parent): LReportLineBase
 }
 
 
-LReportVerticalLine::~LReportVerticalLine()
+VerticalLine::~VerticalLine()
 {
 }
 
-void LReportVerticalLine::paint ( QPainter *painter, const QStyleOptionGraphicsItem *option,
+void VerticalLine::paint ( QPainter *painter, const QStyleOptionGraphicsItem *option,
                        QWidget *widget )
 {
   Q_UNUSED( option );

@@ -39,21 +39,21 @@ class QResizeEvent;
 
 LEAF_BEGIN_NAMESPACE
 
-class LReport;
-class LReportDocumentDesignerPrivate;
-class LReportDocumentView;
-class LReportPage;
-class LReportRuler;
-class LReportWidgetBase;
-class LReportWidgetResizer;
-class LReportBand;
-class LReportScene;
-class LReportResizeEvent;
-class LReportMoveEvent;
-class LReportDataConnection;
-class LReportParametere;
-class LReportDataTable;
-class Q_DECL_EXPORT LReportDocumentDesigner : public QWidget
+class Report;
+class DocumentDesignerPrivate;
+class DocumentView;
+class Page;
+class Ruler;
+class WidgetBase;
+class WidgetResizer;
+class Band;
+class Scene;
+class ResizeEvent;
+class MoveEvent;
+class DataConnection;
+class Parametere;
+class DataTable;
+class Q_DECL_EXPORT DocumentDesigner : public QWidget
 {
     Q_OBJECT
 
@@ -65,22 +65,22 @@ class Q_DECL_EXPORT LReportDocumentDesigner : public QWidget
     Q_PROPERTY(int zoom READ zoom WRITE setZoom)
 
 private:
-    LReportDocumentDesignerPrivate  *const d_ptr;
-    Q_DECLARE_PRIVATE(LReportDocumentDesigner)
+    DocumentDesignerPrivate  *const d_ptr;
+    Q_DECLARE_PRIVATE(DocumentDesigner)
 
-    void addReportWidget(LReportWidgetBase *Widget, int x, int y, bool addToReport);
-    void addBand(LReportBand*, bool addToReport);
+    void addReportWidget(WidgetBase *Widget, int x, int y, bool addToReport);
+    void addBand(Band*, bool addToReport);
 
     void reorderBands();
     void reorderBands(bool pos);
     void updateScrollBars();
     void updateMetrics();
-    void refreshWidgetParents(LReportWidgetBase*);
+    void refreshWidgetParents(WidgetBase*);
 
 
 public:
-    LReportDocumentDesigner(QWidget *parent, LReport *report);
-    ~LReportDocumentDesigner();
+    DocumentDesigner(QWidget *parent, Report *report);
+    ~DocumentDesigner();
 
     void setSceneRect();
 
@@ -96,58 +96,58 @@ public:
 
     void createWidget(QString widgetType, QString name, QRectF rc);
 
-    LReportDataConnection *addDataConnection();
-    LReportDataConnection *editDataConnection(QString connectionName);
+    DataConnection *addDataConnection();
+    DataConnection *editDataConnection(QString connectionName);
     bool removeDataConnection(QString connectionName);
 
-    LReportDataTable *addDataTable(QString connectionName);
-    LReportDataTable *editDataTable(QString dataTableName);
+    DataTable *addDataTable(QString connectionName);
+    DataTable *editDataTable(QString dataTableName);
     bool removeDataTable(QString dataTableName);
 
-    LReportParametere *addParametere();
-    LReportParametere *editParametere(QString parametereaName);
+    Parametere *addParametere();
+    Parametere *editParametere(QString parametereaName);
     bool removeParametere(QString parametereaName);
 
-    void addReportWidget(LReportWidgetBase *Widget);
-    void addReportWidget(LReportWidgetBase *Widget, int x, int y);
-    void addBand(LReportBand*);
+    void addReportWidget(WidgetBase *Widget);
+    void addReportWidget(WidgetBase *Widget, int x, int y);
+    void addBand(Band*);
 
     void removeReportWidget();
-    void removeReportWidget(LReportWidgetBase *Widget);
-    void removeBand(LReportWidgetBase *band);
+    void removeReportWidget(WidgetBase *Widget);
+    void removeBand(WidgetBase *band);
 
     void setAlign(ResizeDirection direction);
 
-    LReportWidgetBase *reportWidget(QString name);
-    LReportBand *getBandAt(QPointF pt) const;
-    LReportBand *getBandAt(qreal h) const;
+    WidgetBase *reportWidget(QString name);
+    Band *getBandAt(QPointF pt) const;
+    Band *getBandAt(qreal h) const;
 
-    void setReport(LReport*);
-    LReport *report() const;
+    void setReport(Report*);
+    Report *report() const;
 
     QRectF getGridAlignPoint(QRectF rc);
     QPointF getGridAlignPoint(const QPointF);
-    QPointF getGridAlignPoint(const QPointF, LReportWidgetBase*);
+    QPointF getGridAlignPoint(const QPointF, WidgetBase*);
     QSizeF getGridAlignPoint(const QSizeF);
 
     void showWidgetProperties();
-    void showWidgetProperties(LReportWidgetBase*);
+    void showWidgetProperties(WidgetBase*);
 
     void sendToBack();
     void bringToFront();
 
     void setGridType(GridType type);
 
-    void reorderBandWidgets(LReportBand*);
+    void reorderBandWidgets(Band*);
 
     void showPageSetup();
 
     void loadReport();
 
-    LReportWidgetBase *activeWidget();
-    LReportBand*      activeBand();
+    WidgetBase *activeWidget();
+    Band*      activeBand();
 
-    QList<LReportWidgetBase*> selectedWidgets() const;
+    QList<WidgetBase*> selectedWidgets() const;
     bool hasWidgetProperty(QString propertyName);
     void setWidgetProperty(QString propertyName, QVariant propertyValue);
     QStringList widgetProperties() const;
@@ -164,8 +164,8 @@ public:
     QAction *createUndoAction(QObject *parent) const;
 
     void applyXml(QString oldXml, QString newXml);
-    LReportWidgetBase *createWidgetsFromDom(QDomElement dom);
-    QList<LReportWidgetBase *> createWidgetsFromXml(QString xml);
+    WidgetBase *createWidgetsFromDom(QDomElement dom);
+    QList<WidgetBase *> createWidgetsFromXml(QString xml);
     void removeWidgetsFromXml(QString xml);
 
     void setMouseTool(MouseTool mouseTool);
@@ -184,14 +184,14 @@ private slots:
     void reportWidget_mouseMove(QGraphicsSceneMouseEvent *event);
     void reportWidget_mousePress(QGraphicsSceneMouseEvent *event);
     void reportWidget_mouseRelease(QGraphicsSceneMouseEvent *event);
-    void reportWidget_resizing(LReportResizeEvent*);
-    void reportWidget_moving(LReportMoveEvent*);
+    void reportWidget_resizing(ResizeEvent*);
+    void reportWidget_moving(MoveEvent*);
     void reportWidget_moved(QPointF);
     void reportWidget_resized();
     void reportWidget_contextMenu();
 
-    void on_resizer_pointGridNeeded(LReportMoveEvent*);
-    void on_resizer_sizeGridNeeded(LReportResizeEvent*);
+    void on_resizer_pointGridNeeded(MoveEvent*);
+    void on_resizer_sizeGridNeeded(ResizeEvent*);
     void on_document_scroll(int, int);
 
 public slots:
@@ -218,7 +218,7 @@ signals:
     void dataDirectoryModified();
     void widgetContextMenuEvent();
 
-    friend class LReportDesignerFactory;
+    friend class DesignerFactory;
 
 };
 

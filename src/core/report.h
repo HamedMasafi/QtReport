@@ -38,13 +38,14 @@ class QString;
 
 LEAF_BEGIN_NAMESPACE
 
-class LReportParametere;
-class LReportPrivate;
-class LReportWidgetBase;
-class LReportBand;
-class LReportDataConnection;
-class LReportPrintSettings;
-class LEAF_EXPORT LReport : public QObject
+class ReportModel;
+class Parametere;
+class ReportPrivate;
+class WidgetBase;
+class Band;
+class DataConnection;
+class PrintSettings;
+class LEAF_EXPORT Report : public QObject
 {
     Q_OBJECT
 
@@ -53,15 +54,15 @@ class LEAF_EXPORT LReport : public QObject
 public:
 
     enum XmlNodeType{
-        Widget      = 1,
-        Band        = 2,
-        Connection  = 4,
-        DataTable   = 8,
-        Parametere  = 16,
-        All         = Widget | Band | Connection | DataTable | Parametere
+        WidgetType      = 1,
+        BandType        = 2,
+        ConnectionType  = 4,
+        DataTableType   = 8,
+        ParametereType  = 16,
+        All         = WidgetType | BandType | ConnectionType | DataTableType | ParametereType
     };
 
-    LReport();
+    Report();
 
     bool load(QString path);
     void save(QString path = "");
@@ -69,19 +70,19 @@ public:
     QByteArray getXmlContent(int NodeFlags = All) const;
 
 
-    QList<LReportBand*>          *bands();
-    QList<LReportWidgetBase*>    *widgets();
+    QList<Band *> *bands();
+    QList<WidgetBase *> *widgets();
 
     // designer
     void removeBand(QString name);
     void removeWidget(QString name);
 
-    void widgetToBack(LReportWidgetBase*);
-    void widgetToFront(LReportWidgetBase*);
-    void bandToBack(LReportBand*);
-    void bandToFront(LReportBand*);
+    void widgetToBack(WidgetBase*);
+    void widgetToFront(WidgetBase*);
+    void bandToBack(Band*);
+    void bandToFront(Band*);
 
-    void changeParent(LReportWidgetBase*, LReportBand*);
+    void changeParent(WidgetBase*, Band*);
 
     // print
     void setParametereValue(QString name, QVariant value);
@@ -91,48 +92,51 @@ public:
 
 
     //todo: return one object
-    QList<LReportDataTable*> dataTablesByName(QString tableName);
-    QList<LReportDataTable*> dataTablesByConnections(QString connectionName);
-    QList<LReportDataTable*> dataTables();
+    ReportModel *model() const;
 
-    void addDataTable(LReportDataTable *dataTable);
-    LReportDataTable *dataTable(QString tableName);
-    LReportDataTable *dataTable(QString tableName, QString connectionName);
-    void removeDataTable(LReportDataTable *table);
+    QList<DataTable*> dataTablesByName(QString tableName);
+    QList<DataTable*> dataTablesByConnections(QString connectionName);
+    QList<DataTable*> dataTables();
 
-    LReportBand *section(QString sectionName);
-    LReportBand *findBandByName(QString bandName);
-    LReportDataConnection *findConnectionByName(QString connectionName);
-    LReportWidgetBase *findWidgetByName(QString widgetName);
+    void addDataTable(DataTable *table);
+    DataTable *dataTable(QString tableName);
+    DataTable *dataTable(QString tableName, QString connectionName);
+    void removeDataTable(DataTable *table);
 
-    LReportParametere *parameter(QString name);
-    QList<LReportParametere*> parameters();
+    Band *section(QString sectionName);
+    Band *findBandByName(QString bandName);
+    DataConnection *findConnectionByName(QString connectionName);
+    WidgetBase *findWidgetByName(QString widgetName);
+
+    Parametere *parameter(QString name);
+    QList<Parametere*> parameters();
     void addParametere(QString name, QVariant value);
-    void addParametere(LReportParametere *param);
-    void removeParametere(LReportParametere *param);
+    void addParametere(Parametere *param);
+    void removeParametere(Parametere *param);
 
-    QList<LReportDataConnection*> connections() const;
-    LReportDataConnection *connection(QString connectionName);
-    void addConnection(LReportDataConnection *conn);
-    void removeConnection(LReportDataConnection *conn);
+    QList<DataConnection*> connections() const;
+    DataConnection *connection(QString connectionName);
+    void addConnection(DataConnection *conn);
+    void removeConnection(DataConnection *conn);
 
     void setDataSource(QString dataTableName, QSqlQuery &query);
 
     void print();
 
-    LReportPrintSettings *printSetting() const;
-    void setPrintSetting(LReportPrintSettings *printSetting);
+    PrintSettings *printSetting() const;
+    void setPrintSetting(PrintSettings *printSetting);
 
 private:
-    LReportPrivate  *const d_ptr;
-    Q_DECLARE_PRIVATE(LReport)
+    ReportPrivate *d_ptr;
+    Q_DECLARE_PRIVATE(Report)
 
-    LReportPrintSettings *_printSetting;
+    PrintSettings *_printSetting;
 
 signals:
     void designerUpdateNeeded();
 
-    friend class LReportDocumentDesigner;
+    friend class DocumentDesigner;
+    friend class ReportModel;
 };
 
 LEAF_END_NAMESPACE

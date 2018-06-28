@@ -27,62 +27,62 @@
 
 LEAF_BEGIN_NAMESPACE
 
-LReportDataConnection::LReportDataConnection() : LReportXMLSeriazble()
+DataConnection::DataConnection() : SeriazbleObject()
 {
 }
 
 
-QString LReportDataConnection::driver() const
+QString DataConnection::driver() const
 {
    return _driver;
 }
 
-QString LReportDataConnection::databaseName() const
+QString DataConnection::databaseName() const
 {
    return _databaseName;
 }
 
-QString LReportDataConnection::serverName() const
+QString DataConnection::serverName() const
 {
    return _serverName;
 }
 
-QString LReportDataConnection::username() const
+QString DataConnection::username() const
 {
    return _username;
 }
 
-QString LReportDataConnection::password() const
+QString DataConnection::password() const
 {
     return _password;
 }
 
-void LReportDataConnection::setDriver(QString driver)
+void DataConnection::setDriver(QString driver)
 {
     _driver = driver;
 }
 
-void LReportDataConnection::setDatabaseName(QString databaseName)
+void DataConnection::setDatabaseName(QString databaseName)
 {
     _databaseName = databaseName;
 }
 
-void LReportDataConnection::setServerName(QString serverName)
+void DataConnection::setServerName(QString serverName)
 {
     _serverName = serverName;
 }
 
-void LReportDataConnection::setUsername(QString username)
+void DataConnection::setUsername(QString username)
 {
     _username = username;
 }
 
-void LReportDataConnection::setPassword(QString password)
+void DataConnection::setPassword(QString password)
 {
     _password = password;
 }
 
-void LReportDataConnection::setDatabaseInfo( QString driver,
+void DataConnection::setDatabaseInfo( QString driver,
                                QString database, QString serverName,
                                QString username, QString password )
 {
@@ -93,7 +93,7 @@ void LReportDataConnection::setDatabaseInfo( QString driver,
    _password = password;
 }
 
-bool LReportDataConnection::operator ==(LReportDataConnection &other)
+bool DataConnection::operator ==(DataConnection &other)
 {
     return objectName() == other.objectName();
 }

@@ -51,9 +51,9 @@
 
 enum WidgetTypeFlag
 {
-    Band,
-    Widget,
-    Page
+    BandWidget,
+    WidgetWidget,
+    PageWidget
 };
 Q_DECLARE_FLAGS(WidgetType, WidgetTypeFlag)
 Q_DECLARE_OPERATORS_FOR_FLAGS(WidgetType)

@@ -31,20 +31,20 @@ LEAF_BEGIN_NAMESPACE
 /*!
    @author Hamed Masafi <Hamed.Masafi@GMail.COM>
 */
-class LReportVerticalLine : public LReportLineBase
+class VerticalLine : public LineBase
 {
    Q_OBJECT
 
    public:
-      LReportVerticalLine ( QGraphicsItem *parent =0 );
+      VerticalLine ( QGraphicsItem *parent =0 );
 
-      ~LReportVerticalLine();
+      ~VerticalLine();
 
       void paint ( QPainter *painter, const QStyleOptionGraphicsItem *option,
                    QWidget *Widget );
 
 private:
-      LReportBand *_secondBand;
+      Band *_secondBand;
 };
 
 LEAF_END_NAMESPACE

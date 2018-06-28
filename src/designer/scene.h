@@ -29,21 +29,21 @@
 
 LEAF_BEGIN_NAMESPACE
 
-class LReportScene : public QGraphicsScene
+class Scene : public QGraphicsScene
 {
         Q_OBJECT
 
     public:
 
-        LReportScene();
+        Scene();
 
-        LReportScene(const QRectF& sceneRect, QObject *parent);
+        Scene(const QRectF& sceneRect, QObject *parent);
 
-        LReportScene(qreal x, qreal y, qreal width, qreal height, QObject *parent = 0);
+        Scene(qreal x, qreal y, qreal width, qreal height, QObject *parent = 0);
 
         QRect documentArea() const;
 
-        ~LReportScene();
+        ~Scene();
 
     protected:
         void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);

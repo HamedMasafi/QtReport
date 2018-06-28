@@ -24,30 +24,26 @@
 #ifndef QREPORTPROPERTYBAND_H
 #define QREPORTPROPERTYBAND_H
 
-<<<<<<< HEAD
 #include "ui_propertyband.h"
-=======
-#include "ui_qreportpropertyband.h"
->>>>>>> d6ccb8904f16d3c0ba28fe1f38048a467b682a93
 #include "propertypages/propertypagebase.h"
 
 LEAF_BEGIN_NAMESPACE
 
-class LReportBand;
-class LReportPropertyBand : public LReportPropertyPageBase, private Ui::LReportPropertyBand
+class Band;
+class PropertyBand : public PropertyPageBase, private Ui::LReportPropertyBand
 {
     Q_OBJECT
 
-    LReportBand *_band;
+    Band *_band;
 
 public:
-    explicit LReportPropertyBand(QWidget *parent = 0);
+    explicit PropertyBand(QWidget *parent = 0);
 
     void load();
     void save();
 
-    LReportBand *band() const;
-    void setBand(LReportBand *band);
+    Band *band() const;
+    void setBand(Band *band);
 
 protected:
     void changeEvent(QEvent *e);

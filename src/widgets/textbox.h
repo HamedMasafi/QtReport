@@ -28,32 +28,25 @@
 
 LEAF_BEGIN_NAMESPACE
 
-class LReportTextBox : public LReportDisplayBase
+class TextBox : public DisplayBase
 {
     Q_OBJECT
 
-<<<<<<< HEAD
     REGISTER_PROPERTY_PAGE(text)
     REGISTER_PROPERTY_PAGE(font)
     REGISTER_PROPERTY_PAGE(align)
     REGISTER_PROPERTY_PAGE(format)
-=======
-    Q_CLASSINFO("prop_text", "true")
-    Q_CLASSINFO("prop_font", "true")
-    Q_CLASSINFO("prop_align", "true")
-    Q_CLASSINFO("prop_format", "true")
->>>>>>> d6ccb8904f16d3c0ba28fe1f38048a467b682a93
 
-    Q_CLASSINFO("LReportTextBox", "true")
+    Q_CLASSINFO("TextBox", "true")
 
     Q_PROPERTY( QColor foreColor READ foreColor WRITE setForeColor DESIGNABLE true USER true )
     Q_PROPERTY( QFont font READ font WRITE setFont DESIGNABLE true USER true )
     Q_PROPERTY( QString text READ text WRITE setText DESIGNABLE true USER true )
 
 public:
-    LReportTextBox ( QGraphicsItem *parent = 0 );
+    TextBox(QGraphicsItem *parent = nullptr);
 
-    virtual ~LReportTextBox();
+    virtual ~TextBox();
 
 
     void paint ( QPainter *painter,
@@ -78,6 +71,6 @@ private:
 
 LEAF_END_NAMESPACE
 
-Q_DECLARE_METATYPE(LEAF_WRAP_NAMESPACE(LReportTextBox*))
+Q_DECLARE_METATYPE(LEAF_WRAP_NAMESPACE(TextBox*))
 
 #endif

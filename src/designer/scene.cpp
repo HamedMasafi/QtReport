@@ -27,70 +27,70 @@
 
 LEAF_BEGIN_NAMESPACE
 
-LReportScene::LReportScene() : QGraphicsScene()
+Scene::Scene() : QGraphicsScene()
 {
    this->clear();
 }
 
-LReportScene::LReportScene ( const QRectF& sceneRect, QObject *parent ) : QGraphicsScene ( sceneRect, parent )
+Scene::Scene ( const QRectF& sceneRect, QObject *parent ) : QGraphicsScene ( sceneRect, parent )
 {
    this->clear();
 }
 
 
-LReportScene::LReportScene ( qreal x, qreal y, qreal width, qreal height, QObject  *parent )
+Scene::Scene ( qreal x, qreal y, qreal width, qreal height, QObject  *parent )
       : QGraphicsScene ( x, y, width, height, parent )
 {
    this->clear();
 }
 
 
-LReportScene::~LReportScene()
+Scene::~Scene()
 {
 }
 
 
-QRect LReportScene::documentArea() const
+QRect Scene::documentArea() const
 {
     return QRect();
 }
 
-void LReportScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
+void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
    QGraphicsScene::mouseReleaseEvent(mouseEvent);
    emit mouseRelease(mouseEvent);
 }
 
-void LReportScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
+void Scene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
     QGraphicsScene::mouseMoveEvent(mouseEvent);
     emit mouseMove(mouseEvent);
 }
 
-void LReportScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
+void Scene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
     QGraphicsScene::mousePressEvent(mouseEvent);
     emit mousePress(mouseEvent);
 }
 
-void LReportScene::dragEnterEvent(QGraphicsSceneDragDropEvent *event)
+void Scene::dragEnterEvent(QGraphicsSceneDragDropEvent *event)
 {
     Q_UNUSED(event);
 }
 
-void LReportScene::dragLeaveEvent(QGraphicsSceneDragDropEvent *event)
+void Scene::dragLeaveEvent(QGraphicsSceneDragDropEvent *event)
 {
     Q_UNUSED(event);
 }
 
-void LReportScene::dragMoveEvent(QGraphicsSceneDragDropEvent *event)
+void Scene::dragMoveEvent(QGraphicsSceneDragDropEvent *event)
 {
     Q_UNUSED(event);
 
     event->accept();
 }
 
-void LReportScene::dropEvent(QGraphicsSceneDragDropEvent *event)
+void Scene::dropEvent(QGraphicsSceneDragDropEvent *event)
 {
     emit drop(event);
 }

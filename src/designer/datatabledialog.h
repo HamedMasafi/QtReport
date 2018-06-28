@@ -29,13 +29,13 @@
 
 LEAF_BEGIN_NAMESPACE
 
-class LReport;
-class LReportDataTable;
-class Q_DECL_HIDDEN LReportDataTableDialog : public QDialog, private Ui::LReportDataTableDialog
+class Report;
+class DataTable;
+class Q_DECL_HIDDEN DataTableDialog : public QDialog, private Ui::LReportDataTableDialog
 {
     Q_OBJECT
-    LReportDataTable *_table;
-    LReport *_report;
+    DataTable *_table;
+    Report *_report;
     QString _connectionName;
     bool _editMode;
 
@@ -43,10 +43,10 @@ class Q_DECL_HIDDEN LReportDataTableDialog : public QDialog, private Ui::LReport
     bool checkData();
 
 public:
-    explicit LReportDataTableDialog(LReport *report, QString connectionName, QWidget *parent = 0);
-    explicit LReportDataTableDialog(LReport *report, LReportDataTable *table, QWidget *parent = 0);
+    explicit DataTableDialog(Report *report, QString connectionName, QWidget *parent = 0);
+    explicit DataTableDialog(Report *report, DataTable *table, QWidget *parent = 0);
 
-    LReportDataTable *createDataTable();
+    DataTable *createDataTable();
 
     void fillIntOperatorCombo();
     void fillStringOperatorCombo();

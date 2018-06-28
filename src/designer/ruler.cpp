@@ -38,7 +38,7 @@ LEAF_BEGIN_NAMESPACE
   *Define a new ruler.
  */
 
-LReportRuler::LReportRuler ( QWidget *parent, Qt::Orientation direction ) : QWidget ( parent, 0 )
+Ruler::Ruler ( QWidget *parent, Qt::Orientation direction ) : QWidget ( parent, 0 )
 		, _fontMetrics ( this->font() )
 {
    _pixelPerUnit = 0;
@@ -60,12 +60,12 @@ LReportRuler::LReportRuler ( QWidget *parent, Qt::Orientation direction ) : QWid
 }
 
 
-LReportRuler::~LReportRuler()
+Ruler::~Ruler()
 {
 }
 
 
-void LReportRuler::paintEvent ( QPaintEvent * )
+void Ruler::paintEvent ( QPaintEvent * )
 {
 	QPainter p ( this );
 
@@ -165,7 +165,7 @@ void LReportRuler::paintEvent ( QPaintEvent * )
 }
 
 
-void LReportRuler::mouseMoveEvent ( QMouseEvent * )
+void Ruler::mouseMoveEvent ( QMouseEvent * )
 {
    /* not in current plan :)
    _resizeMode = NoResize;
@@ -184,37 +184,37 @@ void LReportRuler::mouseMoveEvent ( QMouseEvent * )
 }
 
 
-void LReportRuler::setDirection( Qt::Orientation direction )
+void Ruler::setDirection( Qt::Orientation direction )
 {
    _direction = direction;
 
 }
 
-void LReportRuler::setPixelPerUnit(int v)
+void Ruler::setPixelPerUnit(int v)
 {
    _pixelPerUnit = v;
 
 }
 
-void LReportRuler::setStartPos(int v)
+void Ruler::setStartPos(int v)
 {
    _startPos = v;
 
 }
 
-void LReportRuler::setRuleWidth(int v)
+void Ruler::setRuleWidth(int v)
 {
    _ruleWidth = v;
 
 }
 
-void LReportRuler::setStartMargin(int v)
+void Ruler::setStartMargin(int v)
 {
    _startMargin = v;
 
 }
 
-void LReportRuler::setEndMargin(int v)
+void Ruler::setEndMargin(int v)
 {
    _endMargin = v;
 

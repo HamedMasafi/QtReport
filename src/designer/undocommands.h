@@ -6,31 +6,37 @@
 
 LEAF_BEGIN_NAMESPACE
 
-class LReport;
-class LReportDocumentDesigner;
-class LReportUndoCommandPrivate;
-class LReportUndoCommand : public QUndoCommand
+class Report;
+class DocumentDesigner;
+class UndoCommandPrivate;
+class DataConnection;
+class DataTable;
+class Band;
+class Parametere;
+class WidgetBase;
+class Variable;
+class UndoCommand : public QUndoCommand
 {
 
 private:
-    LReportUndoCommandPrivate *d_ptr;
-    Q_DECLARE_PRIVATE(LReportUndoCommand)
+    UndoCommandPrivate *d_ptr;
+    Q_DECLARE_PRIVATE(UndoCommand)
 
 public:
 
-    LReportUndoCommand();
-    LReportUndoCommand(LReportDocumentDesigner *designer, LReport *report);
+    UndoCommand();
+    UndoCommand(DocumentDesigner *designer, Report *report);
 
     virtual void undo();
     virtual void redo();
 
     void setReady();
 
-    LReportDocumentDesigner *designer() const;
-    LReport *report() const;
+    DocumentDesigner *designer() const;
+    Report *report() const;
 
-    void setDesigner(LReportDocumentDesigner *designer);
-    void setReport(LReport *report);
+    void setDesigner(DocumentDesigner *designer);
+    void setReport(Report *report);
 
     void setOldState(QString oldState);
     void setNewState(QString newState);
@@ -39,6 +45,24 @@ public:
     void setNewName(QString newName);
 
 };
+
+#define UNDO_COMMAND_DECL(TYPE) \
+class TYPE##UndoCommand : public UndoCommand \
+{ \
+    TYPE *obj; \
+public: \
+    TYPE##UndoCommand(TYPE *object, DocumentDesigner *designer, Report *report); \
+public: \
+    void undo() Q_DECL_OVERRIDE; \
+    void redo() Q_DECL_OVERRIDE; \
+};
+
+UNDO_COMMAND_DECL(DataConnection)
+UNDO_COMMAND_DECL(DataTable)
+UNDO_COMMAND_DECL(Band)
+UNDO_COMMAND_DECL(Parametere)
+UNDO_COMMAND_DECL(WidgetBase)
+UNDO_COMMAND_DECL(Variable)
 
 LEAF_END_NAMESPACE
 

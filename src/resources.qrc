@@ -73,6 +73,8 @@
         <file alias="table-delete">resources/table-delete.png</file>
         <file alias="section_group_header">resources/section_group_header.png</file>
         <file alias="section_group_footer">resources/section_group_footer.png</file>
+        <file alias="edit">resources/edit.png</file>
+        <file alias="add">resources/add.png</file>
     </qresource>
     <qresource prefix="/qtreport">
         <file alias="gpl2">resources/gpl2</file>

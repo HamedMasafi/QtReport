@@ -26,23 +26,23 @@
 
 LEAF_BEGIN_NAMESPACE
 
-LReportPage::LReportPage(QGraphicsItem *parent): LReportWidgetBase(parent)
+Page::Page(QGraphicsItem *parent): WidgetBase(parent)
 {
     this->setZValue(0);
     this->setIsMovable(false);
 
-    setWidgetType(Page);
+    setWidgetType(PageWidget);
     _gridType = NoGrid;
 
     // setAcceptedMouseButtons( Qt::RightButton );
 }
 
 
-LReportPage::~LReportPage()
+Page::~Page()
 {}
 
 
-void LReportPage::paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget*)
+void Page::paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget*)
 {
     QPen penPage(Qt::black, 0, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
     QBrush brushPage(Qt::white);
@@ -81,7 +81,7 @@ void LReportPage::paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWid
 
 }
 
-QRect LReportPage::documentArea() const
+QRect Page::documentArea() const
 {
     return QRect(_marginLeft,
                  _marginTop,
@@ -90,14 +90,14 @@ QRect LReportPage::documentArea() const
 }
 
 
-void LReportPage::setGridSize(qreal gridSize)
+void Page::setGridSize(qreal gridSize)
 {
     _gridSize = gridSize;
 
     this->update(this->boundingRect());
 }
 
-void LReportPage::setMargins(qreal left, qreal top, qreal right, qreal bottom)
+void Page::setMargins(qreal left, qreal top, qreal right, qreal bottom)
 {
     _marginTop = top;
     _marginLeft = left;
@@ -108,7 +108,7 @@ void LReportPage::setMargins(qreal left, qreal top, qreal right, qreal bottom)
 }
 
 
-void LReportPage::mousePressEvent(QGraphicsSceneMouseEvent *event)
+void Page::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     event->ignore();
     emit selectedChanged();

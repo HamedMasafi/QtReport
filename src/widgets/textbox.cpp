@@ -31,8 +31,8 @@
 
 LEAF_BEGIN_NAMESPACE
 
-LReportTextBox::LReportTextBox(QGraphicsItem *parent) :
-    LReportDisplayBase(parent)
+TextBox::TextBox(QGraphicsItem *parent) :
+    DisplayBase(parent)
 {
     this->setSize(90, 40);
     this->setMinimumSize(10, 4);
@@ -50,16 +50,16 @@ LReportTextBox::LReportTextBox(QGraphicsItem *parent) :
 }
 
 
-LReportTextBox::~LReportTextBox()
+TextBox::~TextBox()
 {
 }
 
 
-void LReportTextBox::paint(QPainter *painter,
+void TextBox::paint(QPainter *painter,
                            const QStyleOptionGraphicsItem *option,
                            QWidget *widget)
 {
-    LReportRectangle::paint(painter, option, widget);
+    Rectangle::paint(painter, option, widget);
 
     Q_UNUSED(option);
     Q_UNUSED(widget);
@@ -75,32 +75,32 @@ void LReportTextBox::paint(QPainter *painter,
                       textOption);
 }
 
-QColor LReportTextBox::foreColor() const
+QColor TextBox::foreColor() const
 {
     return m_foreColor;
 }
 
-QFont LReportTextBox::font() const
+QFont TextBox::font() const
 {
     return m_font;
 }
 
-QString LReportTextBox::text() const
+QString TextBox::text() const
 {
     return m_text;
 }
 
-void LReportTextBox::setForeColor(QColor foreColor)
+void TextBox::setForeColor(QColor foreColor)
 {
     m_foreColor = foreColor;
 }
 
-void LReportTextBox::setFont(QFont font)
+void TextBox::setFont(QFont font)
 {
     m_font = font;
 }
 
-void LReportTextBox::setText(QString text)
+void TextBox::setText(QString text)
 {
     m_text = text;
 }

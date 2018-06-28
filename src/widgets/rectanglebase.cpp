@@ -32,8 +32,8 @@
 
 LEAF_BEGIN_NAMESPACE
 
-LReportRectangle::LReportRectangle(QGraphicsItem *parent):
-    LReportWidgetBase(parent)
+Rectangle::Rectangle(QGraphicsItem *parent):
+    WidgetBase(parent)
 {
     setResizeDirection( Top | Bottom | Left | Right);
 
@@ -45,12 +45,12 @@ LReportRectangle::LReportRectangle(QGraphicsItem *parent):
 }
 
 
-LReportRectangle::~LReportRectangle()
+Rectangle::~Rectangle()
 {
 }
 
 
-void LReportRectangle::paint(QPainter *painter,
+void Rectangle::paint(QPainter *painter,
                                  const QStyleOptionGraphicsItem *option,
                                  QWidget *widget)
 {
@@ -91,7 +91,7 @@ void LReportRectangle::paint(QPainter *painter,
 
 
 
-QRectF LReportRectangle::insideRect() const
+QRectF Rectangle::insideRect() const
 {
     if (lineType() == Qt::NoPen)
         return rect();
@@ -102,9 +102,9 @@ QRectF LReportRectangle::insideRect() const
                       size().height() - lineWidth()  *2 + 1);
 }
 
-void LReportRectangle::loadDom(QDomElement *dom)
+void Rectangle::loadDom(QDomElement *dom)
 {
-    LReportWidgetBase::loadDom(dom);
+    WidgetBase::loadDom(dom);
 
     QColor c;
     int n;
@@ -128,52 +128,52 @@ void LReportRectangle::loadDom(QDomElement *dom)
     }//if
 }
 
-void LReportRectangle::setFillColor(QColor fillColor)
+void Rectangle::setFillColor(QColor fillColor)
 {
     m_fillColor = fillColor;
 }
 
-void LReportRectangle::setFillType(Qt::BrushStyle fillType)
+void Rectangle::setFillType(Qt::BrushStyle fillType)
 {
     m_fillType = fillType;
 }
 
-void LReportRectangle::setLineType(Qt::PenStyle lineType)
+void Rectangle::setLineType(Qt::PenStyle lineType)
 {
     m_lineType = lineType;
 }
 
-void LReportRectangle::setLineColor(QColor lineColor)
+void Rectangle::setLineColor(QColor lineColor)
 {
     m_lineColor = lineColor;
 }
 
-void LReportRectangle::setLineWidth(int lineWidth)
+void Rectangle::setLineWidth(int lineWidth)
 {
     m_lineWidth = lineWidth;
 }
 
-Qt::BrushStyle LReportRectangle::fillType() const
+Qt::BrushStyle Rectangle::fillType() const
 {
     return m_fillType;
 }
 
-Qt::PenStyle LReportRectangle::lineType() const
+Qt::PenStyle Rectangle::lineType() const
 {
     return m_lineType;
 }
 
-QColor LReportRectangle::lineColor() const
+QColor Rectangle::lineColor() const
 {
     return m_lineColor;
 }
 
-int LReportRectangle::lineWidth() const
+int Rectangle::lineWidth() const
 {
     return m_lineWidth;
 }
 
-QColor LReportRectangle::fillColor() const
+QColor Rectangle::fillColor() const
 {
     return m_fillColor;
 }

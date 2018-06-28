@@ -46,18 +46,18 @@ class QDomElement;
 
 LEAF_BEGIN_NAMESPACE
 
-class LReportXMLSeriazble : public QObject
+class SeriazbleObject : public QObject
 {
     Q_OBJECT
 
 public:
 
-    LReportXMLSeriazble(QObject *parent = 0);
+    SeriazbleObject(QObject *parent = 0);
 
     virtual void saveDom(QDomElement *dom);
     virtual void loadDom(QDomElement *dom);
 
-    void copyTo(LReportXMLSeriazble *other);
+    void copyTo(SeriazbleObject *other);
 };
 
 LEAF_END_NAMESPACE

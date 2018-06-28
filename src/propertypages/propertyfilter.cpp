@@ -2,24 +2,24 @@
 
 LEAF_BEGIN_NAMESPACE
 
-LReportPropertyFilter::LReportPropertyFilter(QWidget *parent) :
-    LReportPropertyPageBase(parent)
+PropertyFilter::PropertyFilter(QWidget *parent) :
+    PropertyPageBase(parent)
 {
     _title = tr("Filter");
     setupUi(this);
 }
 
-void LReportPropertyFilter::load()
+void PropertyFilter::load()
 {
 
 }
 
-void LReportPropertyFilter::save()
+void PropertyFilter::save()
 {
 
 }
 
-void LReportPropertyFilter::changeEvent(QEvent *e)
+void PropertyFilter::changeEvent(QEvent *e)
 {
     QWidget::changeEvent(e);
     switch (e->type()) {

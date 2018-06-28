@@ -25,31 +25,27 @@
 #define QREPORTSECTIONSPROPERTIES_H
 
 #include "qtreportglobal.h"
-<<<<<<< HEAD
 #include "ui_sectionsproperties.h"
-=======
-#include "ui_qreportsectionsproperties.h"
->>>>>>> d6ccb8904f16d3c0ba28fe1f38048a467b682a93
 
 LEAF_BEGIN_NAMESPACE
 
-class LReportDocumentDesigner;
-class LReport;
+class DocumentDesigner;
+class Report;
 
-class LReportSectionsProperties : public QDialog, private Ui::LReportSectionsProperties
+class SectionsProperties : public QDialog, private Ui::LReportSectionsProperties
 {
     Q_OBJECT
 
 public:
-    explicit LReportSectionsProperties(QWidget *parent,
-                                       LReportDocumentDesigner *designer,
-                                       LReport *report);
+    explicit SectionsProperties(QWidget *parent,
+                                       DocumentDesigner *designer,
+                                       Report *report);
 
 protected:
     void changeEvent(QEvent *e);
 
-    LReportDocumentDesigner *_designer;
-    LReport *_report;
+    DocumentDesigner *_designer;
+    Report *_report;
 };
 
 LEAF_END_NAMESPACE

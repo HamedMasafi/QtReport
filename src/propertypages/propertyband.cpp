@@ -25,27 +25,23 @@
 #include "sectiondataproperties.h"
 
 #include "widgets/band.h"
-<<<<<<< HEAD
 #include "core/report.h"
-=======
-#include "report.h"
->>>>>>> d6ccb8904f16d3c0ba28fe1f38048a467b682a93
 
 LEAF_BEGIN_NAMESPACE
 
-LReportBand *LReportPropertyBand::band() const
+Band *PropertyBand::band() const
 {
     return _band;
 }
 
-void LReportPropertyBand::setBand(LReportBand *band)
+void PropertyBand::setBand(Band *band)
 {
     _band = band;
     QWidget *w = 0;
 
     switch(band->bandType()){
     case ::Data:
-        w = new LReportSectionDataProperties();
+        w = new SectionDataProperties();
         qDebug() << "------------------------------";
         break;
     }
@@ -53,25 +49,25 @@ void LReportPropertyBand::setBand(LReportBand *band)
     if(w)
         widgetPropertyPage->layout()->addWidget(w);
 }
-LReportPropertyBand::LReportPropertyBand(QWidget *parent) :
-    LReportPropertyPageBase(parent)
+PropertyBand::PropertyBand(QWidget *parent) :
+    PropertyPageBase(parent)
 {
     _title = tr("Band properties");
     setupUi(this);
 }
 
-void LReportPropertyBand::load()
+void PropertyBand::load()
 {
-    foreach (LReportDataTable *table, _designer->report()->dataTables())
+    foreach (DataTable *table, _designer->report()->dataTables())
         comboBox->addItem(table->objectName());
 }
 
-void LReportPropertyBand::save()
+void PropertyBand::save()
 {
 
 }
 
-void LReportPropertyBand::changeEvent(QEvent *e)
+void PropertyBand::changeEvent(QEvent *e)
 {
     QWidget::changeEvent(e);
     switch (e->type()) {

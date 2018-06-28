@@ -40,12 +40,12 @@ LEAF_BEGIN_NAMESPACE
 
 class QColorPicker;
 
-class LReportPropertyPageLineType : public LReportPropertyPageBase
+class PropertyPageLineType : public PropertyPageBase
 {
    Q_OBJECT
 
 public:
-    LReportPropertyPageLineType(QWidget *parent = 0);
+    PropertyPageLineType(QWidget *parent = 0);
 
 
     void load();

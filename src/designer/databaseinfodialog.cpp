@@ -31,10 +31,10 @@
 
 LEAF_BEGIN_NAMESPACE
 
-class LReportDatabaseInfoDialogPrivate
+class DatabaseInfoDialogPrivate
 {
 public:
-    LReportDatabaseInfoDialogPrivate(LReportDatabaseInfoDialog *parent)
+    DatabaseInfoDialogPrivate(DatabaseInfoDialog *parent)
         : q_ptr(parent){
 
     }
@@ -45,19 +45,19 @@ public:
     };
     Mode mode;
 
-    LReport *report;
-    LReportDataConnection *dataConnection;
+    Report *report;
+    DataConnection *dataConnection;
     bool _isEditMode;
     bool test(bool showOKMessage = true, bool showErrorMessage = true);
 
 private:
-    LReportDatabaseInfoDialog *q_ptr;
-    Q_DECLARE_PUBLIC(LReportDatabaseInfoDialog)
+    DatabaseInfoDialog *q_ptr;
+    Q_DECLARE_PUBLIC(DatabaseInfoDialog)
 };
 
-bool LReportDatabaseInfoDialogPrivate::test(bool showOKMessage, bool showErrorMessage)
+bool DatabaseInfoDialogPrivate::test(bool showOKMessage, bool showErrorMessage)
 {
-    Q_Q(LReportDatabaseInfoDialog);
+    Q_Q(DatabaseInfoDialog);
 
     QSqlDatabase db = QSqlDatabase::addDatabase(
                 q->comboBoxDrivers->currentText(),
@@ -92,15 +92,15 @@ bool LReportDatabaseInfoDialogPrivate::test(bool showOKMessage, bool showErrorMe
 }
 
 
-LReportDatabaseInfoDialog::LReportDatabaseInfoDialog(LReport *report, LReportDataConnection *dataConnection) :
+DatabaseInfoDialog::DatabaseInfoDialog(Report *report, DataConnection *dataConnection) :
     QDialog(),
-    d_ptr(new LReportDatabaseInfoDialogPrivate(this))
+    d_ptr(new DatabaseInfoDialogPrivate(this))
 {
     setupUi(this);
-    Q_D(LReportDatabaseInfoDialog);
+    Q_D(DatabaseInfoDialog);
     d->report = report,
     d->dataConnection = dataConnection;
-    d->mode = dataConnection ? LReportDatabaseInfoDialogPrivate::Edit : LReportDatabaseInfoDialogPrivate::New;
+    d->mode = dataConnection ? DatabaseInfoDialogPrivate::Edit : DatabaseInfoDialogPrivate::New;
 
     QValidator *validator = new QRegExpValidator(QRegExp("[A-Za-z][\\d\\w]+"), this);
     lineEditName->setValidator(validator);
@@ -115,7 +115,7 @@ LReportDatabaseInfoDialog::LReportDatabaseInfoDialog(LReport *report, LReportDat
 
 }
 
-void LReportDatabaseInfoDialog::changeEvent(QEvent *e)
+void DatabaseInfoDialog::changeEvent(QEvent *e)
 {
     QDialog::changeEvent(e);
 
@@ -124,15 +124,15 @@ void LReportDatabaseInfoDialog::changeEvent(QEvent *e)
 }
 
 
-void LReportDatabaseInfoDialog::on_pushButtonTest_clicked()
+void DatabaseInfoDialog::on_pushButtonTest_clicked()
 {
-    Q_D(LReportDatabaseInfoDialog);
+    Q_D(DatabaseInfoDialog);
     d->test();
 }
 
-void LReportDatabaseInfoDialog::on_buttonBox_accepted()
+void DatabaseInfoDialog::on_buttonBox_accepted()
 {
-    Q_D(LReportDatabaseInfoDialog);
+    Q_D(DatabaseInfoDialog);
 
     if(d->mode == d->New && d->report->connection(lineEditName->text())){
         QMessageBox::information(this,
@@ -147,9 +147,9 @@ void LReportDatabaseInfoDialog::on_buttonBox_accepted()
 }
 
 
-LReportDataConnection *LReportDatabaseInfoDialog::dataConnection() const
+DataConnection *DatabaseInfoDialog::dataConnection() const
 {
-    LReportDataConnection *dataConnection = new LReportDataConnection();
+    DataConnection *dataConnection = new DataConnection();
     dataConnection->setObjectName(lineEditName->text());
     dataConnection->setServerName(lineEditServerName->text());
     dataConnection->setDatabaseName(lineEditDatabase->text());
@@ -159,7 +159,7 @@ LReportDataConnection *LReportDatabaseInfoDialog::dataConnection() const
     return dataConnection;
 }
 
-void LReportDatabaseInfoDialog::setDataConnection(const LReportDataConnection *dataConnection)
+void DatabaseInfoDialog::setDataConnection(const DataConnection *dataConnection)
 {
     lineEditName->setText(dataConnection->objectName());
     lineEditServerName->setText(dataConnection->serverName());
@@ -171,67 +171,67 @@ void LReportDatabaseInfoDialog::setDataConnection(const LReportDataConnection *d
 
 
 
-//QString LReportDatabaseInfoDialog::name() const
+//QString DatabaseInfoDialog::name() const
 //{
 //    return lineEditName->text();
 //}
 
-//void LReportDatabaseInfoDialog::setName(QString name)
+//void DatabaseInfoDialog::setName(QString name)
 //{
 //    lineEditName->setText(name);
 //}
 
-//QString LReportDatabaseInfoDialog::driver() const
+//QString DatabaseInfoDialog::driver() const
 //{
 //    return comboBoxDrivers->currentText();
 //}
 
-//QString LReportDatabaseInfoDialog::databaseName() const
+//QString DatabaseInfoDialog::databaseName() const
 //{
 //    return lineEditDatabase->text();
 //}
 
-//QString LReportDatabaseInfoDialog::serverName() const
+//QString DatabaseInfoDialog::serverName() const
 //{
 //    return lineEditServerName->text();
 //}
 
-//QString LReportDatabaseInfoDialog::username() const
+//QString DatabaseInfoDialog::username() const
 //{
 //    return lineEditUsername->text();
 //}
 
-//QString LReportDatabaseInfoDialog::password() const
+//QString DatabaseInfoDialog::password() const
 //{
 //    return lineEditPassword->text();
 //}
 
-//void LReportDatabaseInfoDialog::setDriver(QString driver)
+//void DatabaseInfoDialog::setDriver(QString driver)
 //{
 //    comboBoxDrivers->setCurrentIndex(comboBoxDrivers->findText(driver));
 //}
 
-//void LReportDatabaseInfoDialog::setDatabaseName(QString databaseName)
+//void DatabaseInfoDialog::setDatabaseName(QString databaseName)
 //{
 //    lineEditDatabase->setText(databaseName);
 //}
 
-//void LReportDatabaseInfoDialog::setServerName(QString serverName)
+//void DatabaseInfoDialog::setServerName(QString serverName)
 //{
 //    lineEditServerName->setText(serverName);
 //}
 
-//void LReportDatabaseInfoDialog::setUsername(QString username)
+//void DatabaseInfoDialog::setUsername(QString username)
 //{
 //    lineEditUsername->setText(username);
 //}
 
-//void LReportDatabaseInfoDialog::setPassword(QString password)
+//void DatabaseInfoDialog::setPassword(QString password)
 //{
 //    lineEditPassword->setText(password);
 //}
 
-//void LReportDatabaseInfoDialog::setDatabaseInfo( QString driver,
+//void DatabaseInfoDialog::setDatabaseInfo( QString driver,
 //                                                 QString database, QString serverName,
 //                                                 QString username, QString password )
 //{

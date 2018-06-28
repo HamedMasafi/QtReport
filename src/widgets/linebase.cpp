@@ -29,7 +29,7 @@
 
 LEAF_BEGIN_NAMESPACE
 
-LReportLineBase::LReportLineBase(QGraphicsItem *parent): LReportWidgetBase(parent)
+LineBase::LineBase(QGraphicsItem *parent): WidgetBase(parent)
 {
    setLineWidth( 1 );
    setLineType( Qt::SolidLine );
@@ -37,13 +37,13 @@ LReportLineBase::LReportLineBase(QGraphicsItem *parent): LReportWidgetBase(paren
 }
 
 
-LReportLineBase::~LReportLineBase()
+LineBase::~LineBase()
 {
 }
 
-void LReportLineBase::loadDom(QDomElement *dom)
+void LineBase::loadDom(QDomElement *dom)
 {
-    LReportWidgetBase::loadDom(dom);
+    WidgetBase::loadDom(dom);
 
     if (dom->hasAttribute("lineType")) {
         int n = QString(dom->attribute("lineType")).toInt();
@@ -51,32 +51,32 @@ void LReportLineBase::loadDom(QDomElement *dom)
     }//if
 }
 
-int LReportLineBase::lineWidth() const
+int LineBase::lineWidth() const
 {
     return m_lineWidth;
 }
 
-QColor LReportLineBase::lineColor() const
+QColor LineBase::lineColor() const
 {
     return m_lineColor;
 }
 
-Qt::PenStyle LReportLineBase::lineType() const
+Qt::PenStyle LineBase::lineType() const
 {
     return m_lineType;
 }
 
-void LReportLineBase::setLineWidth(int lineWidth)
+void LineBase::setLineWidth(int lineWidth)
 {
     m_lineWidth = lineWidth;
 }
 
-void LReportLineBase::setLineColor(QColor lineColor)
+void LineBase::setLineColor(QColor lineColor)
 {
     m_lineColor = lineColor;
 }
 
-void LReportLineBase::setLineType(Qt::PenStyle lineType)
+void LineBase::setLineType(Qt::PenStyle lineType)
 {
     m_lineType = lineType;
 }

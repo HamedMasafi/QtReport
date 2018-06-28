@@ -32,12 +32,12 @@ class QGraphicsSceneMouseEvent;
 
 LEAF_BEGIN_NAMESPACE
 
-class Q_DECL_HIDDEN LReportPage : public LReportWidgetBase
+class Q_DECL_HIDDEN Page : public WidgetBase
 {
    public:
-      LReportPage( QGraphicsItem *parent=0 );
+      Page (QGraphicsItem *parent = nullptr);
 
-      ~LReportPage();
+      ~Page();
 
       void paint ( QPainter  *painter, const QStyleOptionGraphicsItem  *option, QWidget  *Widget = 0 )  ;
 

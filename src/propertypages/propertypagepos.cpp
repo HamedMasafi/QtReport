@@ -2,15 +2,15 @@
 
 LEAF_BEGIN_NAMESPACE
 
-LReportPropertyPagePos::LReportPropertyPagePos(QWidget *parent) :
-    LReportPropertyPageBase(parent)
+PropertyPagePos::PropertyPagePos(QWidget *parent) :
+    PropertyPageBase(parent)
 {
     setupUi(this);
 
     _title = tr( "Position" );
 }
 
-void LReportPropertyPagePos::changeEvent(QEvent *e)
+void PropertyPagePos::changeEvent(QEvent *e)
 {
     QWidget::changeEvent(e);
     switch (e->type())
@@ -24,7 +24,7 @@ void LReportPropertyPagePos::changeEvent(QEvent *e)
 }
 
 
-void LReportPropertyPagePos::load()
+void PropertyPagePos::load()
 {
 //   doubleSpinBoxLeft->setValue( widget->pos().x() );
 //   doubleSpinBoxTop->setValue( widget->pos().y() );
@@ -32,7 +32,7 @@ void LReportPropertyPagePos::load()
 //   doubleSpinBoxHeight->setValue( widget->size().height() );
 }
 
-void LReportPropertyPagePos::save()
+void PropertyPagePos::save()
 {
 //   widget->setPos(  doubleSpinBoxLeft->value(), doubleSpinBoxTop->value() );
 //   widget->setSize( doubleSpinBoxWidth->value(), doubleSpinBoxHeight->value() );

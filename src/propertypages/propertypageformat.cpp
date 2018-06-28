@@ -2,15 +2,15 @@
 
 LEAF_BEGIN_NAMESPACE
 
-LReportPropertyPageFormat::LReportPropertyPageFormat(QWidget *parent) :
-      LReportPropertyPageBase(parent)
+PropertyPageFormat::PropertyPageFormat(QWidget *parent) :
+      PropertyPageBase(parent)
 {
     setupUi(this);
 
     _title = tr( "Format" );
 }
 
-void LReportPropertyPageFormat::changeEvent(QEvent *e)
+void PropertyPageFormat::changeEvent(QEvent *e)
 {
     QWidget::changeEvent(e);
 
@@ -18,12 +18,12 @@ void LReportPropertyPageFormat::changeEvent(QEvent *e)
         retranslateUi(this);
 }
 
-void LReportPropertyPageFormat::load()
+void PropertyPageFormat::load()
 {
 
 }
 
-void LReportPropertyPageFormat::save()
+void PropertyPageFormat::save()
 {
 
 }

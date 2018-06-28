@@ -27,12 +27,12 @@
 
 #include "ui_designeraboutdialog.h"
 
-class LReportDesignerAboutDialog : public QDialog, private Ui::RReportDesignerAboutDialog
+class DesignerAboutDialog : public QDialog, private Ui::RReportDesignerAboutDialog
 {
     Q_OBJECT
 
 public:
-    explicit LReportDesignerAboutDialog(QWidget *parent = 0);
+    explicit DesignerAboutDialog(QWidget *parent = 0);
 
 protected:
     void changeEvent(QEvent *e);

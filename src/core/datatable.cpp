@@ -30,107 +30,107 @@
 
 LEAF_BEGIN_NAMESPACE
 
-LReportDataField::LReportDataField(QString name) {
+DataField::DataField(QString name) {
     setObjectName(name);
 }
 
-int LReportDataField::type() const
+int DataField::type() const
 {
     return m_type;
 }
 
-QString LReportDataField::filter() const
+QString DataField::filter() const
 {
     return m_filter;
 }
 
-void LReportDataField::setType(int type)
+void DataField::setType(int type)
 {
     m_type = type;
 }
 
-void LReportDataField::setFilter(QString filter)
+void DataField::setFilter(QString filter)
 {
     m_filter = filter;
 }
 
-LReportDataTable::LReportDataTable(QString connectionName) :
-    LReportXMLSeriazble(),
+DataTable::DataTable(QString connectionName) :
+    SeriazbleObject(),
     m_connectionName(connectionName)
 {
 }
 
-void LReportDataTable::remove(LReportDataField *field)
+void DataTable::remove(DataField *field)
 {
     _fields.removeOne(field);
 }
 
-void LReportDataTable::clear()
+void DataTable::clear()
 {
     _fields.clear();
 }
 
-void LReportDataTable::append(LReportDataField *field)
+void DataTable::append(DataField *field)
 {
     _fields.append(field);
 }
 
-void LReportDataTable::append(QString fieldName)
+void DataTable::append(QString fieldName)
 {
-    LReportDataField *f = new LReportDataField(fieldName);
+    DataField *f = new DataField(fieldName);
     _fields.append(f);
 }
 
-void LReportDataTable::appendRecordFields(QSqlRecord *record)
+void DataTable::appendRecordFields(QSqlRecord *record)
 {
     for (int i = 0; i < record->count(); i++)
         append(record->fieldName(i));
 }
 
-QList<LReportDataField*> LReportDataTable::fields() const
+QList<DataField*> DataTable::fields() const
 {
     return _fields;
 }
 
-void LReportDataTable::saveDom(QDomElement *dom)
+void DataTable::saveDom(QDomElement *dom)
 {
-    LReportXMLSeriazble::saveDom(dom);
+    SeriazbleObject::saveDom(dom);
 
-    foreach(LReportDataField *field, _fields){
+    foreach(DataField *field, _fields){
         QDomElement elParam = dom->ownerDocument().createElement("Field");
         field->saveDom(&elParam);
         dom->appendChild(elParam);
     }//foreach
 }
 
-void LReportDataTable::loadDom(QDomElement *dom)
+void DataTable::loadDom(QDomElement *dom)
 {
     QDomNodeList fieldsList = dom->elementsByTagName("Field");
     for(int i = 0; i < fieldsList.count(); i++){
         QDomElement el = fieldsList.at(i).toElement();
-        LReportDataField *field = new LReportDataField(el.attribute("objectName"));
+        DataField *field = new DataField(el.attribute("objectName"));
         field->loadDom(&el);
         _fields.append(field);
     }
-    LReportXMLSeriazble::loadDom(dom);
+    SeriazbleObject::loadDom(dom);
 }
 
-QString LReportDataTable::connectionName() const
+QString DataTable::connectionName() const
 {
     return m_connectionName;
 }
 
-QString LReportDataTable::selectCommand() const
+QString DataTable::selectCommand() const
 {
     return m_selectCommand;
 }
 
-void LReportDataTable::setConnectionName(QString connectionName)
+void DataTable::setConnectionName(QString connectionName)
 {
     m_connectionName = connectionName;
 }
 
-void LReportDataTable::setSelectCommand(QString selectCommand)
+void DataTable::setSelectCommand(QString selectCommand)
 {
     m_selectCommand = selectCommand;
 }

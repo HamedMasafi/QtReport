@@ -8,10 +8,10 @@
 
 LEAF_BEGIN_NAMESPACE
 
-class LReportResizeEvent : public QEvent
+class ResizeEvent : public QEvent
 {
 public:
-   LReportResizeEvent( const QSizeF &size, const QSizeF &oldSize ): QEvent( Resize )
+   ResizeEvent( const QSizeF &size, const QSizeF &oldSize ): QEvent( Resize )
     {
        m_size = size;
        m_oldSize = oldSize;
@@ -32,10 +32,10 @@ protected:
 };
 
 
-class LReportMoveEvent : public QEvent
+class MoveEvent : public QEvent
 {
 public:
-   LReportMoveEvent( const QPointF &point, const QPointF &oldPoint ): QEvent( Resize )
+   MoveEvent( const QPointF &point, const QPointF &oldPoint ): QEvent( Resize )
     {
        m_point = point;
        m_oldPoint = oldPoint;

@@ -43,11 +43,7 @@
        <string>Fields</string>
       </property>
       <property name="icon">
-<<<<<<< HEAD
        <iconset resource="../resources.qrc">
-=======
-       <iconset resource="resources.qrc">
->>>>>>> d6ccb8904f16d3c0ba28fe1f38048a467b682a93
         <normaloff>:/designer/field</normaloff>:/designer/field</iconset>
       </property>
      </item>
@@ -56,11 +52,7 @@
        <string>Variables</string>
       </property>
       <property name="icon">
-<<<<<<< HEAD
        <iconset resource="../resources.qrc">
-=======
-       <iconset resource="resources.qrc">
->>>>>>> d6ccb8904f16d3c0ba28fe1f38048a467b682a93
         <normaloff>:/designer/form</normaloff>:/designer/form</iconset>
       </property>
      </item>
@@ -69,11 +61,7 @@
   </layout>
  </widget>
  <resources>
-<<<<<<< HEAD
   <include location="../resources.qrc"/>
-=======
-  <include location="resources.qrc"/>
->>>>>>> d6ccb8904f16d3c0ba28fe1f38048a467b682a93
  </resources>
  <connections/>
 </ui>

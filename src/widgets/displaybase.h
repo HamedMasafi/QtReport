@@ -35,7 +35,7 @@ LEAF_BEGIN_NAMESPACE
   *This class is base class for all display class that display a thing
   *in a rectangle region such as textbox, image and rectangle
  */
-class LReportDisplayBase : public LReportRectangle
+class DisplayBase : public Rectangle
 {
     Q_OBJECT
 
@@ -44,9 +44,9 @@ class LReportDisplayBase : public LReportRectangle
     Qt::Alignment m_align;
 
 public:
-    LReportDisplayBase ( QGraphicsItem *parent = 0 );
+    DisplayBase ( QGraphicsItem *parent = 0 );
 
-    ~LReportDisplayBase();
+    ~DisplayBase();
 
     Qt::Alignment align() const;
 public slots:

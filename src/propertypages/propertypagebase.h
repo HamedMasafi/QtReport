@@ -25,23 +25,19 @@
 #define RPROPERTYPAGEBASE_H
 
 #include "widgets/widgetbase.h"
-<<<<<<< HEAD
 #include "designer/documentdesigner.h"
-=======
-#include "documentdesigner.h"
->>>>>>> d6ccb8904f16d3c0ba28fe1f38048a467b682a93
 #include <QWidget>
 
 class QSpinBox;
 
 LEAF_BEGIN_NAMESPACE
 
-class LReportDocumentDesigner;
-class LReportPropertyPageBase : public QWidget
+class DocumentDesigner;
+class PropertyPageBase : public QWidget
 {
     Q_OBJECT
 public:
-   LReportPropertyPageBase(QWidget *parent = 0);
+   PropertyPageBase(QWidget *parent = 0);
 
 
    bool isChanged() const;
@@ -62,13 +58,13 @@ public:
    int     _index;
    QString _title;
 
-   LReportDocumentDesigner *designer() const;
-   void setDesigner(LReportDocumentDesigner *designer);
+   DocumentDesigner *designer() const;
+   void setDesigner(DocumentDesigner *designer);
 
 protected:
    bool _isChanged;
 
-   LReportDocumentDesigner *_designer;
+   DocumentDesigner *_designer;
 
 };
 

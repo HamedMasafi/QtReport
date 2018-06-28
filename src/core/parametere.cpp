@@ -29,8 +29,8 @@
 
 LEAF_BEGIN_NAMESPACE
 
-LReportParametere::LReportParametere(QString name, QVariant value, QVariant::Type type):
-    LReportXMLSeriazble(),
+Parametere::Parametere(QString name, QVariant value, QVariant::Type type):
+    SeriazbleObject(),
     m_name(name),
     m_value(value),
     m_type(type)
@@ -39,27 +39,27 @@ LReportParametere::LReportParametere(QString name, QVariant value, QVariant::Typ
     setType((int)type);
 }
 
-QString LReportParametere::name() const
+QString Parametere::name() const
 {
     return m_name;
 }
 
-int LReportParametere::type() const
+int Parametere::type() const
 {
     return m_type;
 }
 
-QVariant LReportParametere::value() const
+QVariant Parametere::value() const
 {
     return m_value;
 }
 
-QVariant LReportParametere::defaultValue() const
+QVariant Parametere::defaultValue() const
 {
     return m_defaultValue;
 }
 
-void LReportParametere::setName(QString name)
+void Parametere::setName(QString name)
 {
     if (m_name == name)
         return;
@@ -68,17 +68,17 @@ void LReportParametere::setName(QString name)
     emit nameChanged(name);
 }
 
-void LReportParametere::setType(int type)
+void Parametere::setType(int type)
 {
     m_type = type;
 }
 
-void LReportParametere::setValue(QVariant value)
+void Parametere::setValue(QVariant value)
 {
     m_value = value;
 }
 
-void LReportParametere::setDefaultValue(QVariant defaultValue)
+void Parametere::setDefaultValue(QVariant defaultValue)
 {
     m_defaultValue = defaultValue;
 }

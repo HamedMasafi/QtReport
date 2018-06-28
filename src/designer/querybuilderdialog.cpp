@@ -39,13 +39,13 @@
 
 LEAF_BEGIN_NAMESPACE
 
-LReportQueryBuilderDialog::LReportQueryBuilderDialog(LReport *report, QString connectionName, QWidget *parent) :
+QueryBuilderDialog::QueryBuilderDialog(Report *report, QString connectionName, QWidget *parent) :
     QDialog(parent),
     _report(report)
 {
     setupUi(this);
 
-    LReportDataConnection *conn = report->connection(connectionName);
+    DataConnection *conn = report->connection(connectionName);
 
     qDebug() << connectionName;
     if (!conn) {
@@ -105,12 +105,12 @@ LReportQueryBuilderDialog::LReportQueryBuilderDialog(LReport *report, QString co
 
 }
 
-QString LReportQueryBuilderDialog::tableName() const
+QString QueryBuilderDialog::tableName() const
 {
     return _tableName;
 }
 
-void LReportQueryBuilderDialog::changeEvent(QEvent *e)
+void QueryBuilderDialog::changeEvent(QEvent *e)
 {
     QDialog::changeEvent(e);
     switch (e->type()) {
@@ -122,13 +122,13 @@ void LReportQueryBuilderDialog::changeEvent(QEvent *e)
     }
 }
 
-void LReportQueryBuilderDialog::on_tablesTree_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem*)
+void QueryBuilderDialog::on_tablesTree_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem*)
 {
     customQuery->setPlainText(QString("SELECT * FROM `%1`").arg(current->text(0)));
     _tableName = current->text(0);
 }
 
-QString LReportQueryBuilderDialog::query() const
+QString QueryBuilderDialog::query() const
 {
     return customQuery->toPlainText();
 }

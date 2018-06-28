@@ -2,7 +2,7 @@
 
 LEAF_BEGIN_NAMESPACE
 
-LReportWidget::LReportWidget(QGraphicsItem *parent): LReportWidgetBase(parent)
+Widget::Widget(QGraphicsItem *parent): WidgetBase(parent)
 {
 }
 

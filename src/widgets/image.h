@@ -28,17 +28,12 @@
 
 LEAF_BEGIN_NAMESPACE
 
-class LReportImage : public LReportDisplayBase
+class Image : public DisplayBase
 {
     Q_OBJECT
 
-<<<<<<< HEAD
     REGISTER_PROPERTY_PAGE(image)
     REGISTER_PROPERTY_PAGE(align)
-=======
-    Q_CLASSINFO("prop_image", "true")
-    Q_CLASSINFO("prop_align", "true")
->>>>>>> d6ccb8904f16d3c0ba28fe1f38048a467b682a93
 
     Q_PROPERTY(QPixmap image       READ image       WRITE setImage       USER true)
     Q_PROPERTY(bool    scaleImage  READ scaleImage  WRITE setScaleImage  USER true)
@@ -49,8 +44,8 @@ class LReportImage : public LReportDisplayBase
     bool m_acceptRatio;
 
 public:
-    LReportImage(QGraphicsItem *parent = 0);
-    ~LReportImage();
+    Image(QGraphicsItem *parent = 0);
+    ~Image();
 
     void paint(QPainter *painter,
                const QStyleOptionGraphicsItem *option,

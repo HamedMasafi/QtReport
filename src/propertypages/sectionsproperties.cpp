@@ -22,20 +22,15 @@
  ***************************************************************************/
 
 #include "sectionsproperties.h"
-<<<<<<< HEAD
 #include "designer/documentdesigner.h"
 #include "core/report.h"
-=======
-#include "documentdesigner.h"
-#include "report.h"
->>>>>>> d6ccb8904f16d3c0ba28fe1f38048a467b682a93
 #include "widgets/band.h"
 
 LEAF_BEGIN_NAMESPACE
 
-LReportSectionsProperties::LReportSectionsProperties(QWidget *parent,
-                                                     LReportDocumentDesigner *designer,
-                                                     LReport *report) :
+SectionsProperties::SectionsProperties(QWidget *parent,
+                                                     DocumentDesigner *designer,
+                                                     Report *report) :
     QDialog(parent),
     _designer(designer),
     _report(report)
@@ -47,7 +42,7 @@ LReportSectionsProperties::LReportSectionsProperties(QWidget *parent,
 
 }
 
-void LReportSectionsProperties::changeEvent(QEvent *e)
+void SectionsProperties::changeEvent(QEvent *e)
 {
     QDialog::changeEvent(e);
     switch (e->type()) {

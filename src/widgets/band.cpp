@@ -28,8 +28,8 @@
 
 LEAF_BEGIN_NAMESPACE
 
-LReportBand::LReportBand(QGraphicsItem *parent):
-    LReportPanel(parent),
+Band::Band(QGraphicsItem *parent):
+    Panel(parent),
     _index(0)
 {
     this->setResizeDirection(::Bottom);
@@ -41,12 +41,12 @@ LReportBand::LReportBand(QGraphicsItem *parent):
 
     this->setMinimumSize(this->size().width(), _headerHeight);
 
-    setWidgetType(::Band);
+    setWidgetType(BandWidget);
 }
 
 
-LReportBand::LReportBand(BandType type, QGraphicsItem *parent):
-    LReportPanel(parent),
+Band::Band(BandType type, QGraphicsItem *parent):
+    Panel(parent),
     _bandType(type)
 {
     this->setResizeDirection(::Bottom);
@@ -58,37 +58,37 @@ LReportBand::LReportBand(BandType type, QGraphicsItem *parent):
 
     this->setMinimumSize(this->size().width(), _headerHeight);
 
-    setWidgetType(::Band);
+    setWidgetType(BandWidget);
 
     qRegisterMetaType<BandType>("BandType");
 }
 
 
-LReportBand::~LReportBand()
+Band::~Band()
 {
 }
 
 
-BandType  LReportBand::bandType() const
+BandType  Band::bandType() const
 {
     return _bandType;
 }
 
-void LReportBand::setBandType(BandType type)
+void Band::setBandType(BandType type)
 {
     _bandType = type;
 }
 
-qreal LReportBand::bandHeight() const
+qreal Band::bandHeight() const
 {
     return size().height() - headerHeight();
 }
-void LReportBand::setBandHeight(qreal value)
+void Band::setBandHeight(qreal value)
 {
     setSize(size().width(), value + headerHeight());
 }
 
-void LReportBand::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
+void Band::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
                         QWidget *widget)
 {
     Q_UNUSED(option);
@@ -173,7 +173,7 @@ void LReportBand::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
 
 }
 
-QString LReportBand::typeString() const
+QString Band::typeString() const
 {
     QString ret;
     switch (_bandType) {
@@ -216,7 +216,7 @@ QString LReportBand::typeString() const
     return ret;
 }
 
-QString LReportBand::header() const
+QString Band::header() const
 {
     if(objectName() == "")
         return typeString();
@@ -229,17 +229,17 @@ QString LReportBand::header() const
 //   return pos.x();
 //}
 
-void LReportBand::setTop(qreal value)
+void Band::setTop(qreal value)
 {
     this->setPos(this->pos().x(), value);
     reorderChilds();
 }
 
-qreal LReportBand::headerHeight() const
+qreal Band::headerHeight() const
 {
     return _headerHeight;
 }
-void LReportBand::setHeaderHeight(qreal headerHeight)
+void Band::setHeaderHeight(qreal headerHeight)
 {
     _headerHeight = headerHeight;
     this->setMinimumSize(this->size().width(), _headerHeight);
@@ -249,7 +249,7 @@ void LReportBand::setHeaderHeight(qreal headerHeight)
   *Set height for report widget
  * \see void setSize ( QSizeF size )
  */
-void LReportBand::setHeight(int height)
+void Band::setHeight(int height)
 {
     setSize(size().width(), height + headerHeight());
 }
@@ -257,24 +257,24 @@ void LReportBand::setHeight(int height)
 /*!
  * \see void setSize ( QSizeF size )
  */
-void LReportBand::setSize(int width, int height)
+void Band::setSize(int width, int height)
 {
     QSize newSize(width, height + headerHeight());
-    LReportWidgetBase::setSize(newSize);
+    WidgetBase::setSize(newSize);
 }
 
 
-void LReportBand::saveDom(QDomElement *dom)
+void Band::saveDom(QDomElement *dom)
 {
-    LReportXMLSeriazble::saveDom(dom);
+    SeriazbleObject::saveDom(dom);
 
     dom->setAttribute("bandType", (int)bandType());
     dom->setAttribute("bandHeight", (int)bandHeight());
 }
 
-void LReportBand::loadDom(QDomElement *dom)
+void Band::loadDom(QDomElement *dom)
 {
-    LReportWidgetBase::loadDom(dom);
+    WidgetBase::loadDom(dom);
 
     int nBuffer =  dom->attribute("bandHeight").toInt();
     setBandHeight(nBuffer);
@@ -284,7 +284,7 @@ void LReportBand::loadDom(QDomElement *dom)
 }
 
 
-void LReportBand::addWidget(LReportWidgetBase *widget, QPointF pt)
+void Band::addWidget(WidgetBase *widget, QPointF pt)
 {
     if (!_childs.contains(widget))
         _childs.append(widget);
@@ -294,12 +294,12 @@ void LReportBand::addWidget(LReportWidgetBase *widget, QPointF pt)
     widget->setPos(this->mapToScene(tmpPos));
 }
 
-void LReportBand::setIndex(int index)
+void Band::setIndex(int index)
 {
     _index = index;
 }
 
-int LReportBand::index() const
+int Band::index() const
 {
     return _index;
 }

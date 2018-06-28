@@ -41,18 +41,18 @@
 
 LEAF_BEGIN_NAMESPACE
 
-class LReportWidgetBasePrivate
+class WidgetBasePrivate
 {
 public:
-    LReportWidgetBasePrivate(LReportWidgetBase *parent) :
+    WidgetBasePrivate(WidgetBase *parent) :
         q_ptr(parent),
         fixedSize(0, 0),
         minimumSize(5, 5),
         isMovable(true),
-        parentBand(0),
-        secondParent(0),
-        marginPos(0, 0),
-        widgetType(Widget)
+        parentBand(nullptr),
+        secondParent(nullptr),
+        widgetType(WidgetWidget),
+        marginPos(0, 0)
     {
 
     }
@@ -65,16 +65,16 @@ public:
     bool              isSelected;
     bool              wasMoved;
     bool              isMovable;
-    LReportPanel     *parentBand;
-    LReportBand      *secondParent;
+    Panel     *parentBand;
+    Band      *secondParent;
     QPointF           childPos;
     QPointF           marginPos;
     qreal             topAtSecondBand;
     QPointF           lastPos;
 
 private:
-    LReportWidgetBase  *const q_ptr;
-    Q_DECLARE_PUBLIC(LReportWidgetBase)
+    WidgetBase  *const q_ptr;
+    Q_DECLARE_PUBLIC(WidgetBase)
 
 };
 
@@ -84,9 +84,9 @@ private:
   This class is base of all report object like RTextBox, RRectangle, ...
   *
 */
-LReportWidgetBase::LReportWidgetBase(QGraphicsItem *parent) :
-    d_ptr(new LReportWidgetBasePrivate(this)),
-    LReportXMLSeriazble(),
+WidgetBase::WidgetBase(QGraphicsItem *parent) :
+    d_ptr(new WidgetBasePrivate(this)),
+    SeriazbleObject(),
     QGraphicsItem(parent)
 {
     setFlag(QGraphicsItem::ItemIsSelectable);
@@ -96,19 +96,19 @@ LReportWidgetBase::LReportWidgetBase(QGraphicsItem *parent) :
 
 
 
-LReportWidgetBase::~LReportWidgetBase()
+WidgetBase::~WidgetBase()
 {
 }
 
-ResizeDirection LReportWidgetBase::resizeDirection() const
+ResizeDirection WidgetBase::resizeDirection() const
 {
-    Q_D(const LReportWidgetBase);
+    Q_D(const WidgetBase);
     return d->resizeDirection;
 }
 
-void LReportWidgetBase::setResizeDirection(ResizeDirection value)
+void WidgetBase::setResizeDirection(ResizeDirection value)
 {
-    Q_D(LReportWidgetBase);
+    Q_D(WidgetBase);
     d->resizeDirection = value;
 }
 
@@ -119,9 +119,9 @@ void LReportWidgetBase::setResizeDirection(ResizeDirection value)
   if you want to get rect of position and size use childRect.
   \see childRect()
 */
-QRectF LReportWidgetBase::boundingRect() const
+QRectF WidgetBase::boundingRect() const
 {
-    Q_D(const LReportWidgetBase);
+    Q_D(const WidgetBase);
     return QRectF(0, 0, d->size.width(), d->size.height());
 }
 
@@ -130,7 +130,7 @@ QRectF LReportWidgetBase::boundingRect() const
 /*!
   Return left part of widget position. left is pos().x()
 */
-qreal LReportWidgetBase::left() const
+qreal WidgetBase::left() const
 {
     return pos().x();
 }
@@ -138,7 +138,7 @@ qreal LReportWidgetBase::left() const
 /*!
   Return top part of widget position. top is pos().y()
 */
-qreal LReportWidgetBase::top() const
+qreal WidgetBase::top() const
 {
     return pos().y();
 }
@@ -147,14 +147,14 @@ qreal LReportWidgetBase::top() const
   Return with of widget. This is same of the size().width()
   \see size(), height(), setSize()
 */
-qreal LReportWidgetBase::width() const
+qreal WidgetBase::width() const
 {
-    Q_D(const LReportWidgetBase);
+    Q_D(const WidgetBase);
     return d->size.width();
 }
-qreal LReportWidgetBase::height() const
+qreal WidgetBase::height() const
 {
-    Q_D(const LReportWidgetBase);
+    Q_D(const WidgetBase);
     return d->size.height();
 }
 
@@ -164,7 +164,7 @@ qreal LReportWidgetBase::height() const
   \see setLeft
   \see pos
 */
-void LReportWidgetBase::setLeft(qreal value)
+void WidgetBase::setLeft(qreal value)
 {
     setPos(value, pos().y());
 }
@@ -174,7 +174,7 @@ void LReportWidgetBase::setLeft(qreal value)
   \see setTop
   \see pos
 */
-void LReportWidgetBase::setTop(qreal value)
+void WidgetBase::setTop(qreal value)
 {
     setPos(pos().x(), value);
 }
@@ -183,9 +183,9 @@ void LReportWidgetBase::setTop(qreal value)
   *Set width for report widget
  * \see void setSize ( QSizeF size )
  */
-void LReportWidgetBase::setWidth(int width)
+void WidgetBase::setWidth(int width)
 {
-    Q_D(LReportWidgetBase);
+    Q_D(WidgetBase);
     setSize(width, d->size.height());
 }
 
@@ -193,9 +193,9 @@ void LReportWidgetBase::setWidth(int width)
   *Set height for report widget
  * \see void setSize ( QSizeF size )
  */
-void LReportWidgetBase::setHeight(int height)
+void WidgetBase::setHeight(int height)
 {
-    Q_D(LReportWidgetBase);
+    Q_D(WidgetBase);
     setSize(d->size.width(), height);
 }
 
@@ -203,16 +203,16 @@ void LReportWidgetBase::setHeight(int height)
   *Return size of report widget; Actualy this is size part of
   *boundingRect()
  */
-QSizeF LReportWidgetBase::size() const
+QSizeF WidgetBase::size() const
 {
-    Q_D(const LReportWidgetBase);
+    Q_D(const WidgetBase);
     return d->size;
 }
 
 /*!
   *Set size for current widget, This method affect to boundingRect
  */
-void LReportWidgetBase::setSize(QSizeF size)
+void WidgetBase::setSize(QSizeF size)
 {
     setSize(size.width(), size.height());
 }
@@ -220,12 +220,12 @@ void LReportWidgetBase::setSize(QSizeF size)
 /*!
  * \see void setSize ( QSizeF size )
  */
-void LReportWidgetBase::setSize(int width, int height)
+void WidgetBase::setSize(int width, int height)
 {
-    Q_D(LReportWidgetBase);
+    Q_D(WidgetBase);
 
     QSize newSize(width, height);
-    LReportResizeEvent resizeEvent(
+    ResizeEvent resizeEvent(
         newSize,
         QSize(d->size.width(), d->size.height()));
 
@@ -243,10 +243,10 @@ void LReportWidgetBase::setSize(int width, int height)
   Set position for widget
   \see pos
 */
-void LReportWidgetBase::setPos(const QPointF& p)
+void WidgetBase::setPos(const QPointF& p)
 {
     //TODO tidy here
-    LReportMoveEvent event(p, pos());
+    MoveEvent event(p, pos());
     //emit moving( &event );
 
     if (event.isAccepted()) {
@@ -258,10 +258,10 @@ void LReportWidgetBase::setPos(const QPointF& p)
   Set position for widget
   \see pos
 */
-void LReportWidgetBase::setPos(qreal x, qreal y)
+void WidgetBase::setPos(qreal x, qreal y)
 {
     //TODO tidy here
-    LReportMoveEvent event(QPointF(x, y), pos());
+    MoveEvent event(QPointF(x, y), pos());
     //emit moving( &event );
 
     //if ( event.isAccepted() )
@@ -270,9 +270,9 @@ void LReportWidgetBase::setPos(qreal x, qreal y)
     }
 }
 
-QRectF LReportWidgetBase::rect(bool border) const
+QRectF WidgetBase::rect(bool border) const
 {
-    Q_D(const LReportWidgetBase);
+    Q_D(const WidgetBase);
 
     if (border)
         return QRectF(0, 0, d->size.width(), d->size.height());
@@ -283,9 +283,9 @@ QRectF LReportWidgetBase::rect(bool border) const
 /*!
   change rect og current reportWidget without signal emit
 */
-void LReportWidgetBase::setRect(const QRectF rc)
+void WidgetBase::setRect(const QRectF rc)
 {
-    Q_D(LReportWidgetBase);
+    Q_D(WidgetBase);
     setPos(rc.topLeft());
     d->size = rc.size();
     prepareGeometryChange();
@@ -294,7 +294,7 @@ void LReportWidgetBase::setRect(const QRectF rc)
 /*!
   Return rect of widget based on it's parent
 */
-QRectF LReportWidgetBase::childRect() const
+QRectF WidgetBase::childRect() const
 {
     return QRectF(pos(), size());
 }
@@ -303,7 +303,7 @@ QRectF LReportWidgetBase::childRect() const
   Set rect(pos and size) of current widget. The pos for QRectF based on
   parent of widget
 */
-void LReportWidgetBase::setChildRect(QRectF rc)
+void WidgetBase::setChildRect(QRectF rc)
 {
     setPos(rc.topLeft());
     setSize(rc.width(), rc.height());
@@ -313,7 +313,7 @@ void LReportWidgetBase::setChildRect(QRectF rc)
   Return a QRectF that define widget position and size. Size in returned rect
   calculated by scene.
 */
-QRectF LReportWidgetBase::sceneRect() const
+QRectF WidgetBase::sceneRect() const
 {
     if (this->parentItem())
         return QRectF(scenePos(), size());
@@ -323,12 +323,12 @@ QRectF LReportWidgetBase::sceneRect() const
 
 /*!
   Return widget position by it's parent.
-  \note The parent of a LReportWidgetBase is not QGraphicsItem::parent()
+  \note The parent of a WidgetBase is not QGraphicsItem::parent()
   \see setChildPos(QPointF pos)
 */
-QPointF LReportWidgetBase::childPos() const
+QPointF WidgetBase::childPos() const
 {
-    Q_D(const LReportWidgetBase);
+    Q_D(const WidgetBase);
     return d->childPos;
 }
 
@@ -336,29 +336,29 @@ QPointF LReportWidgetBase::childPos() const
   Set childPos for current widget
   \see childPos()
 */
-void LReportWidgetBase::setChildPos(QPointF pos)
+void WidgetBase::setChildPos(QPointF pos)
 {
-    Q_D(LReportWidgetBase);
+    Q_D(WidgetBase);
     d->childPos = pos;
 }
 
 
 
-QPointF LReportWidgetBase::marginPos() const
+QPointF WidgetBase::marginPos() const
 {
-    Q_D(const LReportWidgetBase);
+    Q_D(const WidgetBase);
     return d->marginPos;
 }
 
-void LReportWidgetBase::setMarginPos(qreal x, qreal y)
+void WidgetBase::setMarginPos(qreal x, qreal y)
 {
-    Q_D(LReportWidgetBase);
+    Q_D(WidgetBase);
     d->marginPos = QPointF(x, y);
 }
 
-void LReportWidgetBase::setMarginPos(QPointF pt)
+void WidgetBase::setMarginPos(QPointF pt)
 {
-    Q_D(LReportWidgetBase);
+    Q_D(WidgetBase);
     d->marginPos = pt;
 }
 
@@ -368,9 +368,9 @@ void LReportWidgetBase::setMarginPos(QPointF pt)
   \see setMinimumSize ( QSizeF size )
   \see setMinimumSize ( int x, int y )
 */
-QSizeF LReportWidgetBase::minimumSize() const
+QSizeF WidgetBase::minimumSize() const
 {
-    Q_D(const LReportWidgetBase);
+    Q_D(const WidgetBase);
     return d->minimumSize;
 }
 
@@ -379,9 +379,9 @@ QSizeF LReportWidgetBase::minimumSize() const
   \see minimumSize()
   \see setMinimumSize ( int x, int y )
 */
-void LReportWidgetBase::setMinimumSize(QSizeF size)
+void WidgetBase::setMinimumSize(QSizeF size)
 {
-    Q_D(LReportWidgetBase);
+    Q_D(WidgetBase);
     d->minimumSize = size;
 }
 
@@ -390,22 +390,22 @@ void LReportWidgetBase::setMinimumSize(QSizeF size)
   \see minimumSize()
   \see setMinimumSize ( QSizeF size )
 */
-void LReportWidgetBase::setMinimumSize(int x, int y)
+void WidgetBase::setMinimumSize(int x, int y)
 {
-    Q_D(LReportWidgetBase);
+    Q_D(WidgetBase);
     d->minimumSize = QSizeF(x, y);
 }
 
-void LReportWidgetBase::setFixedSize(qreal width, qreal height)
+void WidgetBase::setFixedSize(qreal width, qreal height)
 {
-    Q_D(LReportWidgetBase);
+    Q_D(WidgetBase);
     d->fixedSize.setWidth(width);
     d->fixedSize.setHeight(height);
 }
 
-void LReportWidgetBase::setFixedSize(QSizeF size)
+void WidgetBase::setFixedSize(QSizeF size)
 {
-    Q_D(LReportWidgetBase);
+    Q_D(WidgetBase);
     d->fixedSize = size;
 }
 
@@ -413,7 +413,7 @@ void LReportWidgetBase::setFixedSize(QSizeF size)
 
 
 //Properties
-bool LReportWidgetBase::hasProperty(QString prop)
+bool WidgetBase::hasProperty(QString prop)
 {
     const QMetaObject *metaObject = this->metaObject();
     prop = prop.toLower();
@@ -431,7 +431,7 @@ bool LReportWidgetBase::hasProperty(QString prop)
     return false;
 }
 
-void LReportWidgetBase::setPropertyValue(QString propName, QVariant value)
+void WidgetBase::setPropertyValue(QString propName, QVariant value)
 {
     const QMetaObject *metaObject = this->metaObject();
     //propName = propName.toLower();
@@ -450,7 +450,7 @@ void LReportWidgetBase::setPropertyValue(QString propName, QVariant value)
     }
     while ((metaObject = metaObject->superClass()) != 0);
 }
-QVariant LReportWidgetBase::propertyValue(QString propName)
+QVariant WidgetBase::propertyValue(QString propName)
 {
     const QMetaObject *metaObject = this->metaObject();
     //propName = propName.toLower();
@@ -472,7 +472,7 @@ QVariant LReportWidgetBase::propertyValue(QString propName)
 }
 
 
-bool LReportWidgetBase::hasClassInfo(QString infoName)
+bool WidgetBase::hasClassInfo(QString infoName)
 {
     for (int i = 0; i < metaObject()->classInfoCount(); i++)
         if (metaObject()->classInfo(i).name() == infoName)
@@ -482,21 +482,21 @@ bool LReportWidgetBase::hasClassInfo(QString infoName)
 }
 
 
-LReportWidgetBase *LReportWidgetBase::createWidget(QString type)
+WidgetBase *WidgetBase::createWidget(QString type)
 {
-    if (type == "LReportTextBox")         return new LReportTextBox();
-    if (type == "LReportImage")           return new LReportImage();
-    if (type == "LReportHorizontalLine")  return new LReportHorizontalLine();
-    if (type == "LReportVerticalLine")    return new LReportVerticalLine();
-    if (type == "LReportRectangle")       return new LReportRectangle();
-    if (type == "LReportLineBase")        return new LReportRectangle();
+    if (type == "TextBox")         return new TextBox();
+    if (type == "Image")           return new Image();
+    if (type == "HorizontalLine")  return new HorizontalLine();
+    if (type == "VerticalLine")    return new VerticalLine();
+    if (type == "Rectangle")       return new Rectangle();
+    if (type == "LineBase")        return new Rectangle();
 
     return 0;
 }
 
-LReportWidgetBase *LReportWidgetBase::createWidget(QDomElement *dom)
+WidgetBase *WidgetBase::createWidget(QDomElement *dom)
 {
-    LReportWidgetBase *widget;
+    WidgetBase *widget;
     QString type = dom->attribute("type", "");
 
     if(type.isEmpty())
@@ -508,13 +508,13 @@ LReportWidgetBase *LReportWidgetBase::createWidget(QDomElement *dom)
     return widget;
 }
 
-QString LReportWidgetBase::createWidgetDomString(QString type)
+QString WidgetBase::createWidgetDomString(QString type)
 {
 //    QString s("<Widget width=\"150\" height=\"75\" type=\"%1\" />");
     return createWidgetDom(type).text();
 }
 
-QString LReportWidgetBase::createWidgetDomString(QString type, QString name, LReportWidgetAttributes attributes)
+QString WidgetBase::createWidgetDomString(QString type, QString name, WidgetAttributes attributes)
 {
 //    QString s("<Widget width=\"150\" height=\"75\" type=\"%1\" type=\"%2\"");
 //    s = s.arg(type).arg(name);
@@ -529,7 +529,7 @@ QString LReportWidgetBase::createWidgetDomString(QString type, QString name, LRe
     return createWidgetDom(type, name, attributes).text();
 }
 
-QDomElement LReportWidgetBase::createWidgetDom(QString type)
+QDomElement WidgetBase::createWidgetDom(QString type)
 {
     QDomElement dom;
     dom.setAttribute("type", type);
@@ -537,7 +537,7 @@ QDomElement LReportWidgetBase::createWidgetDom(QString type)
     dom.setAttribute("height", 75);
     return dom;
 }
-QDomElement LReportWidgetBase::createWidgetDom(QString type, QString name, LReportWidgetAttributes attributes)
+QDomElement WidgetBase::createWidgetDom(QString type, QString name, WidgetAttributes attributes)
 {
     QDomElement dom;
     dom.setAttribute("type", type);
@@ -548,9 +548,9 @@ QDomElement LReportWidgetBase::createWidgetDom(QString type, QString name, LRepo
     return dom;
 }
 
-void LReportWidgetBase::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
+void WidgetBase::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
-    Q_D(LReportWidgetBase);
+    Q_D(WidgetBase);
 
     if (!d->isMovable) return;
 
@@ -563,7 +563,7 @@ void LReportWidgetBase::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
         x = mouseEvent->buttonDownPos(Qt::LeftButton).x();
         y = mouseEvent->buttonDownPos(Qt::LeftButton).y();
 
-        LReportMoveEvent event(QPointF(
+        MoveEvent event(QPointF(
                                    this->pos().x() + mouseEvent->pos().x() -  x,
                                    this->pos().y() + mouseEvent->pos().y() -  y
                                ),
@@ -586,17 +586,17 @@ void LReportWidgetBase::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
     //GraphicsItem::mouseMoveEvent( event );
 }
 
-void LReportWidgetBase::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
+void WidgetBase::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
-    Q_D(LReportWidgetBase);
+    Q_D(WidgetBase);
     d->lastPos = pos();
     emit selectedChanged();
     emit mousePress(mouseEvent);
 }
 
-void LReportWidgetBase::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
+void WidgetBase::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
-    Q_D(LReportWidgetBase);
+    Q_D(WidgetBase);
     if (d->wasMoved) {
         emit moved(d->lastPos);
         d->wasMoved = false;
@@ -604,14 +604,14 @@ void LReportWidgetBase::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
     emit mouseRelease(mouseEvent);
 }
 
-void LReportWidgetBase::contextMenuEvent(QGraphicsSceneContextMenuEvent*)
+void WidgetBase::contextMenuEvent(QGraphicsSceneContextMenuEvent*)
 {
     emit contextMenu();
 }
 
-void LReportWidgetBase::setWidgetType(WidgetType type)
+void WidgetBase::setWidgetType(WidgetType type)
 {
-    Q_D(LReportWidgetBase);
+    Q_D(WidgetBase);
     d->widgetType = type;
 }
 
@@ -619,7 +619,7 @@ void LReportWidgetBase::setWidgetType(WidgetType type)
   *Send selected widget to back. after this method current
   *widget will be cover by another widgets
  */
-void LReportWidgetBase::sendToBack()
+void WidgetBase::sendToBack()
 {
     this->setZValue(0);
 }
@@ -627,12 +627,12 @@ void LReportWidgetBase::sendToBack()
 /*!
   *Come selected widget to bring of other widgets.
  */
-void LReportWidgetBase::bringToFront()
+void WidgetBase::bringToFront()
 {
     this->setZValue(99);
 }
 
-void LReportWidgetBase::dragMoveEvent(QGraphicsSceneDragDropEvent *event)
+void WidgetBase::dragMoveEvent(QGraphicsSceneDragDropEvent *event)
 {
     if (event->pos().x() < 0) event->ignore();
 }
@@ -641,9 +641,9 @@ void LReportWidgetBase::dragMoveEvent(QGraphicsSceneDragDropEvent *event)
   Determine that can this report widget move by mouse draging or not.
   \see setIsMovable
 */
-bool LReportWidgetBase::isMovable() const
+bool WidgetBase::isMovable() const
 {
-    Q_D(const LReportWidgetBase);
+    Q_D(const WidgetBase);
     return d->isMovable;
 }
 
@@ -654,15 +654,15 @@ bool LReportWidgetBase::isMovable() const
   to true.
   \see isMovable
 */
-void LReportWidgetBase::setIsMovable(bool isMovable)
+void WidgetBase::setIsMovable(bool isMovable)
 {
-    Q_D(LReportWidgetBase);
+    Q_D(WidgetBase);
     d->isMovable = isMovable;
 }
 
-const WidgetType LReportWidgetBase::widgetType() const
+const WidgetType WidgetBase::widgetType() const
 {
-    Q_D(const LReportWidgetBase);
+    Q_D(const WidgetBase);
     return d->widgetType;
 }
 
@@ -672,40 +672,40 @@ const WidgetType LReportWidgetBase::widgetType() const
   QSectionBand in report designer that can contain some other widgets.
   \see setParentBand(QSectionBand *widget)
 */
-LReportPanel *LReportWidgetBase::parentBand() const
+Panel *WidgetBase::parentBand() const
 {
-    Q_D(const LReportWidgetBase);
+    Q_D(const WidgetBase);
     return d->parentBand;
 }
 
-void LReportWidgetBase::setParentBand(LReportPanel *widget)
+void WidgetBase::setParentBand(Panel *widget)
 {
-    Q_D(LReportWidgetBase);
+    Q_D(WidgetBase);
     //this->setParentItem( widget );
     d->parentBand = widget;
 }
 
-LReportBand *LReportWidgetBase::secondParent() const
+Band *WidgetBase::secondParent() const
 {
-    Q_D(const LReportWidgetBase);
+    Q_D(const WidgetBase);
     return d->secondParent;
 }
 
-void LReportWidgetBase::setSecondParent(LReportBand *widget)
+void WidgetBase::setSecondParent(Band *widget)
 {
-    Q_D(LReportWidgetBase);
+    Q_D(WidgetBase);
     d->secondParent = widget;
 }
 
-qreal LReportWidgetBase::topAtSecondBand() const
+qreal WidgetBase::topAtSecondBand() const
 {
-    Q_D(const LReportWidgetBase);
+    Q_D(const WidgetBase);
     return d->topAtSecondBand;
 }
 
-void LReportWidgetBase::setTopAtSecondBand(qreal value)
+void WidgetBase::setTopAtSecondBand(qreal value)
 {
-    Q_D(LReportWidgetBase);
+    Q_D(WidgetBase);
     d->topAtSecondBand = value;
 }
 

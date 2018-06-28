@@ -4,8 +4,8 @@
 
 LEAF_BEGIN_NAMESPACE
 
-LReportPropertySort::LReportPropertySort(QWidget *parent) :
-    LReportPropertyPageBase(parent)
+PropertySort::PropertySort(QWidget *parent) :
+    PropertyPageBase(parent)
 {
     _title = tr("Sort");
     setupUi(this);
@@ -15,16 +15,16 @@ LReportPropertySort::LReportPropertySort(QWidget *parent) :
 //    tableWidget->setItemDelegate();
 }
 
-void LReportPropertySort::save()
+void PropertySort::save()
 {
 
 }
 
-void LReportPropertySort::load()
+void PropertySort::load()
 {
 }
 
-void LReportPropertySort::changeEvent(QEvent *e)
+void PropertySort::changeEvent(QEvent *e)
 {
     QWidget::changeEvent(e);
     switch (e->type()) {

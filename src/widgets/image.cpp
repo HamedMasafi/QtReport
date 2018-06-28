@@ -33,25 +33,25 @@
 
 LEAF_BEGIN_NAMESPACE
 
-LReportImage::LReportImage(QGraphicsItem *parent):
-    LReportDisplayBase(parent)
+Image::Image(QGraphicsItem *parent):
+    DisplayBase(parent)
 {
     setScaleImage(false);
     setAcceptRatio(false);
 }
 
 
-LReportImage::~LReportImage()
+Image::~Image()
 {
 }
 
 
 
-void LReportImage::paint(QPainter *painter,
+void Image::paint(QPainter *painter,
                          const QStyleOptionGraphicsItem *option,
                          QWidget *widget)
 {
-    LReportRectangle::paint(painter, option, widget);
+    Rectangle::paint(painter, option, widget);
 
     Q_UNUSED(option);
     Q_UNUSED(widget);
@@ -81,9 +81,9 @@ void LReportImage::paint(QPainter *painter,
 
 }
 
-void LReportImage::saveDom(QDomElement *dom)
+void Image::saveDom(QDomElement *dom)
 {
-    LReportXMLSeriazble::saveDom(dom);
+    SeriazbleObject::saveDom(dom);
 
     QByteArray ba;
     QBuffer buffer(&ba, this);
@@ -94,41 +94,41 @@ void LReportImage::saveDom(QDomElement *dom)
     dom->setAttribute("imageData", QString(ba.toBase64()));
 }
 
-void LReportImage::loadDom(QDomElement *dom)
+void Image::loadDom(QDomElement *dom)
 {
-    LReportWidgetBase::loadDom(dom);
+    WidgetBase::loadDom(dom);
     QByteArray b;
 
     b.append(dom->attribute("imageData"));
     m_image.loadFromData(QByteArray::fromBase64(b));
 }
 
-QPixmap LReportImage::image() const
+QPixmap Image::image() const
 {
     return m_image;
 }
 
-bool LReportImage::scaleImage() const
+bool Image::scaleImage() const
 {
     return m_scaleImage;
 }
 
-bool LReportImage::acceptRatio() const
+bool Image::acceptRatio() const
 {
     return m_acceptRatio;
 }
 
-void LReportImage::setImage(QPixmap image)
+void Image::setImage(QPixmap image)
 {
     m_image = image;
 }
 
-void LReportImage::setScaleImage(bool scaleImage)
+void Image::setScaleImage(bool scaleImage)
 {
     m_scaleImage = scaleImage;
 }
 
-void LReportImage::setAcceptRatio(bool acceptRatio)
+void Image::setAcceptRatio(bool acceptRatio)
 {
     m_acceptRatio = acceptRatio;
 }

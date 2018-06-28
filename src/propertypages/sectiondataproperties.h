@@ -24,18 +24,14 @@
 #ifndef QREPORTSECTIONDATAPROPERTIES_H
 #define QREPORTSECTIONDATAPROPERTIES_H
 
-<<<<<<< HEAD
 #include "ui_sectiondataproperties.h"
-=======
-#include "ui_qreportsectiondataproperties.h"
->>>>>>> d6ccb8904f16d3c0ba28fe1f38048a467b682a93
 
-class LReportSectionDataProperties : public QWidget, private Ui::LReportSectionDataProperties
+class SectionDataProperties : public QWidget, private Ui::LReportSectionDataProperties
 {
     Q_OBJECT
 
 public:
-    explicit LReportSectionDataProperties(QWidget *parent = 0);
+    explicit SectionDataProperties(QWidget *parent = 0);
 
 protected:
     void changeEvent(QEvent *e);

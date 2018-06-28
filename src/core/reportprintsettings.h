@@ -1,13 +1,13 @@
-#ifndef LREPORTPRINTSETTINGS_H
-#define LREPORTPRINTSETTINGS_H
+#ifndef PRINTSETTINGS_H
+#define PRINTSETTINGS_H
 
 #include "qtreportglobal.h"
 #include <QtCore/QObject>
 
 LEAF_BEGIN_NAMESPACE
 
-class LReportPrintSettingsPrivate;
-class LReportPrintSettings : public QObject
+class PrintSettingsPrivate;
+class PrintSettings : public QObject
 {
     Q_OBJECT
 
@@ -17,7 +17,7 @@ class LReportPrintSettings : public QObject
     Q_PROPERTY(qreal marginRight   READ marginRight  WRITE setMarginRight  USER true)
 
 public:
-    LReportPrintSettings();
+    PrintSettings();
 
     qreal marginLeft() const;
     qreal marginBottom() const;
@@ -39,10 +39,10 @@ public:
 
 
 private:
-    LReportPrintSettingsPrivate  *const d_ptr;
-    Q_DECLARE_PRIVATE(LReportPrintSettings)
+    PrintSettingsPrivate  *const d_ptr;
+    Q_DECLARE_PRIVATE(PrintSettings)
 };
 
 LEAF_END_NAMESPACE
 
-#endif // LREPORTPRINTSETTINGS_H
+#endif // PRINTSETTINGS_H

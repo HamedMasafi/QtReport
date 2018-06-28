@@ -2,21 +2,21 @@
 
 LEAF_BEGIN_NAMESPACE
 
-LReportPanel::LReportPanel(QGraphicsItem *parent):
-    LReportRectangle(parent)
+Panel::Panel(QGraphicsItem *parent):
+    Rectangle(parent)
 {
     setMinimumSize(20, 20);
 }
 
-void LReportPanel::reorderChilds()
+void Panel::reorderChilds()
 {
-    foreach(LReportWidgetBase  *widget, _childs) {
+    foreach(WidgetBase  *widget, _childs) {
         QPointF pt = mapToScene(widget->childPos());
         widget->setPos(pt);
     }//foreach
 }
 
-QList<LReportWidgetBase*> *LReportPanel::childs()
+QList<WidgetBase*> *Panel::childs()
 {
     return &_childs;
 }

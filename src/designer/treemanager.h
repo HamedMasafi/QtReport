@@ -32,29 +32,29 @@ class QAction;
 
 LEAF_BEGIN_NAMESPACE
 
-class LReport;
-class LReportDataTable;
-class LReportDataField;
-class LReportParametere;
-class LReportDataConnection;
-class LReportDocumentDesigner;
+class Report;
+class DataTable;
+class DataField;
+class Parametere;
+class DataConnection;
+class DocumentDesigner;
 enum TreeNodeTypeFlag
 {
-   DataTable,
-   Parameters,
-   Varibles
+   DataTableType,
+   ParametersType,
+   VariblesType
 };
 Q_DECLARE_FLAGS(TreeNodeType, TreeNodeTypeFlag)
 Q_DECLARE_OPERATORS_FOR_FLAGS(TreeNodeType)
 
 
-class LReportTreeManager : public QTreeWidget
+class TreeManager : public QTreeWidget
 {
     Q_OBJECT
 
 
 public:
-    LReportTreeManager(QWidget *parent = 0, LReportDocumentDesigner *designer = 0, LReport *report = 0, bool readOnly = false);
+    TreeManager(QWidget *parent = 0, DocumentDesigner *designer = 0, Report *report = 0, bool readOnly = false);
 
     QMenu *createContextMenu();
 
@@ -85,10 +85,10 @@ private:
     void initToplevelItems();
     void initActions();
 
-    QTreeWidgetItem *addConnectionNode(LReportDataConnection *);
-    QTreeWidgetItem *addTableNode(QTreeWidgetItem *, LReportDataTable *);
-    QTreeWidgetItem *addFieldNode(QTreeWidgetItem *, LReportDataField *);
-    QTreeWidgetItem *addParametereNode(LReportParametere *);
+    QTreeWidgetItem *addConnectionNode(DataConnection *);
+    QTreeWidgetItem *addTableNode(QTreeWidgetItem *, DataTable *);
+    QTreeWidgetItem *addFieldNode(QTreeWidgetItem *, DataField *);
+    QTreeWidgetItem *addParametereNode(Parametere *);
 
     QMenu *_contextMenu;
 
@@ -109,9 +109,9 @@ private:
 
     QTreeWidgetItem *nodeDataTable;
     QTreeWidgetItem *nodeParameters;
-    LReport  *_report;
+    Report  *_report;
     bool _readOnly;
-    LReportDocumentDesigner *_designer;
+    DocumentDesigner *_designer;
 
     QString itemText();
     void setItemText(QString caption);

@@ -28,7 +28,7 @@
 
 LEAF_BEGIN_NAMESPACE
 
-LReportDocumentView::LReportDocumentView ( QWidget *parent ) : QGraphicsView ( parent )
+DocumentView::DocumentView ( QWidget *parent ) : QGraphicsView ( parent )
 {
    connect ( horizontalScrollBar(), SIGNAL ( valueChanged ( int ) ),
              this,                  SIGNAL ( horizontalValueChanged ( int ) ) ) ;
@@ -39,36 +39,36 @@ LReportDocumentView::LReportDocumentView ( QWidget *parent ) : QGraphicsView ( p
 }
 
 
-LReportDocumentView::LReportDocumentView ( QGraphicsScene *scene, QWidget *parent ) : QGraphicsView ( scene, parent )
+DocumentView::DocumentView ( QGraphicsScene *scene, QWidget *parent ) : QGraphicsView ( scene, parent )
 {
 }
 
 
-LReportDocumentView::~LReportDocumentView()
+DocumentView::~DocumentView()
 {
 }
 
-void LReportDocumentView::setPageSize ( int , int  )
+void DocumentView::setPageSize ( int , int  )
 {
 }
 
-void LReportDocumentView::mouseMoveEvent ( QGraphicsSceneMouseEvent  *mouseEvent )
+void DocumentView::mouseMoveEvent ( QGraphicsSceneMouseEvent  *mouseEvent )
 {
    emit mouseMove ( mouseEvent );
 }
 
-void LReportDocumentView::mousePressEvent ( QGraphicsSceneMouseEvent  *mouseEvent )
+void DocumentView::mousePressEvent ( QGraphicsSceneMouseEvent  *mouseEvent )
 {
    emit mousePress ( mouseEvent );
 }
 /*
-void LReportDocumentView::mouseReleaseEvent ( QGraphicsSceneMouseEvent  *mouseEvent )
+void DocumentView::mouseReleaseEvent ( QGraphicsSceneMouseEvent  *mouseEvent )
 {
    emit mouseRelease ( mouseEvent );
 }*/
 
 
-void LReportDocumentView::scrollContentsBy ( int dx, int dy )
+void DocumentView::scrollContentsBy ( int dx, int dy )
 {
    emit scroll( dx, dy );
    QGraphicsView::scrollContentsBy(dx, dy);

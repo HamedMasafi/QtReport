@@ -1,23 +1,19 @@
 #include <QFileDialog>
 
-<<<<<<< HEAD
 #include "designer/documentdesigner.h"
-=======
-#include "documentdesigner.h"
->>>>>>> d6ccb8904f16d3c0ba28fe1f38048a467b682a93
 #include "propertypages/propertypageimage.h"
 #include <QImage>
 
 LEAF_BEGIN_NAMESPACE
 
-LReportPropertyPageImage::LReportPropertyPageImage(QWidget *parent) :
-      LReportPropertyPageBase(parent)
+PropertyPageImage::PropertyPageImage(QWidget *parent) :
+      PropertyPageBase(parent)
 {
     setupUi(this);
     _title = tr( "Image" );
 }
 
-void LReportPropertyPageImage::changeEvent(QEvent *e)
+void PropertyPageImage::changeEvent(QEvent *e)
 {
     QWidget::changeEvent(e);
     switch (e->type()) {
@@ -30,7 +26,7 @@ void LReportPropertyPageImage::changeEvent(QEvent *e)
 }
 
 
-void LReportPropertyPageImage::load()
+void PropertyPageImage::load()
 {
    pixmap = _designer->widgetProperty("image").value<QPixmap>();
    label->setPixmap( pixmap.scaled( label->size(), Qt::KeepAspectRatio ) );
@@ -40,7 +36,7 @@ void LReportPropertyPageImage::load()
    checkBoxAcceptRatio->setChecked( _designer->widgetProperty("acceptRatio").toBool() );
 }
 
-void LReportPropertyPageImage::save()
+void PropertyPageImage::save()
 {
    _designer->setWidgetProperty("image", pixmap );
    _designer->setWidgetProperty("scaleImage", checkBoxScale->isChecked() );
@@ -48,7 +44,7 @@ void LReportPropertyPageImage::save()
 }
 
 
-void LReportPropertyPageImage::on_pushButtonBrowse_clicked()
+void PropertyPageImage::on_pushButtonBrowse_clicked()
 {
    QFileDialog *dialog = new QFileDialog(this);
 
@@ -61,18 +57,18 @@ void LReportPropertyPageImage::on_pushButtonBrowse_clicked()
    label->setPixmap( pixmap.scaled( label->size(), Qt::KeepAspectRatio ) );
 }
 
-void LReportPropertyPageImage::on_pushButtonClear_clicked()
+void PropertyPageImage::on_pushButtonClear_clicked()
 {
    pixmap = QPixmap();
    label->setPixmap( pixmap );
 }
 
-void LReportPropertyPageImage::on_checkBoxScale_clicked()
+void PropertyPageImage::on_checkBoxScale_clicked()
 {
  //   checkBoxAcceptRatio->setEnabled( checkBoxScale->isChecked() );
 }
 
-void LReportPropertyPageImage::resizeEvent ( QResizeEvent * )
+void PropertyPageImage::resizeEvent ( QResizeEvent * )
 {
    if( !label->pixmap()->isNull() )
       label->setPixmap( pixmap.scaled( label->size(), Qt::KeepAspectRatio ) );

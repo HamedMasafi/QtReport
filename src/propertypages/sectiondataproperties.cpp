@@ -23,13 +23,13 @@
 
 #include "sectiondataproperties.h"
 
-LReportSectionDataProperties::LReportSectionDataProperties(QWidget *parent) :
+SectionDataProperties::SectionDataProperties(QWidget *parent) :
     QWidget(parent)
 {
     setupUi(this);
 }
 
-void LReportSectionDataProperties::changeEvent(QEvent *e)
+void SectionDataProperties::changeEvent(QEvent *e)
 {
     QWidget::changeEvent(e);
     switch (e->type()) {

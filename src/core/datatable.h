@@ -26,7 +26,7 @@
 #define RREPORTDATATABLE_H
 
 #include "qtreportglobal.h"
-#include "designer/xmlseriazble.h"
+#include "designer/seriazbleobject.h"
 
 #include <QtCore/QString>
 #include <QtCore/QVariant>
@@ -35,8 +35,8 @@ class QSqlRecord;
 
 LEAF_BEGIN_NAMESPACE
 
-class LReportDataConnection;
-class LReportDataField : public LReportXMLSeriazble
+class DataConnection;
+class DataField : public SeriazbleObject
 {
     Q_OBJECT
 
@@ -47,7 +47,7 @@ class LReportDataField : public LReportXMLSeriazble
     QString m_filter;
 
 public:
-    LReportDataField(QString name);
+    DataField(QString name);
 
     int type() const;
     QString filter() const;
@@ -57,7 +57,7 @@ public slots:
     void setFilter(QString filter);
 };
 
-class LReportDataTable : public LReportXMLSeriazble
+class DataTable : public SeriazbleObject
 {
     Q_OBJECT
 
@@ -65,16 +65,16 @@ class LReportDataTable : public LReportXMLSeriazble
     Q_PROPERTY(QString selectCommand READ selectCommand WRITE setSelectCommand USER true)
 
     public:
-        LReportDataTable(QString connectionName);
+        DataTable(QString connectionName);
 
-    void remove(LReportDataField *field);
+    void remove(DataField *field);
     void clear();
-    void append(LReportDataField *field);
+    void append(DataField *field);
     void append(QString fieldName);
 
     void appendRecordFields(QSqlRecord *record);
 
-    QList<LReportDataField*> fields() const;
+    QList<DataField*> fields() const;
 
     void saveDom(QDomElement *dom);
     void loadDom(QDomElement *dom);
@@ -89,7 +89,7 @@ public slots:
     void setSelectCommand(QString selectCommand);
 
 private:
-    QList<LReportDataField*> _fields;
+    QList<DataField*> _fields;
 
     QString m_connectionName;
     QString m_selectCommand;

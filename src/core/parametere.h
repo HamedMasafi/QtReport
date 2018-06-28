@@ -26,11 +26,11 @@
 
 #include <QVariant>
 
-#include "xmlseriazble.h"
+#include "seriazbleobject.h"
 
 LEAF_BEGIN_NAMESPACE
 
-class LReportParametere : public LReportXMLSeriazble
+class Parametere : public SeriazbleObject
 {
     Q_OBJECT
 
@@ -45,7 +45,7 @@ class LReportParametere : public LReportXMLSeriazble
     int m_type;
 
 public:
-    LReportParametere(QString name = "",
+    Parametere(QString name = "",
                       QVariant value = QVariant(),
                       QVariant::Type type = QVariant::String);
     QString name() const;

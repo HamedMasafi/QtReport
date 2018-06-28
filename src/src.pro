@@ -60,7 +60,6 @@ SOURCES +=  \
     widgets/verticalline.cpp \
     widgets/widget.cpp \
     widgets/widgetbase.cpp \
-    designer/xmlseriazble.cpp \
     core/dataconnection.cpp \
     designer/datatabledialog.cpp \
     designer/newconnectionwizard.cpp \
@@ -68,7 +67,12 @@ SOURCES +=  \
     propertypages/propertyfilter.cpp \
     propertypages/propertysort.cpp \
     widgets/band.cpp \
-    core/lreportprintsettings.cpp
+    core/reportprintsettings.cpp \
+    core/reportdatamodel.cpp \
+    core/reportmodel.cpp \
+    designer/seriazbleobject.cpp \
+    designer/modeltreeview.cpp \
+    core/variable.cpp
 
 HEADERS +=  \
     designer/colorpicker.h \
@@ -127,8 +131,12 @@ HEADERS +=  \
     widgets/verticalline.h \
     widgets/widget.h \
     widgets/widgetbase.h \
-    designer/xmlseriazble.h \
-    core/lreportprintsettings.h
+    core/reportprintsettings.h \
+    core/reportdatamodel.h \
+    core/reportmodel.h \
+    designer/seriazbleobject.h \
+    designer/modeltreeview.h \
+    core/variable.h
 
 FORMS += \
     designer/databaseinfodialog.ui \

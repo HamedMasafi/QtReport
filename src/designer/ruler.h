@@ -33,13 +33,13 @@ class QMouseEvent;
 
 LEAF_BEGIN_NAMESPACE
 
-class LReportRuler : public QWidget
+class Ruler : public QWidget
 {
 	public:
 
 
-      LReportRuler ( QWidget *parent, Qt::Orientation direction );
-      ~LReportRuler();
+      Ruler ( QWidget *parent, Qt::Orientation direction );
+      ~Ruler();
 		void paintEvent ( QPaintEvent  *event );
 		void mouseMoveEvent ( QMouseEvent  *event );
 

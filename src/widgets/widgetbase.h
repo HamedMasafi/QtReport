@@ -34,11 +34,7 @@
 #include <QPair>
 
 #include "qtreportglobal.h"
-<<<<<<< HEAD
-#include "designer/xmlseriazble.h"
-=======
-#include "xmlseriazble.h"
->>>>>>> d6ccb8904f16d3c0ba28fe1f38048a467b682a93
+#include "designer/seriazbleobject.h"
 
 class QGraphicsSceneDragDropEvent;
 class QMouseEvent;
@@ -47,15 +43,15 @@ class QPointF;
 
 LEAF_BEGIN_NAMESPACE
 
-class LReportResizeEvent;
-class LReportMoveEvent;
-class LReportBand;
-class LReportPanel;
-class LReportWidgetBasePrivate;
-class LReportWidgetAttributes : public QList<QPair<QString, QString> >
+class ResizeEvent;
+class MoveEvent;
+class Band;
+class Panel;
+class WidgetBasePrivate;
+class WidgetAttributes : public QList<QPair<QString, QString> >
 {
 public:
-    LReportWidgetAttributes(){
+    WidgetAttributes(){
 
     }
 
@@ -63,28 +59,25 @@ public:
         append(qMakePair<QString, QString>(name, value));
     }
 };
-<<<<<<< HEAD
 
-=======
->>>>>>> d6ccb8904f16d3c0ba28fe1f38048a467b682a93
-class LReportWidgetBase : public LReportXMLSeriazble, public QGraphicsItem
+class WidgetBase : public SeriazbleObject, public QGraphicsItem
 {
     Q_OBJECT
     Q_INTERFACES(QGraphicsItem)
-    Q_DISABLE_COPY(LReportWidgetBase)
+    Q_DISABLE_COPY(WidgetBase)
 
     Q_PROPERTY(qreal left READ left WRITE setLeft USER true)
     Q_PROPERTY(qreal top READ top WRITE setTop USER true)
     Q_PROPERTY(qreal width READ width WRITE setWidth USER true)
     Q_PROPERTY(qreal height READ height WRITE setHeight USER true)
     Q_PROPERTY(QSizeF size WRITE setSize READ size)
-    //Q_PROPERTY(LReportPanel *parentBand READ parentBand WRITE setParentBand)
+    //Q_PROPERTY(Panel *parentBand READ parentBand WRITE setParentBand)
     Q_PROPERTY(QPointF childPos READ childPos WRITE setChildPos)
 
 
 public:
-    LReportWidgetBase(QGraphicsItem *parent = 0);
-    ~LReportWidgetBase();
+    WidgetBase(QGraphicsItem *parent = 0);
+    ~WidgetBase();
 
 
     ResizeDirection resizeDirection() const;
@@ -138,11 +131,11 @@ public:
 
     const WidgetType widgetType() const;
 
-    LReportPanel *parentBand() const;
-    void setParentBand(LReportPanel *Widget);
+    Panel *parentBand() const;
+    void setParentBand(Panel *Widget);
 
-    LReportBand *secondParent() const;
-    void setSecondParent(LReportBand *Widget);
+    Band *secondParent() const;
+    void setSecondParent(Band *Widget);
 
     qreal topAtSecondBand() const;
     void setTopAtSecondBand(qreal value);
@@ -158,12 +151,12 @@ public:
     bool hasProperty(QString name);
     QVariant propertyValue(QString name);
 
-    static LReportWidgetBase *createWidget(QString type);
-    static LReportWidgetBase *createWidget(QDomElement *dom);
+    static WidgetBase *createWidget(QString type);
+    static WidgetBase *createWidget(QDomElement *dom);
     static QString createWidgetDomString(QString type);
-    static QString createWidgetDomString(QString type, QString name, LReportWidgetAttributes attributes);
+    static QString createWidgetDomString(QString type, QString name, WidgetAttributes attributes);
     static QDomElement createWidgetDom(QString type);
-    static QDomElement createWidgetDom(QString type, QString name, LReportWidgetAttributes attributes);
+    static QDomElement createWidgetDom(QString type, QString name, WidgetAttributes attributes);
 
     bool hasClassInfo(QString infoName);
 
@@ -184,8 +177,8 @@ protected:
     void setWidgetType(WidgetType type);
 
 private:
-    LReportWidgetBasePrivate  *const d_ptr;
-    Q_DECLARE_PRIVATE(LReportWidgetBase)
+    WidgetBasePrivate  *const d_ptr;
+    Q_DECLARE_PRIVATE(WidgetBase)
 
 signals:
     void mousePressEvent(QMouseEvent *event);
@@ -197,15 +190,15 @@ signals:
     void contextMenu();
 
     void moved(QPointF lastPos);
-    void moving(LReportMoveEvent*);
-    void resizing(LReportResizeEvent*);
+    void moving(MoveEvent*);
+    void resizing(ResizeEvent*);
 
     void selectedChanged();
 
-    friend class LReport;
+    friend class Report;
 };
 
-//Q_DECLARE_METATYPE(LReportWidgetBase)
+//Q_DECLARE_METATYPE(WidgetBase)
 
 LEAF_END_NAMESPACE
 

@@ -24,13 +24,13 @@
 #ifndef QREPORTDATASOURCE_H
 #define QREPORTDATASOURCE_H
 
-#include "xmlseriazble.h"
+#include "seriazbleobject.h"
 
 class QString;
 
 LEAF_BEGIN_NAMESPACE
 
-class LReportDataConnection : public LReportXMLSeriazble
+class DataConnection : public SeriazbleObject
 {
     Q_OBJECT
 
@@ -41,7 +41,7 @@ class LReportDataConnection : public LReportXMLSeriazble
     Q_PROPERTY(QString password READ password WRITE setPassword USER true)
 
 public:
-    LReportDataConnection();
+    DataConnection();
 
     QString driver() const;
     QString databaseName() const;
@@ -57,7 +57,7 @@ public:
 
     void setDatabaseInfo( QString driver, QString database, QString serverName, QString username, QString password );
 
-    bool operator ==(LReportDataConnection &other);
+    bool operator ==(DataConnection &other);
 
 private:
     QString _name;

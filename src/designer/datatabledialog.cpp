@@ -39,7 +39,7 @@
 
 LEAF_BEGIN_NAMESPACE
 
-LReportDataTableDialog::LReportDataTableDialog(LReport *report, QString connectionName, QWidget *parent) :
+DataTableDialog::DataTableDialog(Report *report, QString connectionName, QWidget *parent) :
     QDialog(parent),
     _report(report),
     _table(0),
@@ -58,7 +58,7 @@ LReportDataTableDialog::LReportDataTableDialog(LReport *report, QString connecti
 
 }
 
-LReportDataTableDialog::LReportDataTableDialog(LReport *report, LReportDataTable *table, QWidget *parent) :
+DataTableDialog::DataTableDialog(Report *report, DataTable *table, QWidget *parent) :
     QDialog(parent),
     _report(report),
     _table(table),
@@ -77,10 +77,10 @@ LReportDataTableDialog::LReportDataTableDialog(LReport *report, LReportDataTable
 
     datasourceName->setText(table->objectName());
     querySql->setPlainText(table->selectCommand());
-    foreach (LReportDataField *field, table->fields()) {
+    foreach (DataField *field, table->fields()) {
         QTreeWidgetItem *item = new QTreeWidgetItem;
         item->setText(0, field->objectName());
-        item->setText(1, LReportTypeHelper::typeToString((QVariant::Type)field->type()));
+        item->setText(1, TypeHelper::typeToString((QVariant::Type)field->type()));
         treeWidgetFields->addTopLevelItem(item);
     }
 
@@ -90,7 +90,7 @@ LReportDataTableDialog::LReportDataTableDialog(LReport *report, LReportDataTable
     fillIntOperatorCombo();
 }
 
-void LReportDataTableDialog::changeEvent(QEvent *e)
+void DataTableDialog::changeEvent(QEvent *e)
 {
     QDialog::changeEvent(e);
     switch (e->type()) {
@@ -103,11 +103,11 @@ void LReportDataTableDialog::changeEvent(QEvent *e)
 }
 
 
-void LReportDataTableDialog::on_queryBuilderButton_clicked()
+void DataTableDialog::on_queryBuilderButton_clicked()
 {
     QString cn = _table ? _table->connectionName() : _connectionName;
 
-    LReportQueryBuilderDialog dialog(_report, cn, this);
+    QueryBuilderDialog dialog(_report, cn, this);
     if(dialog.exec() == QDialog::Accepted) {
         datasourceName->setText(dialog.tableName());
         querySql->setPlainText(dialog.query());
@@ -115,7 +115,7 @@ void LReportDataTableDialog::on_queryBuilderButton_clicked()
     }//if
 }
 
-void LReportDataTableDialog::fetchScheema()
+void DataTableDialog::fetchScheema()
 {
     QSqlQuery q(querySql->toPlainText());
     QSqlRecord records = q.record();
@@ -124,16 +124,16 @@ void LReportDataTableDialog::fetchScheema()
     for(int i = 0; i < records.count(); i++){
         QTreeWidgetItem *item = new QTreeWidgetItem;
         item->setText(0, records.fieldName(i));
-        item->setText(1, LReportTypeHelper::typeToString(records.field(i).type()));
+        item->setText(1, TypeHelper::typeToString(records.field(i).type()));
         treeWidgetFields->addTopLevelItem(item);
     }//for
 }
 
 
-LReportDataTable *LReportDataTableDialog::createDataTable()
+DataTable *DataTableDialog::createDataTable()
 {
     if(!_table)
-        _table = new LReportDataTable(_connectionName);
+        _table = new DataTable(_connectionName);
     else
         _table->clear();
 
@@ -142,8 +142,8 @@ LReportDataTable *LReportDataTableDialog::createDataTable()
 
     for(int i = 0;  i < treeWidgetFields->topLevelItemCount(); i++){
         QTreeWidgetItem *item = treeWidgetFields->topLevelItem(i);
-        LReportDataField *field = new LReportDataField(item->text(0));
-        field->setType((LReportTypeHelper::stringToType(item->text(1))));
+        DataField *field = new DataField(item->text(0));
+        field->setType((TypeHelper::stringToType(item->text(1))));
         field->setFilter(item->text(2));
         _table->append(field);
     }
@@ -151,7 +151,7 @@ LReportDataTable *LReportDataTableDialog::createDataTable()
     return _table;
 }
 
-bool LReportDataTableDialog::checkData()
+bool DataTableDialog::checkData()
 {
     if(datasourceName->text().trimmed() == ""){
         QMessageBox::warning(this,
@@ -180,13 +180,13 @@ bool LReportDataTableDialog::checkData()
     return true;
 }
 
-void LReportDataTableDialog::on_buttonBox_accepted()
+void DataTableDialog::on_buttonBox_accepted()
 {
     if(checkData())
         this->accept();
 }
 
-void LReportDataTableDialog::on_treeWidgetFields_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
+void DataTableDialog::on_treeWidgetFields_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
 {
     QString type = current->text(1).toLower();
     QString filter = current->text(2);
@@ -229,7 +229,7 @@ void LReportDataTableDialog::on_treeWidgetFields_currentItemChanged(QTreeWidgetI
 }
 
 
-void LReportDataTableDialog::fillIntOperatorCombo()
+void DataTableDialog::fillIntOperatorCombo()
 {
     comboBoxOperator->addItem("Equal", "=");
     comboBoxOperator->addItem("Less than", "<");
@@ -239,13 +239,13 @@ void LReportDataTableDialog::fillIntOperatorCombo()
     comboBoxOperator->addItem("Not equal", "!=");
 }
 
-void LReportDataTableDialog::fillStringOperatorCombo()
+void DataTableDialog::fillStringOperatorCombo()
 {
     comboBoxOperator->addItem("Equal", "=");
     comboBoxOperator->addItem("Like", "LIKE");
 }
 
-void LReportDataTableDialog::setFilterText()
+void DataTableDialog::setFilterText()
 {
     if(!treeWidgetFields->currentItem())
         return;
