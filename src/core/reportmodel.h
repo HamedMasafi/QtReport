@@ -13,7 +13,6 @@ class DataConnection;
 class DataField;
 class DataTable;
 class Band;
-class SeriazbleObject;
 class WidgetBase;
 class Report;
 class Variable;
@@ -43,12 +42,15 @@ public:
         WidgetBaseItem
     };
     enum Role {
-        TypeRole = Qt::UserRole + 1
+        TextRole = Qt::DisplayRole,
+        IconRole = Qt::DecorationRole,
+        TypeRole = Qt::UserRole + 1,
+        DataRole
     };
     struct Node {
         Node *parent;
         QList<Node*> childs;
-        SeriazbleObject *data;
+        QObject *data;
         NodeType type;
         int row;
 
@@ -69,13 +71,19 @@ public:
             childs.append(node);
             node->parent = this;
         }
-        void remove(SeriazbleObject *o) {
+        void remove(QObject *o) {
             for (int i = 0; i < childs.count(); ++i) {
                 if (childs.at(i)->data == o) {
                     childs.removeAt(i);
                     return;
                 }
             }
+        }
+        Node *findChild(QObject *obj) {
+            foreach (Node *n, childs)
+                if (n->data == obj)
+                    return n;
+            return nullptr;
         }
         void reorder() {
             for (int i = 0; i < childs.count(); ++i)

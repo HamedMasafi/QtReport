@@ -29,39 +29,21 @@
     </layout>
    </item>
    <item>
-    <widget class="QTreeWidget" name="treeWidget">
-     <attribute name="headerVisible">
-      <bool>false</bool>
+    <widget class="Leaf::ModelTreeView" name="treeView">
+     <attribute name="headerDefaultSectionSize">
+      <number>0</number>
      </attribute>
-     <column>
-      <property name="text">
-       <string>1</string>
-      </property>
-     </column>
-     <item>
-      <property name="text">
-       <string>Fields</string>
-      </property>
-      <property name="icon">
-       <iconset resource="../resources.qrc">
-        <normaloff>:/designer/field</normaloff>:/designer/field</iconset>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Variables</string>
-      </property>
-      <property name="icon">
-       <iconset resource="../resources.qrc">
-        <normaloff>:/designer/form</normaloff>:/designer/form</iconset>
-      </property>
-     </item>
     </widget>
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="../resources.qrc"/>
- </resources>
+ <customwidgets>
+  <customwidget>
+   <class>Leaf::ModelTreeView</class>
+   <extends>QTreeView</extends>
+   <header>modeltreeview.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
  <connections/>
 </ui>

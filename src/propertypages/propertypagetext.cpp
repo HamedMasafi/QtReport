@@ -21,9 +21,12 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
+#include <QSortFilterProxyModel>
 #include "designer/documentdesigner.h"
 #include "propertypages/propertypagetext.h"
 #include "widgets/textbox.h"
+#include "report.h"
+#include "reportmodel.h"
 
 LEAF_BEGIN_NAMESPACE
 
@@ -48,7 +51,13 @@ void PropertyPageText::changeEvent(QEvent *e)
 
 void PropertyPageText::load()
 {
-   textEdit->setPlainText(_designer->widgetProperty("text").toString());
+    QSortFilterProxyModel *f = new QSortFilterProxyModel(this);//
+    f->setSourceModel(_designer->report()->model());
+    f->setFilterRole(ReportModel::TypeRole);
+    f->setFilterKeyColumn(0);
+    f->setFilterRegExp("3|4|5|6");
+    treeView->setModel(f);
+    textEdit->setPlainText(_designer->widgetProperty("text").toString());
 }
 
 void PropertyPageText::save()

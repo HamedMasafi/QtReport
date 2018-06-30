@@ -281,7 +281,7 @@ QRectF WidgetBase::rect(bool border) const
 }
 
 /*!
-  change rect og current reportWidget without signal emit
+  change rect of current reportWidget without signal emit
 */
 void WidgetBase::setRect(const QRectF rc)
 {

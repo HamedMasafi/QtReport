@@ -717,18 +717,15 @@ DataTable *DocumentDesigner::addDataTable(QString connectionName)
     Q_D(DocumentDesigner);
 
     DataTableDialog dialog(d->report, connectionName, this);
-
-    UndoCommand *cmd = new UndoCommand(this, d->report);
-    cmd->setText(tr("Add data table"));
-    cmd->setOldState(d->report->getXmlContent(Report::DataTableType));
-
     if(dialog.exec() == QDialog::Rejected)
-        return 0;
+        return nullptr;
 
     DataTable *table = dialog.createDataTable();
-    d->report->addDataTable(table);
-
-    cmd->setNewState(d->report->getXmlContent(Report::DataTableType));
+    DataTableUndoCommand *cmd = new DataTableUndoCommand(table, this, d->report);
+    cmd->setText(tr("Add data table"));
+//    cmd->setOldState(d->report->getXmlContent(Report::DataTableType));
+//    d->report->addDataTable(table);
+//    cmd->setNewState(d->report->getXmlContent(Report::DataTableType));
     d->undoStack->push(cmd);
     cmd->setReady();
 

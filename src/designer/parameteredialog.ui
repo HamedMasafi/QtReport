@@ -33,22 +33,287 @@
       <widget class="QComboBox" name="comboBoxType">
        <item>
         <property name="text">
-         <string>Int</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Float</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
          <string>Bool</string>
         </property>
        </item>
        <item>
         <property name="text">
+         <string>Int</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
          <string>String</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Date</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Time</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>DateTime</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Url</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>UInt</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>LongLong</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>ULongLong</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Double</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Char</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Map</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>List</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>StringList</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>ByteArray</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>BitArray</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Locale</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Rect</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>RectF</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Size</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>SizeF</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Line</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>LineF</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Point</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>PointF</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>RegExp</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>RegularExpression</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Hash</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>EasingCurve</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Uuid</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>ModelIndex</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>PersistentModelIndex</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Font</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Pixmap</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Brush</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Color</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Palette</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Image</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Polygon</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Region</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Bitmap</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Cursor</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>KeySequence</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Pen</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>TextLength</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>TextFormat</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Matrix</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Transform</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Matrix4x4</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Vector2D</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Vector3D</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Vector4D</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Quaternion</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>PolygonF</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Icon</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>SizePolicy</string>
         </property>
        </item>
       </widget>

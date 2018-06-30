@@ -32,30 +32,22 @@ QString TypeHelper::typeToString(QVariant::Type type)
     switch(type){
     case QVariant::Int:
         return "Int";
-        break;
 
     case QVariant::Double:
         return "Double";
-        break;
 
     case QVariant::Bool:
         return "Bool";
-        break;
 
     case QVariant::Char:
         return "Char";
-        break;
 
     case QVariant::Pixmap:
         return "Pixmap";
-        break;
 
     default:
         return "String";
-        break;
-
     }//switch
-
 }
 
 QVariant::Type TypeHelper::stringToType(QString type)

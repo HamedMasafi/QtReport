@@ -1,7 +1,7 @@
 /***************************************************************************
  *   QtReport                                                              *
  *   Qt Report Builder Soultion                                            *
- *                                                                         * 
+ *                                                                         *
  *   Copyright (C) 2010 by Hamed Masafi                                    *
  *   Hamed.Masafi@GMail.COM                                                *
  *                                                                         *
@@ -27,6 +27,8 @@
 #include "colorpicker.h"
 #include "widgets/rectanglebase.h"
 
+#include <QMetaEnum>
+
 LEAF_BEGIN_NAMESPACE
 
 PropertyPageRectangle::PropertyPageRectangle(QWidget *parent) :
@@ -34,40 +36,82 @@ PropertyPageRectangle::PropertyPageRectangle(QWidget *parent) :
 {
     setupUi(this);
 
-     _title = tr( "Rectangle" );
+    _title = tr( "Rectangle" );
 
-    QPixmap px( 16, 16);
-    QPainter painter( &px );
+    QMetaEnum penStyleEnum = QMetaEnum::fromType<Qt::PenStyle>();
+    for (int i = 0; i < penStyleEnum.keyCount(); ++i) {
+        QPixmap px( 16, 16);
+        QPainter painter( &px );
+        painter.setPen(Qt::PenStyle(penStyleEnum.value(i)));
+        px.fill(Qt::white);
+        painter.drawLine(0, 8, 16, 8);
+        comboBoxLineType->addItem(QIcon(px), penStyleEnum.key(i), penStyleEnum.value(i));
+    }
 
-    painter.setPen( Qt::NoPen );
-    px.fill( Qt::white );
-    painter.drawLine( 0, 8, 16, 8 );
-    comboBoxLineType->addItem( QIcon(px), tr("None"), (int)Qt::NoPen );
+    QList<Qt::BrushStyle> brushes;
+    brushes << Qt::NoBrush
+             << Qt::SolidPattern
+//             << Dense1Pattern
+//             << Dense2Pattern
+//             << Dense3Pattern
+//             << Dense4Pattern
+//             << Dense5Pattern
+//             << Dense6Pattern
+//             << Dense7Pattern
+             << Qt::HorPattern
+             << Qt::VerPattern
+             << Qt::CrossPattern
+             << Qt::BDiagPattern
+             << Qt::FDiagPattern
+             << Qt::DiagCrossPattern;
+//             << LinearGradientPattern
+//             << RadialGradientPattern
+//             << ConicalGradientPattern;
 
-    painter.setPen( Qt::SolidLine );
-    px.fill( Qt::white );
-    painter.drawLine( 0, 8, 16, 8 );
-    comboBoxLineType->addItem( QIcon(px), tr("Solid"), (int)Qt::SolidLine );
+    QMetaEnum penBrushStyle = QMetaEnum::fromType<Qt::BrushStyle>();
+    foreach (Qt::BrushStyle bs, brushes){
+        QPixmap px(16, 16);
+        QPainter painter( &px );
+        px.fill(Qt::white);
+        painter.setPen(Qt::red);
+        QBrush b(Qt::black, bs);
+        painter.fillRect(QRect(0, 0, 15, 15), b);
+        painter.end();
+        comboBoxFillType->addItem(QIcon(px), penBrushStyle.valueToKey(int(bs)), int(bs));
+    }
 
-    painter.setPen( Qt::DashLine );
-    px.fill( Qt::white );
-    painter.drawLine( 0, 8, 16, 8 );
-    comboBoxLineType->addItem( QIcon(px), tr("Dash"), (int)Qt::DashLine );
+//    QPixmap px( 16, 16);
+//    QPainter painter( &px );
 
-    painter.setPen( Qt::DotLine );
-    px.fill( Qt::white );
-    painter.drawLine( 0, 8, 16, 8 );
-    comboBoxLineType->addItem( QIcon(px), tr("Dot"), (int)Qt::DotLine );
+//    painter.setPen( Qt::NoPen );
+//    px.fill( Qt::white );
+//    painter.drawLine( 0, 8, 16, 8 );
+//    comboBoxLineType->addItem( QIcon(px), tr("None"), (int)Qt::NoPen );
 
-    painter.setPen( Qt::DashDotLine );
-    px.fill( Qt::white );
-    painter.drawLine( 0, 8, 16, 8 );
-    comboBoxLineType->addItem( QIcon(px), tr("Dash-Dot"), (int)Qt::DashDotLine );
+//    painter.setPen( Qt::SolidLine );
+//    px.fill( Qt::white );
+//    painter.drawLine( 0, 8, 16, 8 );
+//    comboBoxLineType->addItem( QIcon(px), tr("Solid"), (int)Qt::SolidLine );
 
-    painter.setPen( Qt::DashDotDotLine );
-    px.fill( Qt::white );
-    painter.drawLine( 0, 8, 16, 8 );
-    comboBoxLineType->addItem( QIcon(px), tr("Dash-Dot-Dot"), (int)Qt::DashDotDotLine );
+//    painter.setPen( Qt::DashLine );
+//    px.fill( Qt::white );
+//    painter.drawLine( 0, 8, 16, 8 );
+//    comboBoxLineType->addItem( QIcon(px), tr("Dash"), (int)Qt::DashLine );
+
+//    painter.setPen( Qt::DotLine );
+//    px.fill( Qt::white );
+//    painter.drawLine( 0, 8, 16, 8 );
+//    comboBoxLineType->addItem( QIcon(px), tr("Dot"), (int)Qt::DotLine );
+
+//    painter.setPen( Qt::DashDotLine );
+//    px.fill( Qt::white );
+//    painter.drawLine( 0, 8, 16, 8 );
+//    comboBoxLineType->addItem( QIcon(px), tr("Dash-Dot"), (int)Qt::DashDotLine );
+
+//    painter.setPen( Qt::DashDotDotLine );
+//    px.fill( Qt::white );
+//    painter.drawLine( 0, 8, 16, 8 );
+//    comboBoxLineType->addItem( QIcon(px), tr("Dash-Dot-Dot"), (int)Qt::DashDotDotLine );
 
     pickerLineColor = new QColorPicker( this );
     pickerFillColor = new QColorPicker( this );
@@ -81,35 +125,35 @@ void PropertyPageRectangle::changeEvent(QEvent *e)
     QWidget::changeEvent(e);
     switch (e->type())
     {
-       case QEvent::LanguageChange:
-           retranslateUi(this);
-           break;
-       default:
-           break;
+    case QEvent::LanguageChange:
+        retranslateUi(this);
+        break;
+    default:
+        break;
     }
 }
 
 
 void PropertyPageRectangle::load()
 {
-   comboBoxLineType->setCurrentIndex(_designer->widgetProperty("lineType").toInt());
-   pickerLineColor->setColor(QColor(_designer->widgetProperty("lineColor").toString()));
-   pickerFillColor->setColor(QColor(_designer->widgetProperty("fillColor").toString()));
-   spinBoxLineWidth->setValue( _designer->widgetProperty("lineWidth").toInt() );
+    comboBoxLineType->setCurrentIndex(_designer->widgetProperty("lineType").toInt());
+    comboBoxFillType->setCurrentIndex(_designer->widgetProperty("fillType").toInt());
+    pickerLineColor->setColor(QColor(_designer->widgetProperty("lineColor").toString()));
+    pickerFillColor->setColor(QColor(_designer->widgetProperty("fillColor").toString()));
+    spinBoxLineWidth->setValue( _designer->widgetProperty("lineWidth").toInt() );
 
-   pickerFillColor->update();
-   pickerLineColor->update();
+    pickerFillColor->update();
+    pickerLineColor->update();
 }
 
 void PropertyPageRectangle::save()
 {
-   _designer->setWidgetProperty("fillType", (int)Qt::SolidPattern );
-   _designer->setWidgetProperty("lineType",
-                                comboBoxLineType->itemData( comboBoxLineType->currentIndex() ).toInt() );
+    _designer->setWidgetProperty("lineType", comboBoxLineType->currentData().toInt() );
+    _designer->setWidgetProperty("fillType", comboBoxFillType->currentData().toInt() );
 
-   _designer->setWidgetProperty("lineColor", pickerLineColor->color().name());
-   _designer->setWidgetProperty("fillColor", pickerFillColor->color().name());
-   _designer->setWidgetProperty("lineWidth", spinBoxLineWidth->value());
+    _designer->setWidgetProperty("lineColor", pickerLineColor->color().name());
+    _designer->setWidgetProperty("fillColor", pickerFillColor->color().name());
+    _designer->setWidgetProperty("lineWidth", spinBoxLineWidth->value());
 }
 
 LEAF_END_NAMESPACE

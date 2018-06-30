@@ -14,11 +14,16 @@ class ModelTreeView : public QTreeView
     Q_OBJECT
     Report *_report;
     QMenu *menu;
+    bool m_enableDrag;
 
 public:
+    ModelTreeView(QWidget *parent = Q_NULLPTR);
     ModelTreeView(Report *report, QWidget *parent = Q_NULLPTR);
 
     // QWidget interface
+    bool enableDrag() const;
+    void setEnableDrag(bool enableDrag);
+
 protected:
     void mousePressEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
 

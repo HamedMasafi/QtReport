@@ -112,6 +112,9 @@
        <property name="rowWrapPolicy">
         <enum>QFormLayout::WrapLongRows</enum>
        </property>
+       <item row="0" column="0" colspan="2">
+        <widget class="QComboBox" name="comboBoxFillType"/>
+       </item>
       </layout>
      </item>
     </layout>

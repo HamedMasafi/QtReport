@@ -6,7 +6,6 @@
 #include "widgets/band.h"
 #include "core/variable.h"
 
-#include <QRandomGenerator>
 #include <QCoreApplication>
 #include <QIcon>
 #include <QRegularExpression>
@@ -133,7 +132,19 @@ void ReportModel::addDataTable(DataTable *dt)
 
 void ReportModel::removeDataTable(DataTable *dt)
 {
-
+    for (int i = 0; i < connections.count(); ++i) {
+        if (connections.at(i)->objectName() == dt->connectionName()) {
+            Node *n = rootConnectionsItem->childs.at(i);
+            Node *dtNode = n->findChild(dt);
+            beginRemoveRows(createIndex(n->row,
+                                        0,
+                                        n),
+                            dtNode->row,
+                            dtNode->row);
+            n->remove(dt);
+            endRemoveRows();
+        }
+    }
 }
 
 void ReportModel::addBand(Band *b)
@@ -245,14 +256,17 @@ QVariant ReportModel::data(const QModelIndex &index, int role) const
     Node *d = static_cast<Node*>(index.internalPointer());
 
     switch (role) {
-    case Qt::DisplayRole:
+    case TextRole:
         return d->title();
 
-    case Qt::DecorationRole:
+    case IconRole:
         return QIcon(d->iconPath());
 
     case TypeRole:
         return d->type;
+
+    case DataRole:
+        return QVariant::fromValue(d->data);
 
     default:
         return QVariant();
