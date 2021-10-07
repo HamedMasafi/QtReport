@@ -1,7 +1,8 @@
-SUBDIRS += src \
- tools/QtReportDesigner
 
 TEMPLATE = subdirs 
 CONFIG += warn_on \
-          qt \
+          qt ordered \
           thread 
+
+SUBDIRS += src \
+    tools/QtReportDesigner

@@ -96,7 +96,7 @@
       <item row="2" column="1">
        <widget class="QLineEdit" name="lineEditServerName">
         <property name="text">
-         <string>localhost</string>
+         <string/>
         </property>
        </widget>
       </item>
@@ -117,7 +117,7 @@
       <item row="4" column="1">
        <widget class="QLineEdit" name="lineEditUsername">
         <property name="text">
-         <string>root</string>
+         <string/>
         </property>
        </widget>
       </item>
@@ -131,7 +131,7 @@
       <item row="5" column="1">
        <widget class="QLineEdit" name="lineEditPassword">
         <property name="text">
-         <string>onlyonlyi</string>
+         <string/>
         </property>
         <property name="echoMode">
          <enum>QLineEdit::Password</enum>
@@ -141,7 +141,7 @@
       <item row="3" column="1">
        <widget class="QLineEdit" name="lineEditDatabase">
         <property name="text">
-         <string>amarok</string>
+         <string/>
         </property>
        </widget>
       </item>

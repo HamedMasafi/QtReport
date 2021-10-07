@@ -49,14 +49,14 @@
 
 //LEAF_BEGIN_NAMESPACE
 
-enum WidgetTypeFlag
+enum WidgetType
 {
     BandWidget,
     WidgetWidget,
     PageWidget
 };
-Q_DECLARE_FLAGS(WidgetType, WidgetTypeFlag)
-Q_DECLARE_OPERATORS_FOR_FLAGS(WidgetType)
+//Q_DECLARE_FLAGS(WidgetType, WidgetTypeFlag)
+//Q_DECLARE_OPERATORS_FOR_FLAGS(WidgetType)
 
 enum ResizeDirectionFlag
 {
@@ -68,17 +68,17 @@ enum ResizeDirectionFlag
 Q_DECLARE_FLAGS(ResizeDirection, ResizeDirectionFlag)
 Q_DECLARE_OPERATORS_FOR_FLAGS(ResizeDirection)
 
-enum UnitFlag
+enum Unit
 {
     Centimeters,
     Milimeters,
     Inch,
     Pixel
 };
-Q_DECLARE_FLAGS(Unit, UnitFlag)
-Q_DECLARE_OPERATORS_FOR_FLAGS(Unit)
+//Q_DECLARE_FLAGS(Unit, UnitFlag)
+//Q_DECLARE_OPERATORS_FOR_FLAGS(Unit)
 
-enum BandTypeFlag
+enum BandType
 {
     ReportHeader,
     PageHeader,
@@ -89,25 +89,25 @@ enum BandTypeFlag
     PageFooter,
     ReportFooter
 };
-Q_DECLARE_FLAGS(BandType, BandTypeFlag)
-Q_DECLARE_OPERATORS_FOR_FLAGS(BandType)
+//Q_DECLARE_FLAGS(BandType, BandTypeFlag)
+//Q_DECLARE_OPERATORS_FOR_FLAGS(BandType)
 
-enum GridTypeFlag
+enum GridType
 {
     NoGrid,
     DotGrid,
     LinesGrid
 };
-Q_DECLARE_FLAGS(GridType, GridTypeFlag)
-Q_DECLARE_OPERATORS_FOR_FLAGS(GridType)
+//Q_DECLARE_FLAGS(GridType, GridTypeFlag)
+//Q_DECLARE_OPERATORS_FOR_FLAGS(GridType)
 
-enum MouseToolFlag
+enum MouseTool
 {
     Pointer,
     Hand
 };
-Q_DECLARE_FLAGS(MouseTool, MouseToolFlag)
-Q_DECLARE_OPERATORS_FOR_FLAGS(MouseTool)
+//Q_DECLARE_FLAGS(MouseTool, MouseToolFlag)
+//Q_DECLARE_OPERATORS_FOR_FLAGS(MouseTool)
 
 
 //LEAF_END_NAMESPACE

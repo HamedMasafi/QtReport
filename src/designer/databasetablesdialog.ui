@@ -14,7 +14,7 @@
    <string>New datatable</string>
   </property>
   <property name="windowIcon">
-   <iconset>
+   <iconset resource="../resources.qrc">
     <normaloff>:/designer/qtreport_32</normaloff>:/designer/qtreport_32</iconset>
   </property>
   <property name="modal">
@@ -225,7 +225,9 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../resources.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>buttonBox</sender>
