@@ -995,6 +995,9 @@ WidgetBase *DocumentDesigner::createWidgetsFromDom(QDomElement dom)
 
     WidgetBase *widget = WidgetBase::createWidget(&dom);
 
+    if (!widget)
+        return nullptr;
+
     addReportWidget(widget, 0, 0, true);
     widget->loadDom(&dom);
     widget->update();

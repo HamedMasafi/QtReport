@@ -496,13 +496,13 @@ WidgetBase *WidgetBase::createWidget(QString type)
 
 WidgetBase *WidgetBase::createWidget(QDomElement *dom)
 {
-    WidgetBase *widget;
+    WidgetBase *widget{nullptr};
     QString type = dom->attribute("type", "");
 
     if(type.isEmpty())
-        return 0;
+        return nullptr;
 
-    if(widget = createWidget(type))
+    if((widget = createWidget(type)))
       widget->loadDom(dom);
 
     return widget;
