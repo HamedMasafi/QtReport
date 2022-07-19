@@ -71,6 +71,8 @@ protected:
 private slots:
     void on_buttonBox_accepted();
     void on_pushButtonTest_clicked();
+    void on_comboBoxDrivers_activated(int index);
+    void on_toolButtonBrowseFilePath_clicked();
 };
 
 LEAF_END_NAMESPACE

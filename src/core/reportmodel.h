@@ -35,7 +35,7 @@ public:
         VariableItem,
 
         DataTableItem,
-        FieldItem,
+        DataFieldItem,
 
         WidgetsRoot,
         BandItem,
@@ -65,6 +65,7 @@ public:
         Node (Band *b);
         Node (WidgetBase *w);
         Node (Variable *w);
+        Node (DataField *f);
 
         void addChild(Node *node) {
             node->row = childs.count();

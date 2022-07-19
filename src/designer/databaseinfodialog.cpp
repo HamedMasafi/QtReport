@@ -24,6 +24,7 @@
 
 #include <QtSql/QSqlDatabase>
 #include <QtSql/QSqlError>
+#include <QFileDialog>
 #include <QMessageBox>
 #include "databaseinfodialog.h"
 #include "core/report.h"
@@ -151,10 +152,15 @@ DataConnection *DatabaseInfoDialog::dataConnection() const
 {
     DataConnection *dataConnection = new DataConnection();
     dataConnection->setObjectName(lineEditName->text());
-    dataConnection->setServerName(lineEditServerName->text());
-    dataConnection->setDatabaseName(lineEditDatabase->text());
-    dataConnection->setUsername(lineEditUsername->text());
-    dataConnection->setPassword(lineEditPassword->text());
+
+    if (comboBoxDrivers->currentIndex() == 0) {
+        dataConnection->setDatabaseName(lineEditFilePath->text());
+    } else {
+        dataConnection->setServerName(lineEditServerName->text());
+        dataConnection->setDatabaseName(lineEditDatabase->text());
+        dataConnection->setUsername(lineEditUsername->text());
+        dataConnection->setPassword(lineEditPassword->text());
+    }
     dataConnection->setDriver(comboBoxDrivers->currentText());
     return dataConnection;
 }
@@ -241,5 +247,17 @@ void DatabaseInfoDialog::setDataConnection(const DataConnection *dataConnection)
 //    lineEditUsername->setText(username);
 //    lineEditPassword->setText(password);
 //}
+
+void DatabaseInfoDialog::on_comboBoxDrivers_activated(int index)
+{
+    stackedWidget->setCurrentIndex(index == 0 ? 0 : 1);
+}
+
+void DatabaseInfoDialog::on_toolButtonBrowseFilePath_clicked()
+{
+    auto filePath = QFileDialog::getOpenFileName(this, tr("Select database file"));
+    if (!filePath.isEmpty())
+        lineEditFilePath->setText(filePath);
+}
 
 LEAF_END_NAMESPACE

@@ -14,7 +14,7 @@
    <string>Query builder</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="resources.qrc">
+   <iconset resource="../resources.qrc">
     <normaloff>:/designer/qtreport_32</normaloff>:/designer/qtreport_32</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -73,7 +73,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="resources.qrc"/>
+  <include location="../resources.qrc"/>
  </resources>
  <connections>
   <connection>

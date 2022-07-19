@@ -94,33 +94,27 @@ void ReportModel::removeVariable(Variable *gv)
 
 void ReportModel::addDataTable(DataConnection *c, DataTable *t)
 {
-    for (int i = 0; i < connections.count(); ++i) {
-        if (connections.at(i)->objectName() == c->objectName()) {
-            Node *n = rootConnectionsItem->childs.at(i);
-            beginInsertRows(createIndex(n->row,
-                                        0,
-                                        n),
-                            n->childs.count(),
-                            n->childs.count());
-//            bands.append(b);
-            n->addChild(new Node(t));
-            endInsertRows();
-        }
-    }
+    addDataTable(c->objectName(), t);
 }
 
 void ReportModel::addDataTable(QString connectionName, DataTable *dt)
 {
     for (int i = 0; i < connections.count(); ++i) {
         if (connections.at(i)->objectName() == connectionName) {
-            Node *n = rootConnectionsItem->childs.at(i);
-            beginInsertRows(createIndex(n->row,
-                                        0,
-                                        n),
-                            n->childs.count(),
-                            n->childs.count());
-            n->addChild(new Node(dt));
+            Node *connectionNode = rootConnectionsItem->childs.at(i);
+            beginInsertRows(createIndex(connectionNode->row, 0, connectionNode),
+                            connectionNode->childs.count(),
+                            connectionNode->childs.count());
+
+            auto tableNode = new Node(dt);
+            connectionNode->addChild(tableNode);
+
+            auto fields = dt->fields();
+            for (auto &f : fields)
+                tableNode->addChild(new Node(f));
+
             endInsertRows();
+            return;
         }
     }
 }
@@ -245,6 +239,7 @@ int ReportModel::rowCount(const QModelIndex &parent) const
 
 int ReportModel::columnCount(const QModelIndex &parent) const
 {
+    Q_UNUSED(parent)
     return 1;
 }
 
@@ -285,6 +280,7 @@ NODE_CTOR(DataConnection)
 NODE_CTOR(Band)
 NODE_CTOR(WidgetBase)
 NODE_CTOR(Variable)
+NODE_CTOR(DataField)
 
 QString ReportModel::Node::title() const {
     switch (type) {
@@ -316,7 +312,7 @@ QString ReportModel::Node::title() const {
     case DataTableItem:
         return qobject_cast<DataTable*>(data)->objectName();
 
-    case FieldItem:
+    case DataFieldItem:
         return qobject_cast<DataField*>(data)->objectName();
 
     case WidgetsRoot:
@@ -352,7 +348,7 @@ QString ReportModel::Node::iconPath() const
     case DataTableItem:
         return ":/designer/table";
 
-    case FieldItem:
+    case DataFieldItem:
         return ":/designer/field";
 
     case WidgetsRoot:

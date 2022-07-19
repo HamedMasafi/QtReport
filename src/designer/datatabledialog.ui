@@ -14,7 +14,7 @@
    <string>New datasource</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="resources.qrc">
+   <iconset resource="../resources.qrc">
     <normaloff>:/designer/qtreport_32</normaloff>:/designer/qtreport_32</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
@@ -187,7 +187,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="resources.qrc"/>
+  <include location="../resources.qrc"/>
  </resources>
  <connections>
   <connection>
